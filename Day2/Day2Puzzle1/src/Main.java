@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 
 public class Main {
-    static private final String GAME_DATA_FILE_PATH = "Day2Puzzle1/games-data.txt";
+    static private final String GAME_DATA_FILE_PATH = "Day2/Day2Puzzle1/games-data.txt";
     static private final File GAMES_DATA_FILE = new File(GAME_DATA_FILE_PATH);
 
     static private final ArrayList<String> gamesData = new ArrayList<>(100);

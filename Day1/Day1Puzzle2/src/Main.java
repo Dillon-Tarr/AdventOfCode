@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Main {
-    private static final String originalValuesFilePath = "Day1Puzzle2/garbled-calibration-values.txt";
+    private static final String originalValuesFilePath = "Day1/Day1Puzzle2/garbled-calibration-values.txt";
     private static final File originalValuesFile = new File(originalValuesFilePath);
     private static final ArrayList<String> values = new ArrayList<>(1000);
 

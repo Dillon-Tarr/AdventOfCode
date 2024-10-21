@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Simpler {
-    private static final String originalValuesFilePath = "Day1Puzzle1/garbled-calibration-values.txt";
+    private static final String originalValuesFilePath = "Day1/Day1Puzzle1/garbled-calibration-values.txt";
     private static final File originalValuesFile = new File(originalValuesFilePath);
 
     private static final ArrayList<String> values = new ArrayList<>(1000);

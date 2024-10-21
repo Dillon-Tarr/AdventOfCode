@@ -2,14 +2,14 @@ import java.io.*;
 
 
 public class Main {
-    private static final String GARBLED_CALIBRATION_VALUES_FILE_PATH = "Day1Puzzle1/garbled-calibration-values.txt";
+    private static final String GARBLED_CALIBRATION_VALUES_FILE_PATH = "Day1/Day1Puzzle1/garbled-calibration-values.txt";
     private static final File garbledCalibrationValuesFile = new File(GARBLED_CALIBRATION_VALUES_FILE_PATH);
 
-    private static final String NUMERALS_ONLY_VALUES_FILE_PATH = "Day1Puzzle1/numerals-only-values.txt";
+    private static final String NUMERALS_ONLY_VALUES_FILE_PATH = "Day1/Day1Puzzle1/numerals-only-values.txt";
     private static final File numeralsOnlyValuesFile = new File(NUMERALS_ONLY_VALUES_FILE_PATH);
     private static final String PLAIN_ENGLISH_OF_NUMERALS_ONLY_FILE_NAME = "numerals-only values file";
 
-    private static final String REAL_CALIBRATION_VALUES_FILE_PATH = "Day1Puzzle1/real-calibration-values.txt";
+    private static final String REAL_CALIBRATION_VALUES_FILE_PATH = "Day1/Day1Puzzle1/real-calibration-values.txt";
     private static final File realCalibrationValuesFile = new File(REAL_CALIBRATION_VALUES_FILE_PATH);
     private static final String PLAIN_ENGLISH_OF_REAL_CALIBRATION_VALUES_FILE_PATH = "real calibration values file";
 

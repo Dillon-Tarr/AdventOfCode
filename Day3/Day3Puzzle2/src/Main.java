@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Main {
-    static private final String ENGINE_SCHEMATIC_FILE_PATH = "Day3Puzzle2/engine-schematic.txt";
+    static private final String ENGINE_SCHEMATIC_FILE_PATH = "Day3/Day3Puzzle2/engine-schematic.txt";
     static private final File ENGINE_SCHEMATIC_FILE = new File(ENGINE_SCHEMATIC_FILE_PATH);
     static private final int SCHEMATIC_LINE_COUNT = getSchematicLineCount();
     static private final int SCHEMATIC_LINE_LENGTH = getSchematicLineLength();

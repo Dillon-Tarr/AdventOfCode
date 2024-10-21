@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Main {
-    static private final String ENGINE_SCHEMATIC_FILE_PATH = "Day3Puzzle1/engine-schematic.txt";
+    static private final String ENGINE_SCHEMATIC_FILE_PATH = "Day3/Day3Puzzle1/engine-schematic.txt";
     static private final File ENGINE_SCHEMATIC_FILE = new File(ENGINE_SCHEMATIC_FILE_PATH);
 
     static private final char[][] schematicCharacters = new char[140][140];
