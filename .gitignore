@@ -27,3 +27,6 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+# For the purpose of not sharing Advent of Code prompts or inputs:
+*.txt
