@@ -3,15 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AdventOfCode2023.iml" filepath="$PROJECT_DIR$/AdventOfCode2023.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Day1/Day1Puzzle1/Day1Puzzle1.iml" filepath="$PROJECT_DIR$/Day1/Day1Puzzle1/Day1Puzzle1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Day1/Day1Puzzle2/Day1Puzzle2.iml" filepath="$PROJECT_DIR$/Day1/Day1Puzzle2/Day1Puzzle2.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Day2/Day2Puzzle1/Day2Puzzle1.iml" filepath="$PROJECT_DIR$/Day2/Day2Puzzle1/Day2Puzzle1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Day2/Day2Puzzle2/Day2Puzzle2.iml" filepath="$PROJECT_DIR$/Day2/Day2Puzzle2/Day2Puzzle2.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Day3/Day3Puzzle1/Day3Puzzle1.iml" filepath="$PROJECT_DIR$/Day3/Day3Puzzle1/Day3Puzzle1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Day3/Day3Puzzle2/Day3Puzzle2.iml" filepath="$PROJECT_DIR$/Day3/Day3Puzzle2/Day3Puzzle2.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Day4/Day4Puzzle1/Day4Puzzle1.iml" filepath="$PROJECT_DIR$/Day4/Day4Puzzle1/Day4Puzzle1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Day4/Day4Puzzle2/Day4Puzzle2.iml" filepath="$PROJECT_DIR$/Day4/Day4Puzzle2/Day4Puzzle2.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Day5/Day5Puzzle1/Day5Puzzle1.iml" filepath="$PROJECT_DIR$/Day5/Day5Puzzle1/Day5Puzzle1.iml" />
     </modules>
   </component>
 </project>
