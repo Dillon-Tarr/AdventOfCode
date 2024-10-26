@@ -14,6 +14,7 @@ public class Main {
     }
 
     private static void printHands() {
+        System.out.println("\nAll hands:");
         for (Hand hand : hands) {
             System.out.println(hand);
         }
@@ -29,7 +30,5 @@ public class Main {
 
         } catch (IOException e) {throw new RuntimeException(e);}
     }
-
-
 
 }
