@@ -2,6 +2,7 @@ package day7.puzzle1;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Main {
     static private final String INPUT_FILE_PATH = "src/day7/input.txt";
@@ -10,14 +11,9 @@ public class Main {
 
     public static void main(String[] args) {
         getInputData();
+        sortHands();
         printHands();
-    }
-
-    private static void printHands() {
-        System.out.println("\nAll hands:");
-        for (Hand hand : hands) {
-            System.out.println(hand);
-        }
+        sumWinnings();
     }
 
     private static void getInputData() {
@@ -27,8 +23,25 @@ public class Main {
                 hands.add(new Hand(currentLine.split(" ")));
                 currentLine = br.readLine();
             }
-
         } catch (IOException e) {throw new RuntimeException(e);}
+    }
+
+    private static void sortHands() {
+        hands.sort(Comparator.comparing(Hand::getScore));
+    }
+
+    private static void printHands() {
+        System.out.println("\nAll hands:");
+        for (Hand hand : hands) {
+            System.out.println(hand);
+        }
+    }
+
+    private static void sumWinnings() {
+        int winnings = 0;
+        for (int i = 0; i < hands.size(); i++)
+            winnings += hands.get(i).getBid() * (i + 1);
+        System.out.println("\nTOTAL WINNINGS:\n\n"+winnings);
     }
 
 }
