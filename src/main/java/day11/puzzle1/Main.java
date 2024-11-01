@@ -29,7 +29,7 @@ public class Main {
 
     private static void findDistanceBetweenThisGalaxyAndEveryLaterGalaxy(int index) {
         if (index >= galaxies.size()-1) return;
-        for (int i = index; i < galaxies.size(); i++) {
+        for (int i = index+1; i < galaxies.size(); i++) {
             int yDiff = galaxies.get(i).getY() - galaxies.get(index).getY();
             int xDiff = galaxies.get(i).getX() - galaxies.get(index).getX();
             if (yDiff < 0) yDiff *= -1;
