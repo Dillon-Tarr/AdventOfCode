@@ -41,34 +41,44 @@ public class ImpossiblySlowMethod {
         String currentBlock = y+","+x;
         for (String pastPastBlock : pastPastBlocks) if (currentBlock.equals(pastPastBlock)) return;
 
-        char blockedDirection = 'x';
+        char aboutFaceBlockedDirection = 'x';
+        String[] lastBlockYAndX = new String[0];
+        if (!pastPastBlocks.isEmpty()) {
+        lastBlockYAndX = pastPastBlocks.get(pastPastBlocks.size()-1).split(",");
+        if (lastBlockYAndX[1].equals(""+(x-1))) aboutFaceBlockedDirection = 'w';
+        else if (lastBlockYAndX[1].equals(""+(x+1))) aboutFaceBlockedDirection = 'e';
+        else if (lastBlockYAndX[0].equals(""+(y-1))) aboutFaceBlockedDirection = 'n';
+        else aboutFaceBlockedDirection = 's';
+        }
+
+        char threeStepBlockedDirection = 'x';
         if (pastPastBlocks.size() >= 3) {
-            String[] lastBlockYAndX = pastPastBlocks.get(pastPastBlocks.size()-1).split(",");
             String[] secondToLastBlockYAndX = pastPastBlocks.get(pastPastBlocks.size()-2).split(",");
             String[] thirdToLastBlockYAndX = pastPastBlocks.get(pastPastBlocks.size()-3).split(",");
+
             if (lastBlockYAndX[0].equals(""+y) &&
                     secondToLastBlockYAndX[0].equals(lastBlockYAndX[0]) &&
                     thirdToLastBlockYAndX[0].equals(secondToLastBlockYAndX[0])) {
                 if (lastBlockYAndX[1].equals(""+(x-1))) {
-                    blockedDirection = 'e';
-                } else blockedDirection = 'w';
+                    threeStepBlockedDirection = 'e';
+                } else threeStepBlockedDirection = 'w';
             }
             if (lastBlockYAndX[1].equals(""+x) &&
                     secondToLastBlockYAndX[1].equals(lastBlockYAndX[1]) &&
                     thirdToLastBlockYAndX[1].equals(secondToLastBlockYAndX[1])) {
-                if (lastBlockYAndX[1].equals(""+(y-1))) {
-                    blockedDirection = 's';
-                } else blockedDirection = 'n';
+                if (lastBlockYAndX[0].equals(""+(y-1))) {
+                    threeStepBlockedDirection = 's';
+                } else threeStepBlockedDirection = 'n';
             }
         }
 
         ArrayList<String> pastBlocks = new ArrayList<>(pastPastBlocks);
         pastBlocks.add(currentBlock);
 
-        if (blockedDirection != 'e' && x < grid[0].length-1) tryPaths(y, x+1, heatLost, pastBlocks);
-        if (blockedDirection != 'w' && x > 0) tryPaths(y, x-1, heatLost, pastBlocks);
-        if (blockedDirection != 's' && y < grid.length-1) tryPaths(y+1, x, heatLost, pastBlocks);
-        if (blockedDirection != 'n' && y > 0) tryPaths(y-1, x, heatLost, pastBlocks);
+        if (aboutFaceBlockedDirection != 'e' && threeStepBlockedDirection != 'e' && x < grid[0].length-1) tryPaths(y, x+1, heatLost, pastBlocks);
+        if (aboutFaceBlockedDirection != 'w' && threeStepBlockedDirection != 'w' && x > 0) tryPaths(y, x-1, heatLost, pastBlocks);
+        if (aboutFaceBlockedDirection != 's' && threeStepBlockedDirection != 's' && y < grid.length-1) tryPaths(y+1, x, heatLost, pastBlocks);
+        if (aboutFaceBlockedDirection != 'n' && threeStepBlockedDirection != 'n' && y > 0) tryPaths(y-1, x, heatLost, pastBlocks);
     }
 
 }
