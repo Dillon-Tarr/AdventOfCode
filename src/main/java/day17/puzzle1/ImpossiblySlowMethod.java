@@ -23,11 +23,9 @@ public class ImpossiblySlowMethod {
         } catch (IOException e) {throw new RuntimeException();}
         try (BufferedReader br = new BufferedReader(new FileReader(INPUT_FILE))) {
             for (int y = 0; y < grid.length; y++) {
-                grid[y] = new Integer[grid.length];
                 String line = br.readLine();
-                for (int x = 0; x < grid[0].length; x++) {
-                    grid[y][x] = Character.getNumericValue(line.charAt(x));
-                }
+                grid[y] = new Integer[line.length()];
+                for (int x = 0; x < line.length(); x++) grid[y][x] = Character.getNumericValue(line.charAt(x));
             }
         } catch (IOException e) {throw new RuntimeException(e);}
     }
