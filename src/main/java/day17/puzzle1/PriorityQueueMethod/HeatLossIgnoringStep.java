@@ -1,4 +1,4 @@
-package day17.puzzle1;
+package day17.puzzle1.PriorityQueueMethod;
 
 class HeatLossIgnoringStep {
     private final int y;

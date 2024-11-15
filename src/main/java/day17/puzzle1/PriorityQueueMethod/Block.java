@@ -1,4 +1,4 @@
-package day17.puzzle1;
+package day17.puzzle1.PriorityQueueMethod;
 
 class Block {
     int y, x, cost, heatLossDistanceFromStart;

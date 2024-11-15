@@ -1,4 +1,4 @@
-package day17.puzzle1;
+package day17.puzzle1.QueueMethod;
 
 import java.io.*;
 import java.util.ArrayList;

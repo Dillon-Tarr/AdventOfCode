@@ -1,4 +1,4 @@
-package day17.puzzle1;
+package day17.puzzle1.PriorityQueueMethod;
 
 record QueuedStep(int y, int x, int heatLost, int consecutiveStepsInOneDirection, char lastStepDirection) implements Comparable<QueuedStep> {
 
