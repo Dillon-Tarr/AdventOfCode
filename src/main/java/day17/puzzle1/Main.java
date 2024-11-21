@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
 public class Main {
     static private final File INPUT_FILE = new File("input-files/day17input.txt");
     static private Block[][] blocks;
-    static private int gridLength, gridWidth, fewestPossibleStepsFromStartToEnd;
+    static private int gridLength, gridWidth;
     static private final PriorityQueue<QueuedStep> queue = new PriorityQueue<>();
 
     public static void main(String[] args) {
@@ -29,32 +29,14 @@ public class Main {
         try (BufferedReader br = new BufferedReader(new FileReader(INPUT_FILE))) {
             String line = br.readLine();
             gridWidth = line.length();
-            fewestPossibleStepsFromStartToEnd = (gridLength-1)*(gridWidth-1);
             for (int y = 0; y < blocks.length; y++) {
                 blocks[y] = new Block[gridWidth];
                 for (int x = 0; x < gridWidth; x++) {
-                    blocks[y][x] = new Block(y, x, Character.getNumericValue(line.charAt(x)), getWorstPossibleEffectiveHeatLossFromBeginningToBlock(y, x));
+                    blocks[y][x] = new Block(y, x, Character.getNumericValue(line.charAt(x)));
                 }
                 line = br.readLine();
             }
         } catch (IOException e) {throw new RuntimeException(e);}
-    }
-
-    private static int getWorstPossibleEffectiveHeatLossFromBeginningToBlock (int y, int x) {
-        return 9*(fewestPossibleStepsFromStartToEnd-calculateFewestNecessaryStepsFromBlockToEnd(y, x));
-    }
-
-    private static int calculateFewestNecessaryStepsFromBlockToEnd(int y, int x){
-        int vDistanceToEnd = gridLength-1-y;
-        int hDistanceToEnd = gridWidth-1-x;
-        int lowerDistance = Math.min(vDistanceToEnd, hDistanceToEnd);
-        if (lowerDistance < 0) throw new RuntimeException("y and/or x value is out of bounds for calculateFewestNecessaryStepsFromBlockToEnd().");
-        int higherDistance = Math.max(vDistanceToEnd, hDistanceToEnd);
-        if (lowerDistance == 0) {
-            if (higherDistance == 0) return 0;
-            else return higherDistance + ((higherDistance-1)/6+1)*2;
-        }
-        else return higherDistance/lowerDistance <= 3 ? higherDistance+lowerDistance : higherDistance+lowerDistance+2+2*(((higherDistance-1)-(lowerDistance*3))/6);
     }
 
     private static void findBestPath() {
@@ -77,7 +59,7 @@ public class Main {
                         if (newY < 0) break;
                         Block block = blocks[newY][x];
                         newHeatLost += block.cost;
-                        if (block.stepIsOldOrCold(new Visit(newDirection, i), newHeatLost)) break;
+                        if (block.stepWasAlreadyTaken(new Visit(newDirection, i))) break;
                         queue.offer(new QueuedStep(newY, x, newHeatLost, newDirection));
                     }
                     newHeatLost = heatLost;
@@ -87,7 +69,7 @@ public class Main {
                         if (newY >= gridLength) break;
                         Block block = blocks[newY][x];
                         newHeatLost += block.cost;
-                        if (block.stepIsOldOrCold(new Visit(newDirection, i), newHeatLost)) break;
+                        if (block.stepWasAlreadyTaken(new Visit(newDirection, i))) break;
                         queue.offer(new QueuedStep(newY, x, newHeatLost, newDirection));
                     }
                 }
@@ -99,7 +81,7 @@ public class Main {
                         if (newX < 0) break;
                         Block block = blocks[y][newX];
                         newHeatLost += block.cost;
-                        if (block.stepIsOldOrCold(new Visit(newDirection, i), newHeatLost)) break;
+                        if (block.stepWasAlreadyTaken(new Visit(newDirection, i))) break;
                         queue.offer(new QueuedStep(y, newX, newHeatLost, newDirection));
                     }
                     newHeatLost = heatLost;
@@ -109,7 +91,7 @@ public class Main {
                         if (newX >= gridWidth) break;
                         Block block = blocks[y][newX];
                         newHeatLost += block.cost;
-                        if (block.stepIsOldOrCold(new Visit(newDirection, i), newHeatLost)) break;
+                        if (block.stepWasAlreadyTaken(new Visit(newDirection, i))) break;
                         queue.offer(new QueuedStep(y, newX, newHeatLost, newDirection));
                     }
                 }

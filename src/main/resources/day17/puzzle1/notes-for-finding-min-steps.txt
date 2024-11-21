@@ -26,3 +26,5 @@ Penalty at 7,2 happens the first time h/l is greater than 3.
 
 Penalty at 10,3 happens the first time h/l is greater than 3.
 2nd penalty at 16,3 happens when h/l is greater than 3 and 6 is added.
+
+It turns out that finding out this information and implementing it did not speed up the solution, so I removed its implementation.
