@@ -20,11 +20,15 @@ public class WouldNeedALotMoreWorkToWork { // Does not work. I would need to sen
     static private char startEntryStepDirection;
 
     public static void main(String[] args) {
+        long startTime = System.nanoTime();
+
         getInputDataAndStartCoordinates();
         setClosestBoundaryDirectionValuesForCheckingIfInsideLoop();
         getLoopTiles();
         convertStartTileToProperCharacter();
         countTilesInsideTheLoop();
+
+        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }
 
     private static void getInputDataAndStartCoordinates() {

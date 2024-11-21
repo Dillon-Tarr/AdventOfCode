@@ -7,22 +7,26 @@ public class Main {
     static private final String INPUT_FILE_PATH = "input-files/day1input.txt";
     static private final File INPUT_FILE = new File(INPUT_FILE_PATH);
 
-    private static final String NUMERALS_ONLY_VALUES_FILE_PATH = "Day1/Day1Puzzle1/numerals-only-values.txt";
+    private static final String NUMERALS_ONLY_VALUES_FILE_PATH = "input-files/day1-numerals-only-values.txt";
     private static final File NUMERALS_ONLY_VALUES_FILE = new File(NUMERALS_ONLY_VALUES_FILE_PATH);
     private static final String PLAIN_ENGLISH_OF_NUMERALS_ONLY_FILE_NAME = "numerals-only values file";
 
-    private static final String REAL_CALIBRATION_VALUES_FILE_PATH = "Day1/Day1Puzzle1/real-calibration-values.txt";
+    private static final String REAL_CALIBRATION_VALUES_FILE_PATH = "input-files/day1-real-calibration-values.txt";
     private static final File REAL_CALIBRATION_VALUES_FILE = new File(REAL_CALIBRATION_VALUES_FILE_PATH);
     private static final String PLAIN_ENGLISH_OF_REAL_CALIBRATION_VALUES_FILE_PATH = "real calibration values file";
 
     private static int sumOfRealCalibrationValues;
 
     public static void main(String[] args) {
+        long startTime = System.nanoTime();
+
         readAndPrintGarbledCalibrationValues();
         String numeralsOnlyValues = reduceCalibrationValuesToNumerals();
         System.out.println(numeralsOnlyValues);
         System.out.println(evaluateRealCalibrationValues());
         System.out.println("\nSUM OF REAL CALIBRATION VALUES:\n"+sumOfRealCalibrationValues);
+
+        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }
 
     private static void readAndPrintGarbledCalibrationValues() {

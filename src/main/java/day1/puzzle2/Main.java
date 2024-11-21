@@ -9,11 +9,15 @@ public class Main {
     private static final ArrayList<String> values = new ArrayList<>(1000);
 
     public static void main(String[] args) {
+        long startTime = System.nanoTime();
+
         getGarbledValues();
         changeFirstAndLastNumberWordsToNumerals();
         removeNonNumeralsFromValues();
         getRealCalibrationValues();
         sumAllCalibrationValues();
+
+        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }
 
     private static void getGarbledValues() {

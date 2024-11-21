@@ -8,9 +8,13 @@ public class Main {
     static private int greatestEnergizationOfAnyBeamConfiguration = 0;
 
     public static void main(String[] args) {
+        long startTime = System.nanoTime();
+
         getInputData();
         tryEveryPossibleBeamConfiguration();
         System.out.println("\nEnergized tile count of best beam configuration:\n\n"+greatestEnergizationOfAnyBeamConfiguration);
+
+        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }
 
     private static void getInputData() {

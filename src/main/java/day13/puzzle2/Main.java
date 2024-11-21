@@ -13,8 +13,12 @@ public class Main {
     static private final ArrayList<Pattern> patterns = new ArrayList<>();
 
     public static void main(String[] args) {
+        long startTime = System.nanoTime();
+
         getInputData();
         getPatternValues();
+
+        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }
 
     private static void getPatternValues() {

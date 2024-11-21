@@ -10,8 +10,12 @@ public class Main {
     static private final File INPUT_FILE = new File(INPUT_FILE_PATH);
 
     public static void main(String[] args) {
+        long startTime = System.nanoTime();
+
         getInputDataAndCreateSpringRows();
         System.out.println("\nSum of all rows' possible arrangement counts:\n\n"+SpringRow.getSumOfAllRowsArrangementCounts());
+
+        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }
 
     private static void getInputDataAndCreateSpringRows() {

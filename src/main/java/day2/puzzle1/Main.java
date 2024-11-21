@@ -17,9 +17,13 @@ public class Main {
 
 
     public static void main(String[] args) {
+        long startTime = System.nanoTime();
+
         getGamesData();
         determinePossibleGames();
         sumPossibleGameIds();
+
+        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }
 
     private static void getGamesData() {

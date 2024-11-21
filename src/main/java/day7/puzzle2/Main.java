@@ -13,10 +13,14 @@ public class Main {
     static private final ArrayList<Hand> hands = new ArrayList<>();
 
     public static void main(String[] args) {
+        long startTime = System.nanoTime();
+
         getInputData();
         sortHands();
         printHands();
         sumWinnings();
+
+        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }
 
     private static void getInputData() {

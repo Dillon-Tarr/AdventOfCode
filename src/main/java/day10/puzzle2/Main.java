@@ -22,6 +22,8 @@ public class Main {
     static private char insideTilesColor; // lavender or red
 
     public static void main(String[] args) {
+        long startTime = System.nanoTime();
+
         getInputData();
         setUpImportantVariables();
         traceLoop();
@@ -30,6 +32,8 @@ public class Main {
         spreadPaint();
         identifyInsideTilesColor();
         countInsideTiles();
+
+        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }
 
     private static void getInputData() {

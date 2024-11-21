@@ -7,9 +7,13 @@ public class Main {
     static private char[][] platform;
 
     public static void main(String[] args) {
+        long startTime = System.nanoTime();
+
         getInputData();
         tiltPlatformSoRoundedRocksRollNorth();
         measureLoadOnNorthSupportBeams();
+
+        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }
 
     private static void getInputData() {

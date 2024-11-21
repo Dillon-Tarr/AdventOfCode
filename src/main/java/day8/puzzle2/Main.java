@@ -20,10 +20,14 @@ public class Main {
     static private final ArrayList<Long> longLeastCommonMultiples = new ArrayList<>();
 
     public static void main(String[] args) {
+        long startTime = System.nanoTime();
+
         getInputData();
         createPaths();
         getAllZEndingKeyFindRecords();
         findFirstStepCountWhereAllPathsHaveZEndingKey();
+
+        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }
 
     private static void getInputData() {

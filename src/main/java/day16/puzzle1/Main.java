@@ -7,9 +7,13 @@ public class Main {
     static private Tile[][] grid;
 
     public static void main(String[] args) {
+        long startTime = System.nanoTime();
+
         getInputData();
         sendBeam('r', 0, 0);
         countEnergizedTiles();
+
+        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }
 
     private static void getInputData() {

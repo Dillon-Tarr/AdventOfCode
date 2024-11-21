@@ -11,11 +11,15 @@ public class Simpler {
     private static int sumOfRealCalibrationValues;
 
     public static void main(String[] args) {
+        long startTime = System.nanoTime();
+
         getGarbledValues();
         removeNonNumeralsFromValues();
         getRealCalibrationValues();
 
         System.out.println("\nSUM OF REAL CALIBRATION VALUES:\n"+sumOfRealCalibrationValues);
+
+        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }
 
     private static void getGarbledValues() {

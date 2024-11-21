@@ -12,11 +12,15 @@ public class Main {
     static private final int[] cardNumberCounts = new int[198];
 
     public static void main(String[] args) {
+        long startTime = System.nanoTime();
+
         getCardsData();
         getMatchingNumberCounts();
         addInitialCardNumberCounts();
         processCards();
         sumCardCounts();
+
+        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }
 
     private static void getCardsData() {

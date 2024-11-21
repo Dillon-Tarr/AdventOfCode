@@ -13,9 +13,13 @@ public class Main {
     static private final ArrayList<Integer> firstValueForEachSequence = new ArrayList<>();
 
     public static void main(String[] args) {
+        long startTime = System.nanoTime();
+
         getInputData();
         extrapolateFirstValueForEachHistory();
         sumExtrapolatedValues();
+
+        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }
 
     private static void getInputData() {

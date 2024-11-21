@@ -14,8 +14,12 @@ public class Main {
     static private int stepCount = 0;
 
     public static void main(String[] args) {
+        long startTime = System.nanoTime();
+
         getInputData();
         travelToZZZ();
+
+        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }
 
     private static void getInputData() {

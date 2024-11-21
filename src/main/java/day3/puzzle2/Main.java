@@ -15,11 +15,15 @@ public class Main {
     static private final ArrayList<int[]> allNumbers = new ArrayList<>(1000);
 
     public static void main(String[] args) {
+        long startTime = System.nanoTime();
+
         getSchematicCharacters();
         getCharacterTypes();
         getAllNumbers();
         getAllPotentialGearHits();
         sumGearRatios();
+
+        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }
 
     private static int getSchematicLineCount() {

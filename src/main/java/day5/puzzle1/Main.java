@@ -27,6 +27,8 @@ public class Main {
     static private Mapper humidityToLocationMapper;
 
     public static void main(String[] args) {
+        long startTime = System.nanoTime();
+
         getInputDataAndMaps();
 
         seedToSoilMapper = new Mapper(seedToSoilMap);
@@ -40,6 +42,8 @@ public class Main {
 
         mapSeedsToLocationNumbers();
         getLowestLocationNumber();
+
+        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }
 
     private static void getInputDataAndMaps() {

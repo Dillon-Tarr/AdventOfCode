@@ -9,10 +9,13 @@ public class ImpossiblySlowMethod {
     static private int heatLostOnBestPath = Integer.MAX_VALUE;
 
     public static void main(String[] args) {
+        long startTime = System.nanoTime();
+
         getInputData();
         tryPaths(0, 1, 0, new ArrayList<>());
         tryPaths(1, 0, 0, new ArrayList<>());
-        System.out.println("\nHeat lost on best path:\n\n"+heatLostOnBestPath);
+
+        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }
 
     private static void getInputData() {

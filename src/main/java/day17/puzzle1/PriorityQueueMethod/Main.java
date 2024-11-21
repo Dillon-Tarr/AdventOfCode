@@ -14,13 +14,13 @@ public class Main {
     static private final ArrayList<HeatLossIgnoringStep> pastVisits = new ArrayList<>();
 
     public static void main(String[] args) {
-        long startTime = System.currentTimeMillis();
+        long startTime = System.nanoTime();
+
         getInputData();
         findBestPath();
-        long endTime = System.currentTimeMillis();
         System.out.println("\nHeat lost on best path:\n\n"+heatLostOnBestPath);
-        long executionDuration = endTime-startTime;
-        System.out.println("\nExecution time in seconds: "+((double) executionDuration/1000));
+
+        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }
 
     private static void findBestPath() {
