@@ -2,7 +2,7 @@ package day17.puzzle1;
 
 import day17.CardinalDirection;
 
-record QueuedStep(int y, int x, int heatLost, int consecutiveStepsInOneDirection, CardinalDirection fromDirection) implements Comparable<QueuedStep> {
+record QueuedStep(int y, int x, int heatLost, CardinalDirection fromDirection) implements Comparable<QueuedStep> {
 
     @Override
     public int compareTo(QueuedStep otherStep) {
