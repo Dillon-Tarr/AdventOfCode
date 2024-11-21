@@ -1,0 +1,28 @@
+****** penalty at 16, 5; 2nd penalty at 16, 3; 3rd penalty at 16, 1;
+******
+******
+ijijij penalty at 13, 4; 2nd penalty at 13, 2; 3rd penalty at 13, 0;
+hghghg
+gfgfgf
+fefefe penalty at 10, 3; 2nd penalty at 10, 1;
+edcdcd
+dcbcbc
+cbabab penalty at 7, 2; 2nd penalty at 7, 0;
+ba9898
+a98787
+987676 penalty at 4, 1;
+876545
+765434
+874323 penalty at 1, 0;
+765430
+
+
+Penalty at 4,1 happens the first time h/l is greater than 3.
+2nd penalty at 10,1 happens when h/l is greater than 3 AND 6 is added.
+3rd penalty at 16,1 happens when h/l is greater than 3 and 6 is added twice.
+
+Penalty at 7,2 happens the first time h/l is greater than 3.
+2nd penalty at 13,2 happens when h/l is greater than 3 and 6 is added.
+
+Penalty at 10,3 happens the first time h/l is greater than 3.
+2nd penalty at 16,3 happens when h/l is greater than 3 and 6 is added.
