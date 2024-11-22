@@ -1,12 +1,10 @@
-package day17.puzzle1;
-
-import day17.CardinalDirection;
+package day17;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
-public class Main {
+public class Puzzle1 {
     static private final File INPUT_FILE = new File("input-files/day17input.txt");
     static private Block[][] blocks;
     static private int gridLength, gridWidth;

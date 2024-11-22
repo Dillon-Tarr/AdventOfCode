@@ -1,6 +1,4 @@
-package day17.puzzle1;
-
-import day17.CardinalDirection;
+package day17;
 
 record Visit (CardinalDirection fromDirection, int consecutiveStepsInOneDirection) {
 
