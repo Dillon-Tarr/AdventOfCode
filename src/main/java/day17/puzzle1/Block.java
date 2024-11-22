@@ -3,19 +3,25 @@ package day17.puzzle1;
 import java.util.ArrayList;
 
 class Block {
-    int cost, heatLossDistanceFromStart;
+    char cost;
+    int heatLossDistanceFromStart;
     ArrayList<Visit> visits = new ArrayList<>();
 
-    Block(int y, int x, int cost) {
+    Block(int y, int x, char cost) {
         this.cost = cost;
         if (y == 0 && x == 0) heatLossDistanceFromStart = 0;
         else heatLossDistanceFromStart = 2000000000;
     }
 
-    boolean stepWasAlreadyTaken(Visit visit) {
+    boolean visitAndReturnWhetherStepWasAlreadyTaken(int newHeatLost, Visit visit) {
         if (visits.stream().anyMatch(visit::equals)) return true;
         visits.add(visit);
+        if (newHeatLost < heatLossDistanceFromStart) heatLossDistanceFromStart = newHeatLost;
         return false;
     }
 
+    @Override
+    public String toString() {
+        return ""+cost;
+    }
 }
