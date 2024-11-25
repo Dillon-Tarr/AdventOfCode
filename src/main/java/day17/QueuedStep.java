@@ -1,5 +1,7 @@
 package day17;
 
+import shared.CardinalDirection;
+
 import java.util.ArrayList;
 
 class QueuedStep implements Comparable<QueuedStep> {

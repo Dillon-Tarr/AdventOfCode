@@ -1,5 +1,7 @@
 package day17;
 
+import shared.CardinalDirection;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.PriorityQueue;

@@ -1,4 +1,4 @@
-package day17;
+package shared;
 
 public enum CardinalDirection {
     NORTH,
