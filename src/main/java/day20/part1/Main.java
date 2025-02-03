@@ -1,4 +1,4 @@
-package day20;
+package day20.part1;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-public class Part1 {
+public class Main {
     static private final File INPUT_FILE = new File("input-files/day20input.txt");
     static private BroadcastModule broadcastModule;
     static private final HashMap<String, Module> modules = new HashMap<>();

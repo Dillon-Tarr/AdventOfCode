@@ -1,0 +1,36 @@
+All the parents of these four modules are FlipFlop modules.
+We must find out how often they send the required high pulse and find the LCM of all of them.
+
+&qq
+&fj
+&jc
+&vm
+// Each of these modules is the single parent of the next 4 modules below.
+// Each needs to send a low pulse.
+// Therefore, the inputs from each of these modules' parents must be high all simultaneously.
+
+->
+
+&ft,
+&jz,
+&sv,
+&ng
+// All of these must send a high pulse.
+// Condition: At least one of the parents of each must send a low pulse.
+// Since the parents of these modules are single parents, each parent needs to send a low pulse.
+
+-> &xm
+// Must send a low pulse.
+//Condition: All parents send high pulse.
+
+-> rx
+//Must receive a low pulse.
+// Condition: Parent sends low pulse.
+
+Check input modules of rx. We must find out when any one of them sends one low pulse.
+For each module, if instanceof ConjunctionModule:
+  check input modules of ConjunctionModule.
+For each ConjunctionModule encountered, add it to those to check if it has no ConjunctionModuleParents.
+Otherwise, go to each of its ConjunctionModule parents and repeat.
+Find how frequently the uppermost ConjunctionModules send a high pulse.
+Get LCM of these periods.

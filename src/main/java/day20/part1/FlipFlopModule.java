@@ -1,4 +1,4 @@
-package day20;
+package day20.part1;
 
 class FlipFlopModule extends Module {
     boolean isOn = false;

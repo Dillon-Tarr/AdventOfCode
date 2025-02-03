@@ -1,9 +1,6 @@
-package day20;
-
-import java.util.HashMap;
+package day20.part2;
 
 class ConjunctionModule extends Module {
-    final HashMap<String, PulseType> inputModulesWithTypeOfLastReceivedPulse = new HashMap<>();
     Pulse[] highPulses;
     Pulse[] lowPulses;
 
@@ -21,16 +18,12 @@ class ConjunctionModule extends Module {
         inputModulesWithTypeOfLastReceivedPulse.put(inputModuleName, pulseType);
         PulseType typeToSend = inputModulesWithTypeOfLastReceivedPulse.containsValue(PulseType.LOW) ? PulseType.HIGH : PulseType.LOW;
         if (typeToSend == PulseType.HIGH) {
-            highPulsesSent += highPulses.length;
+            recordPulses(PulseType.HIGH, highPulses.length);
             return highPulses;
         } else {
-            lowPulsesSent += lowPulses.length;
+            recordPulses(PulseType.LOW, highPulses.length);
             return lowPulses;
         }
-    }
-
-    void addInputModule(String inputModuleName) {
-        inputModulesWithTypeOfLastReceivedPulse.put(inputModuleName, PulseType.LOW);
     }
 
 }

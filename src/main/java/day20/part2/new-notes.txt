@@ -1,0 +1,57 @@
+rx must receive one low pulse.
+ULTIMATE CONDITION: One parent of rx sends a LOW pulse -> Success
+
+We need to capture all top-level conditions.
+Top-level conditions are conditions which must be checked.
+How many generations up can we check?
+
+*0G*
+rx - must receive 1 low
+
+If we just check if rx receives a low pulse on every cycle, we will be checking eternally. This will not work.
+The higher up the generation chain we can check, the more efficient this will be.
+There is but one problem. We can't just check one condition high up the chain.
+We must determine a list of conditions as high up the chain as possible, make sure they are accurate,
+    and then check how often each of them occur. If they occur repeatedly, then we can get the LCM
+    of all the necessary and accurate conditions to find when rx would receive 1 low pulse.
+
+*1G*
+Frx - must send low (will send low after receiving 2 low pulses)
+Crx - must send low (will send low after most-recently receiving a high pulse from all parents)
+
+For Crx, we must simply check that every parent of Crx last sent high.
+    For each parent of Crx, if it is a C module, we must check that it has exactly one parent that last sent low.
+    If a parent of Crx is an F module, we must check that that parent has received an odd number of low pulses.
+
+*2G*
+FFrx - must send low (will send low after receiving 2 low pulses)
+CFrx - must send low (will send low after most-recently receiving a high pulse from all parents)
+FCrx - must send high (will send high after receiving 1 low pulse)
+CCrx - must send high (will send high after receiving any pulse if not all parents have most recently sent high)
+
+*3G*
+FFFrx - must send low (will send low after receiving 2 low pulses)
+CFFrx - must send low (will send low after most-recently receiving a high pulse from all parents)
+FCFrx - must send high (will send high after receiving 1 low pulse)
+CCFrx - must send high (will send high after receiving any pulse if not all parents have most recently sent high)
+FFCrx - must send low (will send low after receiving 2 low pulses)
+CFCrx - must send low (will send low after most-recently receiving a high pulse from all parents)
+FCCrx - ONE must send low (will send low after receiving 2 low pulses)
+CCCrx - ONE must send low (will send low after most-recently receiving a high pulse from all parents)
+
+
+
+1-generation-above-rx:
+    For each parent of rx:
+        If rx-parent (1 generation above rx) is a CONJUNCTION module, the last pulse from each of its parents must be HIGH.
+            Find how often each 2G parent of 1G Conjunction Module sends HIGH. When all do -> SUCCESS
+            If all parents of such a module are FLIP-FLOP modules, then each of those FLIP
+        If rx-parent (1 generation above rx) is a FLIP-FLIP module, it will send a HIGH pulse after it receives one LOW pulse.
+            After it receives a SECOND LOW pulse, it too will send a LOW pulse -> SUCCESS
+
+2-generations-above-rx:
+    For each 1G CONJUNCTION:
+        Each 2G CONJUNCTION parent must send a high pulse. Therefore ONE or more 3G parent must send LOW.
+        Each 2G FLIP-FLOP parent must send a high pulse. Since these flip-flop, they must be checked from
+            ...the perspective of the 1G CONJUNCTION child to ALL send HIGH.
+

@@ -76,6 +76,12 @@ public class LCMFinders {
         }
     }
 
+    public static long findLCMWithPrimes(ArrayList<Long> arrayList) {
+        long[] longArray = new long[arrayList.size()];
+        for (int i = 0; i < arrayList.size(); i++) longArray[i] = arrayList.get(i);
+        return findLCMWithPrimes(longArray);
+    }
+
     // With predefined primes (primes must be in order from least to greatest):
     public static long findLCMWithPredefinedPrimes(long[] longArray, ArrayList<Integer> primes) {
         for (int n = 0; n < longArray.length; n++) {

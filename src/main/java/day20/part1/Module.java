@@ -1,4 +1,4 @@
-package day20;
+package day20.part1;
 
 abstract class Module {
     static long buttonPressCount = 0;

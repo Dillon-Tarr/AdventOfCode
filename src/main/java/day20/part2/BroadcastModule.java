@@ -1,4 +1,4 @@
-package day20;
+package day20.part2;
 
 class BroadcastModule extends Module {
     Pulse[] broadcastPulses;
@@ -6,11 +6,12 @@ class BroadcastModule extends Module {
     BroadcastModule(String name, String[] destinationModuleNames) {
         super(name, destinationModuleNames);
         broadcastPulses = new Pulse[destinationModuleNames.length];
+        typeOfLastPulseSent = PulseType.LOW;
         for (int i = 0; i < destinationModuleNames.length; i++) broadcastPulses[i] = new Pulse(this.name, PulseType.LOW, destinationModuleNames[i]);
     }
 
     Pulse[] sendPulse() {
-        lowPulsesSent += broadcastPulses.length;
+        recordPulses(PulseType.LOW, broadcastPulses.length);
         return broadcastPulses;
     }
 
