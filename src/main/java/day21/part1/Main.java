@@ -13,6 +13,7 @@ public class Main {
     static private int startX;
     static private Tile startPlot;
     static private final int neededStepCount = 64;
+    static private int stepsActuallyTaken = 0;
     static private final ArrayList<Tile> unreachedGardenPlots = new ArrayList<>();
     static private final ArrayList<Tile> reachedGardenPlots = new ArrayList<>();
 
@@ -77,12 +78,11 @@ public class Main {
         HashSet<Tile> nextTiles = new HashSet<>();
         Tile tile, adjacentGardenPlot;
 
-        int stepCount = 0;
         reachedGardenPlots.add(startPlot);
         stepGroup.add(startPlot);
 
-        while (!unreachedGardenPlots.isEmpty() && stepCount < neededStepCount) {
-            stepCount++;
+        while (stepsActuallyTaken < neededStepCount) {
+            stepsActuallyTaken++;
             while(!stepGroup.isEmpty()) {
                 tile = stepGroup.pop();
                 adjacentGardenPlots.addAll(tile.getAdjacentGardenPlots());
@@ -92,10 +92,10 @@ public class Main {
                         nextTiles.add(adjacentGardenPlot);
                         unreachedGardenPlots.remove(adjacentGardenPlot);
                         reachedGardenPlots.add(adjacentGardenPlot);
-                        adjacentGardenPlot.recordFirstReach(stepCount);
                     }
                 }
             }
+            if (nextTiles.isEmpty()) break;
             stepGroup.addAll(nextTiles);
             nextTiles.clear();
         }
@@ -113,6 +113,7 @@ public class Main {
             }
         }
         System.out.println("Number of garden tiles reachable in exactly "+neededStepCount+" steps: "+count);
+        System.out.println("Number of steps actually taken to determine this: "+stepsActuallyTaken);
     }
 
 }
