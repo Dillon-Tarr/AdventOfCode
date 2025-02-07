@@ -1,0 +1,29 @@
+Start point is in the exact center (65, 65) (indexed 0-130) on a 131x131 grid.
+
+It takes exactly 131 steps to reach every reachable tile on the original grid from the center.
+It also takes exactly 131 steps to go from the center of a grid to the center of any horizontally or vertically adjacent grid.
+It takes 65 steps to exactly reach any one edge of the original grid from the center.
+It takes 66 steps to land on the edge of an adjacent grid from the center.
+It takes 66+66 (132) steps to land on the corner of a diagonally adjacent grid from the center.
+
+Required steps for part 2: 26501365
+26501365/131 == 202300r65
+
+Most repeated grids will be completely filled with alternating parity.
+
+Shorthand for stepCount/gridWidth (floor division): gridWidthStepCounts
+    Total number of grids will be:
+        Full grids with odd parity: ((((gridWidthStepCounts-1)/2)*2)+1)^2 : 1, 1, 9, 9, 25, etc.
+        Full grids with even parity: ((gridWidthStepCounts/2)*2)^2 : 0, 4, 4, 16, 16, 36, etc.
+        One grid entered from center-left with 130 steps remaining.
+        One grid entered from center-top with 130 steps remaining.
+        One grid entered from center-right with 130 steps remaining.
+        One grid entered from center-bottom with 130 steps remaining.
+        Grids entered from sw corner with 64 steps remaining: gridWidthStepCounts
+        Grids entered from nw corner with 64 steps remaining: gridWidthStepCounts
+        Grids entered from ne corner with 64 steps remaining: gridWidthStepCounts
+        Grids entered from se corner with 64 steps remaining: gridWidthStepCounts
+        Grids entered from sw corner with 195 steps remaining: gridWidthStepCounts-1
+        Grids entered from nw corner with 195 steps remaining: gridWidthStepCounts-1
+        Grids entered from ne corner with 195 steps remaining: gridWidthStepCounts-1
+        Grids entered from se corner with 195 steps remaining: gridWidthStepCounts-1

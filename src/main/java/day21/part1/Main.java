@@ -59,13 +59,13 @@ public class Main {
         for (int y = 0; y < gridLength-1; y++) {
             for (int x = 0; x < gridWidth; x++) {
                 southernTile = tiles[y+1][x];
-                if (southernTile.isGardenPlot) tiles[y][x].establishSouthTile(southernTile);
+                if (tiles[y][x].isGardenPlot && southernTile.isGardenPlot) tiles[y][x].establishSouthTile(southernTile);
             }
         }
         for (int x = 0; x < gridWidth-1; x++) {
             for (int y = 0; y < gridLength; y++) {
                 easternTile = tiles[y][x+1];
-                if (easternTile.isGardenPlot) tiles[y][x].establishEastTile(easternTile);
+                if (tiles[y][x].isGardenPlot && easternTile.isGardenPlot) tiles[y][x].establishEastTile(easternTile);
             }
         }
         for (int y = 0; y < gridLength; y++) for (int x = 0; x < gridWidth; x++)
