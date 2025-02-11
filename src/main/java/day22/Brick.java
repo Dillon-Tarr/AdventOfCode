@@ -1,4 +1,4 @@
-package day22.part1;
+package day22;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -64,6 +64,9 @@ class Brick implements Comparable<Brick> {
 
     @Override
     public int compareTo(Brick otherBrick) {
-        return Integer.compare(lowZ, otherBrick.lowZ);
+        if (this == otherBrick) return 0;
+        if (lowZ != otherBrick.lowZ) return Integer.compare(lowZ, otherBrick.lowZ);
+        else if (lowY != otherBrick.lowY) return Integer.compare(lowY, otherBrick.lowY);
+        else return Integer.compare(lowX, otherBrick.lowX);
     }
 }

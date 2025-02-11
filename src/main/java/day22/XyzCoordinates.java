@@ -1,4 +1,4 @@
-package day22.part1;
+package day22;
 
 class XyzCoordinates {
     int x, y, z;

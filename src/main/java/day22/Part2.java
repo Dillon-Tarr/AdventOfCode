@@ -1,11 +1,15 @@
-package day22.part1;
+package day22;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.PriorityQueue;
+import java.util.TreeSet;
 
-public class Main {
+public class Part2 {
     static private final File INPUT_FILE = new File("input-files/day22input.txt");
     static private final ArrayList<Brick> allBricks = new ArrayList<>();
     static private Brick[][][] occupyingBrick;
@@ -18,7 +22,7 @@ public class Main {
         fillSpace();
         dropBricks();
         establishSupportStructure();
-        countDisintegrableBricks();
+        getChainReactionsSum();
 
         System.out.println("\nExecution time in seconds: " + ((double) (System.nanoTime() - startTime) / 1000000000));
     }
@@ -46,7 +50,7 @@ public class Main {
     }
 
     private static void fillSpace() {
-        Brick theFloor = new Brick("0,0,0~"+occupyingBrick.length+","+occupyingBrick[0].length+",0");
+        Brick theFloor = new Brick("0,0,0~"+ occupyingBrick.length+","+ occupyingBrick[0].length+",0");
         for (int x = 0; x < occupyingBrick.length; x++) for (int y = 0; y < occupyingBrick[0].length; y++)
             occupyingBrick[x][y][0] = theFloor;
         for (Brick brick : allBricks) for (XyzCoordinates coordinates : brick.occupiedCoordinates)
@@ -98,28 +102,37 @@ public class Main {
         }
     }
 
-    private static void countDisintegrableBricks() {
-        final PriorityQueue<Brick> bricksToCheck = new PriorityQueue<>(allBricks);
-        int disintegrableBrickCount = 0;
+    private static void getChainReactionsSum() {
+        int chainReactionSum = 0; //Sum of OTHER BRICKS that would fall for each brick, if disintegrated.
+        final PriorityQueue<Brick> bricksForWhichToTestChainReactivity = new PriorityQueue<>(allBricks);
+        HashSet<Brick> removedOrFallenBricks = new HashSet<>();
+        TreeSet<Brick> overBricksToCheck = new TreeSet<>();
         Brick brick;
-        boolean overBrickHasOnlyThisBrickAsSupport;
-        while (!bricksToCheck.isEmpty()) {
-            brick = bricksToCheck.poll();
-            if (brick.overBricks.isEmpty()) {
-                disintegrableBrickCount++;
-                continue;
-            }
-            overBrickHasOnlyThisBrickAsSupport = false;
-            for (Brick overBrick : brick.overBricks) {
-                if (overBrick.underBricks.size() < 2) {
-                    overBrickHasOnlyThisBrickAsSupport = true;
-                    break;
+        boolean anUnderBrickRemains;
+
+        while (!bricksForWhichToTestChainReactivity.isEmpty()) {
+            brick = bricksForWhichToTestChainReactivity.poll();
+            if (brick.overBricks.isEmpty()) continue;
+            removedOrFallenBricks.add(brick);
+            overBricksToCheck.addAll(brick.overBricks); //When doing this addAll, only one is being added.
+            while (!overBricksToCheck.isEmpty()) {
+                Brick overBrick = overBricksToCheck.pollFirst();
+                assert overBrick != null;
+                anUnderBrickRemains = false;
+                for (Brick underBrick : overBrick.underBricks) {
+                    if (!removedOrFallenBricks.contains(underBrick)) {
+                        anUnderBrickRemains = true;
+                        break; // Identified that Brick G has itself, and not Brick F, as its only underBrick.
+                    }
+                }
+                if (!anUnderBrickRemains) {
+                    removedOrFallenBricks.add(overBrick);
+                    overBricksToCheck.addAll(overBrick.overBricks);
                 }
             }
-            if (!overBrickHasOnlyThisBrickAsSupport) disintegrableBrickCount++;
+            chainReactionSum += removedOrFallenBricks.size()-1;
+            removedOrFallenBricks.clear();
         }
-
-        System.out.println("\n\nNumber of disintegrable bricks: "+ disintegrableBrickCount);
+        System.out.println("\nChain reaction sum: "+chainReactionSum);
     }
-
 }
