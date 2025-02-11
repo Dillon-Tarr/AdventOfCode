@@ -89,7 +89,7 @@ public class Main {
                 overBrick = occupyingBrick[coordinates.x][coordinates.y][coordinates.z+1];
                 if (overBrick != null && overBrick != brick) overBricks.add(overBrick);
                 underBrick = occupyingBrick[coordinates.x][coordinates.y][coordinates.z-1];
-                if (underBrick != null && overBrick != brick) underBricks.add(underBrick);
+                if (underBrick != null && underBrick != brick) underBricks.add(underBrick);
             }
             brick.overBricks.addAll(overBricks);
             overBricks.clear();
