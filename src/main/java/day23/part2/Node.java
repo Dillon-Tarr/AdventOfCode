@@ -14,8 +14,8 @@ public class Node {
     Road southRoad = null;
     Road westRoad = null;
 
-    Node(Coordinates coordinates) {
-        this.coordinates = coordinates;
+    Node(int y, int x) {
+        this.coordinates = new Coordinates(y, x);
     }
 
     void connectTo(Node otherNode, int distance, CardinalDirection startDirection, CardinalDirection endDirection) {
@@ -46,14 +46,12 @@ public class Node {
         System.out.println("Number of roads: "+roads.size());
     }
 
-    ArrayList<Step> attemptTravel(Step previousStep) {
+    ArrayList<Step> attemptTravel(Step step) {
         ArrayList<Step> newSteps = new ArrayList<>();
         for (Road road : roads) {
-            if (!previousStep.pastCoordinates.contains(road.destination.coordinates))
-                newSteps.add(new Step(road.destination.coordinates.y, road.destination.coordinates.x,
-                        previousStep.stepCount + road.distance, previousStep.pastCoordinates));
+            if (!step.visitedNodes.contains(road.destination))
+                newSteps.add(new Step(road.destination, step.stepCount + road.distance, step.visitedNodes));
         }
-//        if (newSteps.isEmpty()) System.out.println("A node was a dead end.");
         return newSteps;
     }
 

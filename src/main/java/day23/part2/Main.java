@@ -5,15 +5,17 @@ import shared.Coordinates;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class Main {
     static private final File INPUT_FILE = new File("input-files/day23input.txt");
-    static private int gridLength, gridWidth, gridArea, trueStartStretch, trueEndStretch, stepsOfLongestHike = -1;
+    static private int gridLength, gridWidth, gridArea, startStretch, endStretch, stepsOfLongestHike = -1;
     static private char[][] grid;
     static private Node[][] nodes;
     static private final ArrayList<Node> nodesArrayList = new ArrayList<>();
-    static private final ArrayList<Step> steps = new ArrayList<>();
-    static private Coordinates startCoordinates, trueStartCoordinates, endCoordinates, trueEndCoordinates;
+    static private Node effectiveStartNode, effectiveEndNode;
+    static private final Stack<Step> steps = new Stack<>();
+    static private Coordinates startCoordinates, endCoordinates;
 
     public static void main(String[] args) {
         long startTime = System.nanoTime();
@@ -22,7 +24,7 @@ public class Main {
         identifyAndCreateNodes();
         connectNodes();
         establishTrueStartAndEnd();
-        checkIfAnyNodesConnectTwice();
+        groupRoadsAndCheckForDoubleConnections();
         findLongestHike();
 
         System.out.println("\nExecution time in seconds: " + ((double) (System.nanoTime() - startTime) / 1000000000));
@@ -67,10 +69,10 @@ public class Main {
     }
 
     private static void identifyAndCreateNodes() {
-        Node node = new Node(startCoordinates);
+        Node node = new Node(startCoordinates.y, startCoordinates.x);
         nodes[startCoordinates.y][startCoordinates.x] = node;
         nodesArrayList.add(node);
-        node = new Node(endCoordinates);
+        node = new Node(endCoordinates.y, endCoordinates.x);
         nodesArrayList.add(node);
         nodes[endCoordinates.y][endCoordinates.x] = node;
         for (int y = 0; y < gridLength; y++) {
@@ -82,7 +84,7 @@ public class Main {
                 if (x != 0 && grid[y][x-1] != '#') counter++;
                 if (x != gridWidth-1 && grid[y][x+1] != '#') counter++;
                 if (counter >= 3) {
-                    node = new Node(new Coordinates(y, x));
+                    node = new Node(y, x);
                     nodesArrayList.add(node);
                     nodes[y][x] = node;
                 }
@@ -94,12 +96,12 @@ public class Main {
     }
 
     private static void connectNodes() {
-        for (Node node : nodesArrayList) {
-            int y = node.coordinates.y, x = node.coordinates.x;
-            if (node.northRoad == null && y > 0 && grid[y-1][x] != '#') measureRoad(y, x, CardinalDirection.NORTH);
-            if (node.eastRoad == null && x < gridWidth-1 && grid[y][x+1] != '#') measureRoad(y, x, CardinalDirection.EAST);
-            if (node.southRoad == null && y < gridLength-1 && grid[y+1][x] != '#') measureRoad(y, x, CardinalDirection.SOUTH);
-            if (node.westRoad == null && x > 0 && grid[y][x-1] != '#') measureRoad(y, x, CardinalDirection.WEST);
+        for (int y = 0; y < gridLength; y++) for (int x = 0; x < gridWidth; x++) {
+            if (nodes[y][x] == null) continue;
+            if (nodes[y][x].northRoad == null && y > 0 && grid[y - 1][x] != '#') measureRoad(y, x, CardinalDirection.NORTH);
+            if (nodes[y][x].eastRoad == null && x < gridWidth - 1 && grid[y][x + 1] != '#') measureRoad(y, x, CardinalDirection.EAST);
+            if (nodes[y][x].southRoad == null && y < gridLength - 1 && grid[y + 1][x] != '#') measureRoad(y, x, CardinalDirection.SOUTH);
+            if (nodes[y][x].westRoad == null && x > 0 && grid[y][x - 1] != '#') measureRoad(y, x, CardinalDirection.WEST);
         }
     }
 
@@ -134,39 +136,43 @@ public class Main {
 
     private static void establishTrueStartAndEnd() {
         Node startNode = nodes[startCoordinates.y][startCoordinates.x];
-        trueStartCoordinates = startNode.southRoad.destination.coordinates;
-        trueStartStretch = startNode.southRoad.distance;
+        effectiveStartNode = startNode.southRoad.destination;
+        startStretch = startNode.southRoad.distance;
 
         Node endNode = nodes[endCoordinates.y][endCoordinates.x];
-        trueEndCoordinates = endNode.northRoad.destination.coordinates;
-        trueEndStretch = endNode.northRoad.distance;
+        effectiveEndNode = endNode.northRoad.destination;
+        endStretch = endNode.northRoad.distance;
 
         nodesArrayList.remove(startNode);
         nodesArrayList.remove(endNode);
         nodes[startCoordinates.y][startCoordinates.x] = null;
-        nodes[trueStartCoordinates.y][trueStartCoordinates.x].northRoad = null;
+        effectiveStartNode.northRoad = null;
         nodes[endCoordinates.y][endCoordinates.x] = null;
-        nodes[trueEndCoordinates.y][trueEndCoordinates.x].southRoad = null;
+        effectiveEndNode.southRoad = null;
     }
 
-    private static void checkIfAnyNodesConnectTwice() {
+    private static void groupRoadsAndCheckForDoubleConnections() {
         for (Node node : nodesArrayList) node.groupRoadsAndCheckForDoubleConnections();
     }
 
     private static void findLongestHike() {
-        steps.add(new Step(trueStartCoordinates.y, trueStartCoordinates.x, trueStartStretch));
+        steps.push(new Step(effectiveStartNode, startStretch));
         int stepCount;
         while (!steps.isEmpty()) {
-            Step step = steps.remove(0);
+            Step step = steps.pop();
             stepCount = step.stepCount;
 
-            if (step.currentCoordinates == trueEndCoordinates) {
-                stepCount+=trueEndStretch;
-                if (stepCount > stepsOfLongestHike) stepsOfLongestHike = stepCount;
+            if (step.node == effectiveEndNode) {
+                stepCount+= endStretch;
+                if (stepCount > stepsOfLongestHike) {
+                    stepsOfLongestHike = stepCount;
+                    System.out.println("Steps of longest hike updated: "+stepsOfLongestHike);
+                }
                 continue;
             }
 
-            steps.addAll(nodes[step.currentCoordinates.y][step.currentCoordinates.x].attemptTravel(step));
+            for (Step newStep : step.node.attemptTravel(step))
+                steps.push(newStep);
         }
 
         System.out.println("\nStep count of longest hike: "+stepsOfLongestHike);

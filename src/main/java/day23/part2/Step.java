@@ -1,24 +1,23 @@
 package day23.part2;
 
-import shared.Coordinates;
-
 import java.util.ArrayList;
 
 class Step {
     int stepCount;
-    Coordinates currentCoordinates;
-    ArrayList<Coordinates> pastCoordinates = new ArrayList<>();
+    Node node;
+    ArrayList<Node> visitedNodes = new ArrayList<>();
 
-    Step(int y, int x, int stepCount) {
+    Step(Node node, int stepCount) {
+        this.node = node;
         this.stepCount = stepCount;
-        currentCoordinates = new Coordinates(y, x);
+        visitedNodes.add(node);
     }
 
-    Step(int y, int x, int stepCount, ArrayList<Coordinates> pastPastCoordinates) {
+    Step(Node node, int stepCount, ArrayList<Node> pastNodes) {
+        this.node = node;
         this.stepCount = stepCount;
-        currentCoordinates = new Coordinates(y, x);
-        pastCoordinates.addAll(pastPastCoordinates);
-        pastCoordinates.add(new Coordinates(y, x));
+        visitedNodes.addAll(pastNodes);
+        visitedNodes.add(node);
     }
 
 }
