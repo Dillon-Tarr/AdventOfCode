@@ -7,11 +7,11 @@ public class Main {
     static private final int DAY = 1;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
 
-    private static final String NUMERALS_ONLY_VALUES_FILE_PATH = "input-files/day1-numerals-only-values.txt";
+    private static final String NUMERALS_ONLY_VALUES_FILE_PATH = "input-files/2023/day1-numerals-only-values.txt";
     private static final File NUMERALS_ONLY_VALUES_FILE = new File(NUMERALS_ONLY_VALUES_FILE_PATH);
     private static final String PLAIN_ENGLISH_OF_NUMERALS_ONLY_FILE_NAME = "numerals-only values file";
 
-    private static final String REAL_CALIBRATION_VALUES_FILE_PATH = "input-files/day1-real-calibration-values.txt";
+    private static final String REAL_CALIBRATION_VALUES_FILE_PATH = "input-files/2023/day1-real-calibration-values.txt";
     private static final File REAL_CALIBRATION_VALUES_FILE = new File(REAL_CALIBRATION_VALUES_FILE_PATH);
     private static final String PLAIN_ENGLISH_OF_REAL_CALIBRATION_VALUES_FILE_PATH = "real calibration values file";
 
@@ -30,12 +30,12 @@ public class Main {
     }
 
     private static void readAndPrintGarbledCalibrationValues() {
-        String garbledCalibrationValues = getStringFromTextFile(INPUT_FILE);
+        String garbledCalibrationValues = getStringFromTextFile();
         System.out.println("\n\nGarbled calibration values:\n" + garbledCalibrationValues);
     }
 
-    private static String getStringFromTextFile(File file) {
-        try (BufferedReader br = new BufferedReader(new FileReader(file))){
+    private static String getStringFromTextFile() {
+        try (BufferedReader br = new BufferedReader(new FileReader(Main.INPUT_FILE))){
             StringBuilder fileString = new StringBuilder();
             String currentLine = br.readLine();
 
