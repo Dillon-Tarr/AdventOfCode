@@ -1,4 +1,4 @@
-package year2015.day7.part1;
+package year2015.day7.part1.original;
 
 class BitwiseCharOperator {
     static char not(char c) {
