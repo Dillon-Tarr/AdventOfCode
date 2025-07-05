@@ -11,7 +11,8 @@ public class Main {
     static private final int DAY = 7;
     static private final File INPUT_FILE = new File("input-files/2015/"+DAY+".txt");
     static private final ArrayList<String> instructionStrings = new ArrayList<>();
-    static private final HashMap<String, Wire> wires = new HashMap<>();
+    static private final HashMap<String, Wire> inactiveWires = new HashMap<>();
+    static private final HashMap<String, Wire> activeWires = new HashMap<>();
 
     public static void main(String[] args) {
         long startTime = System.nanoTime();
@@ -19,7 +20,9 @@ public class Main {
         getInputData();
         createWires();
         connectWires();
+        activateWires();
 
+        System.out.println("Signal from 'a' wire: "+(int)activeWires.get("a").signal);
 
         System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }
@@ -36,15 +39,38 @@ public class Main {
 
     private static void createWires() {
         String s;
+        String wireName;
         for (int i = 0; i < instructionStrings.size(); i++) {
             s = instructionStrings.get(i);
-            wires.put(s.substring(s.lastIndexOf(" ")+1), new Wire(s));
+            wireName = s.substring(s.lastIndexOf(" ")+1);
+            inactiveWires.put(wireName, new Wire(s, wireName));
         }
     }
-    //TODO: connect wires
+
     private static void connectWires() {
-        for (int i = 0; i < wires.size(); i++) {
-            // Connect wires
+        inactiveWires.forEach((name, wire) -> {
+            Wire[] inputWires = new Wire[wire.inputWireStrings.length];
+            for (int i = 0; i < inputWires.length; i++) {
+                inputWires[i] = inactiveWires.get(wire.inputWireStrings[i]);
+            }
+            wire.connectWires(inputWires);
+        });
+    }
+
+    private static void activateWires() {
+        ArrayList<Wire> transitioningWires = new ArrayList<>();
+        Wire tWire;
+        while (!inactiveWires.isEmpty()) {
+            inactiveWires.forEach((name, wire) -> {
+                if (wire.attemptActivation()) {
+                    transitioningWires.add(wire);
+                }
+            });
+            while (!transitioningWires.isEmpty()) {
+                tWire = transitioningWires.remove(0);
+                inactiveWires.remove(tWire.name);
+                activeWires.put(tWire.name, tWire);
+            }
         }
     }
 
