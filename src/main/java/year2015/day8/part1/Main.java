@@ -1,4 +1,4 @@
-package year2015.day8;
+package year2015.day8.part1;
 
 import java.io.BufferedReader;
 import java.io.File;
