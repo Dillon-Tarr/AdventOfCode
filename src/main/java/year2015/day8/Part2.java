@@ -1,11 +1,11 @@
-package year2015.day8.part2;
+package year2015.day8;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Main {
+public class Part2 {
     static private final int DAY = 8;
     static private final File INPUT_FILE = new File("input-files/2015/"+DAY+".txt");
     static private int numberOfNewCodeCharsNeededForLiterals = 0;

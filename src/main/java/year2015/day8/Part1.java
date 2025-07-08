@@ -1,4 +1,4 @@
-package year2015.day8.part1;
+package year2015.day8;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-public class Main {
+public class Part1 {
     static private final int DAY = 8;
     static private final File INPUT_FILE = new File("input-files/2015/"+DAY+".txt");
     static private final ArrayList<String> inputStrings = new ArrayList<>();
