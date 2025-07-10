@@ -1,4 +1,4 @@
-package year2015.day9.part1;
+package year2015.day9;
 
 import java.util.HashSet;
 

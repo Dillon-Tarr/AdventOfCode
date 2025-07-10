@@ -1,4 +1,4 @@
-package year2015.day9.part1;
+package year2015.day9;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 
-public class Main {
+public class Part1 {
     static private final int DAY = 9;
     static private final File INPUT_FILE = new File("input-files/2015/"+DAY+".txt");
     static private final HashMap<String, Integer> locationsMap = new HashMap<>();
