@@ -1,5 +1,7 @@
 package year2023.day5.part2;
 
+import shared.LongInclusiveNumberRange;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -7,8 +9,8 @@ public class Main {
     static private final int DAY = 5;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
 
-    static private final ArrayList<InclusiveNumberRange> seedRanges = new ArrayList<>();
-    static private final ArrayList<InclusiveNumberRange> locationNumberRanges = new ArrayList<>();
+    static private final ArrayList<LongInclusiveNumberRange> seedRanges = new ArrayList<>();
+    static private final ArrayList<LongInclusiveNumberRange> locationNumberRanges = new ArrayList<>();
 
     static private final ArrayList<long[]> seedToSoilMap = new ArrayList<>();
     static private final ArrayList<long[]> soilToFertilizerMap = new ArrayList<>();
@@ -55,9 +57,9 @@ public class Main {
                 long seedRangeStart = Long.parseLong(seedStrings[i]);
                 long seedRangeLength = Long.parseLong(seedStrings[i+1]);
                 long inclusiveSeedRangeEnd = seedRangeStart + seedRangeLength - 1;
-                seedRanges.add(new InclusiveNumberRange(seedRangeStart, inclusiveSeedRangeEnd));
+                seedRanges.add(new LongInclusiveNumberRange(seedRangeStart, inclusiveSeedRangeEnd));
             }
-            InclusiveNumberRange.mergeOverlappingRanges(seedRanges);
+            LongInclusiveNumberRange.mergeOverlappingRanges(seedRanges);
             System.out.println(seedRanges);
 
             currentLine = br.readLine();
@@ -89,8 +91,8 @@ public class Main {
     }
 
     private static void mapSeedsToLocationNumbers() {
-        ArrayList<InclusiveNumberRange> ranges = new ArrayList<>(seedRanges.size());
-        for (InclusiveNumberRange seedRange : seedRanges) ranges.add(new InclusiveNumberRange(seedRange.getRangeStart(), seedRange.getInclusiveRangeEnd()));
+        ArrayList<LongInclusiveNumberRange> ranges = new ArrayList<>(seedRanges.size());
+        for (LongInclusiveNumberRange seedRange : seedRanges) ranges.add(new LongInclusiveNumberRange(seedRange.rangeStart(), seedRange.inclusiveRangeEnd()));
         System.out.println("Seed ranges:\n"+ranges);
         seedToSoilMapper.transformRanges(ranges); System.out.println("\nSoil ranges:\n"+ranges);
         soilToFertilizerMapper.transformRanges(ranges); System.out.println("\nFertilizer ranges:\n"+ranges);
@@ -106,8 +108,8 @@ public class Main {
 
     private static void getLowestLocationNumber() {
         long lowestLocationNumber = Long.MAX_VALUE;
-            for (InclusiveNumberRange range : locationNumberRanges) {
-                long rangeStart = range.getRangeStart();
+            for (LongInclusiveNumberRange range : locationNumberRanges) {
+                long rangeStart = range.rangeStart();
                 if (rangeStart < lowestLocationNumber)
                     lowestLocationNumber = rangeStart;
             }
