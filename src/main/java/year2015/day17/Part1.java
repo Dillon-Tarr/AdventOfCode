@@ -39,8 +39,10 @@ public class Part1 {
         for (int intAsBinary = 0; intAsBinary < 2 << containerSizes.size()-1; intAsBinary++) {
             sum = 0;
             for (int i = 0; i < containerSizes.size(); i++) {
-                if ((intAsBinary & 1 << i) != 0) sum += containerSizes.get(i);
-                if (sum > 150) break;
+                if ((intAsBinary & 1 << i) != 0) {
+                    sum += containerSizes.get(i);
+                    if (sum > 150) break;
+                }
             }
             if (sum == 150) combinationCount++;
         }
