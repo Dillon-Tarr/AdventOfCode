@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-import static Math.LCMFinders.findLCMWithPrimes;
+import static shared.math.LCMFinders.findLCMWithPrimes;
 
 public class Main {
     static private final int DAY = 20;

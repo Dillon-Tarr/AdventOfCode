@@ -1,6 +1,6 @@
 package year2023.day8.part2;
 
-import static Math.LCMFinders.findLCMWithPrimes;
+import static shared.math.LCMFinders.findLCMWithPrimes;
 
 import java.io.BufferedReader;
 import java.io.File;
