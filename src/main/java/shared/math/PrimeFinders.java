@@ -329,7 +329,6 @@ public class PrimeFinders {
         int lastPrime = primes.get(primes.size()-1);
         if (limit <= lastPrime) throw new IllegalArgumentException("Supplied value to which to find primes, "+ limit
                     +", is less than or equal to the last prime in the existing list: "+lastPrime);
-        int newPrimeCount = primes.size() == 2 ? 2 : 0;
         int i = 2+primes.get(primes.size()-1);
         boolean goodToGo = false;
         while (!goodToGo) {
@@ -347,11 +346,7 @@ public class PrimeFinders {
                     break;
                 }
             }
-            if (!foundThatIHasAPrimeFactor) {
-                primes.add(i);
-                newPrimeCount++;
-                if (newPrimeCount % 1000 == 0) System.out.println(newPrimeCount + " new primes found so far! Current value of i: "+i);
-            }
+            if (!foundThatIHasAPrimeFactor) primes.add(i);
             i += remainderOne ? 4 : 2;
             remainderOne = !remainderOne;
         }
