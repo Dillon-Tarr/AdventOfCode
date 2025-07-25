@@ -33,3 +33,6 @@ bin/
 
 # For the purpose of not sharing Advent of Code prompts or inputs:
 /input-files/
+
+# For not tracking changes to prime number files
+src/main/java/shared/math/*.txt
