@@ -42,15 +42,15 @@ public class BothParts {
 
     private static void findLeastManaSpendToWin(boolean hardMode) {
         // Set initial possible states where boss goes next (Magic Missile, Drain, Shield, Poison, Recharge):
-        queuedBattleStates.add(new BattleState("m", playerStartingHP, playerStartingMP-53,
+        queuedBattleStates.add(new BattleState("m", playerStartingHP-(hardMode ? 1 : 0), playerStartingMP-53,
                 bossStartingHP-4, 53, 0, 0, 0));
-        queuedBattleStates.add(new BattleState("d", playerStartingHP+2, playerStartingMP-73,
+        queuedBattleStates.add(new BattleState("d", playerStartingHP+2-(hardMode ? 1 : 0), playerStartingMP-73,
                 bossStartingHP-2, 73, 0, 0, 0));
-        queuedBattleStates.add(new BattleState("s", playerStartingHP, playerStartingMP-113,
+        queuedBattleStates.add(new BattleState("s", playerStartingHP-(hardMode ? 1 : 0), playerStartingMP-113,
                 bossStartingHP, 113, 6, 0, 0));
-        queuedBattleStates.add(new BattleState("p", playerStartingHP, playerStartingMP-173,
+        queuedBattleStates.add(new BattleState("p", playerStartingHP-(hardMode ? 1 : 0), playerStartingMP-173,
                 bossStartingHP, 173, 0, 6, 0));
-        queuedBattleStates.add(new BattleState("r", playerStartingHP, playerStartingMP-229,
+        queuedBattleStates.add(new BattleState("r", playerStartingHP-(hardMode ? 1 : 0), playerStartingMP-229,
                 bossStartingHP, 229, 0, 0, 5));
 
         BattleState battleState;
