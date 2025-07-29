@@ -1,10 +1,10 @@
-package year2023.day14.part2;
+package year2023.day14;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Main {
+class Part2 {
     static private final int DAY = 14;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
     static private char[][] platform;

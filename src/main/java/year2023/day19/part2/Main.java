@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-public class Main {
+class Main {
     static private final int DAY = 19;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
     static private final HashMap<String, Workflow> workflows = new HashMap<>();
@@ -51,8 +51,8 @@ public class Main {
     private static void countPossibilities() {
         long possibilityCount = 0;
         for (RatingRangeSet rangeSet : acceptedRangeSets) {
-            possibilityCount += (1+rangeSet.xRange.end()-rangeSet.xRange.start())*(1+rangeSet.mRange.end()-rangeSet.mRange.start())
-                    *(1+rangeSet.aRange.end()-rangeSet.aRange.start())*(1+rangeSet.sRange.end()-rangeSet.sRange.start());
+            possibilityCount += (1+rangeSet.xRange.inclusiveRangeEnd()-rangeSet.xRange.rangeStart())*(1+rangeSet.mRange.inclusiveRangeEnd()-rangeSet.mRange.rangeStart())
+                    *(1+rangeSet.aRange.inclusiveRangeEnd()-rangeSet.aRange.rangeStart())*(1+rangeSet.sRange.inclusiveRangeEnd()-rangeSet.sRange.rangeStart());
         }
         System.out.println("Count of possible combinations: "+possibilityCount);
     }

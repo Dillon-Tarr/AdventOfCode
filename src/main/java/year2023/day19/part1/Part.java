@@ -1,6 +1,6 @@
 package year2023.day19.part1;
 
-public class Part {
+class Part {
     int x, m, a, s;
 
     Part (int x, int m, int a, int s) {

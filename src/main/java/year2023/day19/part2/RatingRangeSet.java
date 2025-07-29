@@ -1,20 +1,22 @@
 package year2023.day19.part2;
 
+import shared.LongInclusiveNumberRange;
+
 class RatingRangeSet {
     int completedRuleCountOnCurrentWorkflow = 0;
     boolean metMostRecentWorkflowCondition = false;
-    final LongRange xRange, mRange, aRange, sRange;
+    final LongInclusiveNumberRange xRange, mRange, aRange, sRange;
     String resultOrNextWorkflow;
 
     RatingRangeSet(String resultOrNextWorkflow, long xS, long xE, long mS, long mE, long aS, long aE, long sS, long sE) {
-        this.xRange = new LongRange(xS, xE);
-        this.mRange = new LongRange(mS, mE);
-        this.aRange = new LongRange(aS, aE);
-        this.sRange = new LongRange(sS, sE);
+        this.xRange = new LongInclusiveNumberRange(xS, xE);
+        this.mRange = new LongInclusiveNumberRange(mS, mE);
+        this.aRange = new LongInclusiveNumberRange(aS, aE);
+        this.sRange = new LongInclusiveNumberRange(sS, sE);
         this.resultOrNextWorkflow = resultOrNextWorkflow;
     }
 
-    RatingRangeSet(RatingRangeSet oldRangeSet, char categoryToChange, LongRange newRange, String nextWorkflowSinceConditionWasMet) {
+    RatingRangeSet(RatingRangeSet oldRangeSet, char categoryToChange, LongInclusiveNumberRange newRange, String nextWorkflowSinceConditionWasMet) {
         this.completedRuleCountOnCurrentWorkflow = oldRangeSet.completedRuleCountOnCurrentWorkflow;
         this.metMostRecentWorkflowCondition = true;
         this.resultOrNextWorkflow = nextWorkflowSinceConditionWasMet;
@@ -47,7 +49,7 @@ class RatingRangeSet {
         }
     }
 
-    RatingRangeSet(RatingRangeSet oldRangeSet, char categoryToChange, LongRange newRange) {
+    RatingRangeSet(RatingRangeSet oldRangeSet, char categoryToChange, LongInclusiveNumberRange newRange) {
         this.completedRuleCountOnCurrentWorkflow = oldRangeSet.completedRuleCountOnCurrentWorkflow;
         this.resultOrNextWorkflow = oldRangeSet.resultOrNextWorkflow;
         switch (categoryToChange) {

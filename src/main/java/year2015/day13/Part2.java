@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Part2 {
+class Part2 {
     static private final int DAY = 13;
     static private final File INPUT_FILE = new File("input-files/2015/"+DAY+".txt");
     static private final ArrayList<String> inputStrings = new ArrayList<>();

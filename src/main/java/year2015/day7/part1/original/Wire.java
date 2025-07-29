@@ -2,7 +2,7 @@ package year2015.day7.part1.original;
 
 import java.util.regex.Pattern;
 
-public class Wire {
+class Wire {
     static Pattern containsADigitPattern = Pattern.compile("\\d+");
 
     String name;

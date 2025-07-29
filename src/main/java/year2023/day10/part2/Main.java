@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Main {
+class Main {
     static private final int DAY = 10;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
     static private final ArrayList<char[]> inputLines = new ArrayList<>();
@@ -130,10 +130,10 @@ public class Main {
 
     private static void paintLeftLavenderAndRightRed() {
         for (LoopTile loopTile : loopTiles) {
-            int y = loopTile.getY();
-            int x = loopTile.getX();
-            char character = loopTile.getCharacter();
-            switch (loopTile.getOrientationWhenSteppingOnto()) {
+            int y = loopTile.y();
+            int x = loopTile.x();
+            char character = loopTile.character();
+            switch (loopTile.orientationWhenSteppingOnto()) {
                 case 'n' -> {
                     if (character == '7') {
                         tryToPaint(y, x, 'e', 'r');
@@ -180,7 +180,7 @@ public class Main {
         }
     }
 
-    public static void tryToPaint(int fromY, int fromX, char direction, char color){
+    private static void tryToPaint(int fromY, int fromX, char direction, char color){
         if (direction == 'n' && fromY > 0 && metaData[fromY-1][fromX] != 'p') metaData[fromY-1][fromX] = color;
         else if (direction == 'e' && fromX < gridWidth-1 && metaData[fromY][fromX+1] != 'p') metaData[fromY][fromX+1] = color;
         else if (direction == 's' && fromY < gridHeight-1 && metaData[fromY+1][fromX] != 'p') metaData[fromY+1][fromX] = color;

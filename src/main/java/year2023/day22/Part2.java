@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.TreeSet;
 
-public class Part2 {
+class Part2 {
     static private final int DAY = 22;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
     static private final ArrayList<Brick> allBricks = new ArrayList<>();

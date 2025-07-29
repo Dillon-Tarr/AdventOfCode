@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class Main {
+class Main {
     static private final int DAY = 23;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
     static private int gridLength, gridWidth, gridArea, startStretch, endStretch, stepsOfLongestHike = -1;

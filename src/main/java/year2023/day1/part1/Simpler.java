@@ -3,7 +3,7 @@ package year2023.day1.part1;
 import java.io.*;
 import java.util.ArrayList;
 
-public class Simpler {
+class Simpler {
     static private final int DAY = 1;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
 

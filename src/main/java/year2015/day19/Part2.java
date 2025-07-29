@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-public class Part2 { // This program finds the solution for my input, but is not necessarily a general solution.
+class Part2 { // This program finds the solution for my input, but is not necessarily a general solution.
     static private final int DAY = 19;
     static private final File INPUT_FILE = new File("input-files/2015/"+DAY+".txt");
     static private String medicineMoleculeString;

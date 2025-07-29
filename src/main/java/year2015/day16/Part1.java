@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Part1 {
+class Part1 {
     static private final int DAY = 16;
     static private final File INPUT_FILE = new File("input-files/2015/"+DAY+".txt");
     static private final List<HashMap<String, Integer>> sues = new ArrayList<>(500);

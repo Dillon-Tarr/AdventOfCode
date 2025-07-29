@@ -2,7 +2,7 @@ package year2023.day19.part2;
 
 import java.util.ArrayList;
 
-public class Workflow {
+class Workflow {
     private final Rule[] rules;
     private final String defaultResult;
     private final ArrayList<RatingRangeSet> rangeSetsToProcess = new ArrayList<>();

@@ -5,7 +5,7 @@ import shared.LongInclusiveNumberRange;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public final class Mapper {
+final class Mapper {
     MappingDataContainer[] mappingDataContainers;
 
     Mapper(ArrayList<long[]> map) {
@@ -22,7 +22,7 @@ public final class Mapper {
         }
     }
 
-    public void transformRanges(ArrayList<LongInclusiveNumberRange> ranges) {
+    void transformRanges(ArrayList<LongInclusiveNumberRange> ranges) {
         ArrayList<LongInclusiveNumberRange> transformedRanges = new ArrayList<>();
         for (int i = 0; i < ranges.size(); i++) {
             LongInclusiveNumberRange range = ranges.get(i);

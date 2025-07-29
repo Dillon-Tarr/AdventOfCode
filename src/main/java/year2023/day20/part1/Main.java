@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-public class Main {
+class Main {
     static private final int DAY = 20;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
     static private BroadcastModule broadcastModule;

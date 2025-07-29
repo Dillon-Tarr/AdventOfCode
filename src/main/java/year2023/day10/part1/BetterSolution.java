@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Better {
+class BetterSolution {
     static private final int DAY = 10;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
     static private char[][] grid;

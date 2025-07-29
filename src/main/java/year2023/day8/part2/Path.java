@@ -3,7 +3,7 @@ package year2023.day8.part2;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Path {
+class Path {
     final ArrayList<Node> nodes;
     final char[] instructionSet;
     Node currentNode;
@@ -17,7 +17,7 @@ public class Path {
         findZEndingNodeSteps();
     }
 
-    public ArrayList<KeyFindRecord> getZEndingKeyFindRecords() {return zEndingKeyFindRecords;}
+    ArrayList<KeyFindRecord> getZEndingKeyFindRecords() {return zEndingKeyFindRecords;}
 
     private void setCurrentNode(Node node) {this.currentNode = node;}
 
@@ -33,7 +33,7 @@ public class Path {
             if (currentNode.getKey()[2] == 'Z') {
                 if (!zEndingKeyFindRecords.isEmpty()) {
                     for (KeyFindRecord record : zEndingKeyFindRecords)
-                        if (instructionIndex == record.getInstructionIndex() && Arrays.equals(currentNode.getKey(), record.getKey())) {
+                        if (instructionIndex == record.instructionIndex() && Arrays.equals(currentNode.getKey(), record.key())) {
                             System.out.println("Found loop point for a path.");
                             return;
                         }
@@ -42,7 +42,5 @@ public class Path {
             }
         }}
     }
-
-
 
 }

@@ -2,7 +2,7 @@ package year2023.day5.part1;
 
 import java.util.ArrayList;
 
-public final class Mapper {
+final class Mapper {
     MappingDataContainer[] mappingDataContainers;
 
     Mapper(ArrayList<long[]> map){
@@ -19,7 +19,7 @@ public final class Mapper {
         }
     }
 
-    public long mapValue(long value) {
+    long mapValue(long value) {
         for (MappingDataContainer mappingDataContainer : mappingDataContainers)
             if (value >= mappingDataContainer.rangeStart && value <= mappingDataContainer.rangeEndInclusive)
                 return value + mappingDataContainer.valueToAdd;

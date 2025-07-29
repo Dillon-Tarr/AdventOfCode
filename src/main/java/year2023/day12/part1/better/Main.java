@@ -1,11 +1,11 @@
-package year2023.day12.part1;
+package year2023.day12.part1.better;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Main {
+class Main {
     static private final int DAY = 12;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
 
@@ -13,7 +13,7 @@ public class Main {
         long startTime = System.nanoTime();
 
         getInputDataAndCreateSpringRows();
-        System.out.println("\nSum of all rows' possible arrangement counts:\n\n"+SpringRow.getSumOfAllRowsArrangementCounts());
+        System.out.println("\nSum of all rows' possible arrangement counts:\n\n"+ SpringRow.getSumOfAllRowsArrangementCounts());
 
         System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 
-public class Main {
+class Main {
     public static void main(String[] args) {
         long startTime = System.nanoTime();
 

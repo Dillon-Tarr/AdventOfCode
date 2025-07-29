@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class Part2 {
+class Part2 {
     static private final int DAY = 4;
     static private final File INPUT_FILE = new File("input-files/2015/"+DAY+".txt");
 

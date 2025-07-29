@@ -1,8 +1,8 @@
-package year2023.day4.part1;
+package year2023.day4;
 
 import java.util.Arrays;
 
-public class Card {
+class Card {
     private final int pointsThisCardIsWorth;
 
     Card(int[] winningNumbers, int[] myNumbers) {

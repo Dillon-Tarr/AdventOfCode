@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 
-public class Main {
+class Main {
     static private final int DAY = 8;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
     static private char[] instructionSet;
@@ -75,8 +75,8 @@ public class Main {
                 while (o >= allZEndingKeyFindRecords.get(j).size()) {
                     o -= allZEndingKeyFindRecords.get(j).size();
                 }
-                bigIntegerStepValues[j] = BigInteger.valueOf(allZEndingKeyFindRecords.get(j).get(o).getStepCount());
-                longStepValues[j] = allZEndingKeyFindRecords.get(j).get(o).getStepCount();
+                bigIntegerStepValues[j] = BigInteger.valueOf(allZEndingKeyFindRecords.get(j).get(o).stepCount());
+                longStepValues[j] = allZEndingKeyFindRecords.get(j).get(o).stepCount();
                 System.out.println("value "+j+": "+ bigIntegerStepValues[j]);
                 product = product.multiply(bigIntegerStepValues[j]);
             }

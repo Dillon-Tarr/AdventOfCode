@@ -1,6 +1,6 @@
 package year2023.day23.part2;
 
-public class Road {
+class Road {
     Node destination;
     int distance;
 

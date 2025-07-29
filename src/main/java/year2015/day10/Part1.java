@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Part1 {
+class Part1 {
     static private final int DAY = 10;
     static private final File INPUT_FILE = new File("input-files/2015/"+DAY+".txt");
     static private String inputString;

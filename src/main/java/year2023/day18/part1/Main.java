@@ -5,7 +5,7 @@ import shared.Coordinates;
 import java.io.*;
 import java.util.ArrayList;
 
-public class Main {
+class Main {
     static private final int DAY = 18;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
     static private Instruction[] instructions;

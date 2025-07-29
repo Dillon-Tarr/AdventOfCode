@@ -2,7 +2,7 @@ package year2015.day1;
 
 import java.io.*;
 
-public class Part1 {
+class Part1 {
     static private final int DAY = 1;
     static private final File INPUT_FILE = new File("input-files/2015/"+DAY+".txt");
 

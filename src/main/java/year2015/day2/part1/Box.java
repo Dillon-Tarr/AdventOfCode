@@ -1,6 +1,6 @@
 package year2015.day2.part1;
 
-public class Box {
+class Box {
     private final int[] dimensions = new int[3];
     private final int[] surfaceAreas = new int[3];
     int wrappingPaperNeeded;

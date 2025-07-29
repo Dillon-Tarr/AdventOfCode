@@ -3,7 +3,7 @@ package year2023.day24.part1;
 import java.io.*;
 import java.util.ArrayList;
 
-public class Main {
+class Main {
     static private final int DAY = 24;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
     static private final ArrayList<Hailstone> hailstones = new ArrayList<>();

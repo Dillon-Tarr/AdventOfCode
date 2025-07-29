@@ -2,7 +2,7 @@ package year2023.day21.part2;
 
 import java.io.*;
 
-public class Main {
+class Main {
     static private final int DAY = 21;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
     static int gridWidth = 131; // Only one value needed here, since the grid is square.

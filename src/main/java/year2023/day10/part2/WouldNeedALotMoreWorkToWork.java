@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class WouldNeedALotMoreWorkToWork { // Does not work. I would need to send snakes from
+class WouldNeedALotMoreWorkToWork { // Does not work. I would need to send snakes from
     // each tile to check all possible directions to find the edge of the grid outside the pipe.
     static private final int DAY = 10;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");

@@ -2,7 +2,7 @@ package year2023.day7.part1;
 
 import java.util.ArrayList;
 
-public class Hand {
+class Hand {
     private final char[] cardCharacters = new char[5];
     private final CardType[] cardTypes = new CardType[5];
     private HandType type;
@@ -34,8 +34,8 @@ public class Hand {
         this.bid = Integer.parseInt(strings[1]);
     }
 
-    public long getScore() {return score;}
-    public int getBid() {return bid;}
+    long getScore() {return score;}
+    int getBid() {return bid;}
 
     private void evaluateHandType(){
         ArrayList<CardTypeCounter> cardTypeCounters = new ArrayList<>();

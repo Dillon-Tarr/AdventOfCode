@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
-public class Part1 {
+class Part1 {
     static private final int DAY = 17;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
     static private Block[][] blocks;

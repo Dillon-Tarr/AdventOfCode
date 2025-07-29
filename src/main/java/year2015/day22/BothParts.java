@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-public class BothParts {
+class BothParts {
     static private final int DAY = 22;
     static private final File INPUT_FILE = new File("input-files/2015/"+DAY+".txt");
     static private final int playerStartingHP = 50, playerStartingMP = 500;

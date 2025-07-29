@@ -2,7 +2,7 @@ package year2023.day16.part2;
 
 import java.io.*;
 
-public class Main {
+class Main {
     static private final int DAY = 16;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
     static private char[][] gridOfCharacters;

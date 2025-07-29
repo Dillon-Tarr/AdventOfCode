@@ -1,6 +1,6 @@
 package year2015.day2.part2;
 
-public class Box {
+class Box {
     private final int[] dimensions = new int[3];
     int ribbonNeeded;
 

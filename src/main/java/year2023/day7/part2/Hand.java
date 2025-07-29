@@ -3,7 +3,7 @@ package year2023.day7.part2;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class Hand {
+class Hand {
     private final char[] cardCharacters = new char[5];
     private final CardType[] cardTypes = new CardType[5];
     private final ArrayList<CardTypeCounter> cardTypeCounters = new ArrayList<>();
@@ -37,8 +37,8 @@ public class Hand {
         this.bid = Integer.parseInt(strings[1]);
     }
 
-    public long getScore() {return score;}
-    public int getBid() {return bid;}
+    long getScore() {return score;}
+    int getBid() {return bid;}
 
     private void createCardTypeCounters() {
         cardTypeCounters.add(new CardTypeCounter(cardTypes[0]));

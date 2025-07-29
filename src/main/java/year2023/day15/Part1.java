@@ -1,8 +1,8 @@
-package year2023.day15.part1;
+package year2023.day15;
 
 import java.io.*;
 
-public class Main {
+class Part1 {
     static private final int DAY = 15;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
     static private String[] steps;

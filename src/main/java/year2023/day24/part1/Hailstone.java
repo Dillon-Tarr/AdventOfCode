@@ -1,6 +1,6 @@
 package year2023.day24.part1;
 
-public class Hailstone {
+class Hailstone {
     long xPosition, yPosition, xVelocity, yVelocity;
     boolean hasPositiveXVelocity, hasPositiveYVelocity;
     float slope, yIntercept;

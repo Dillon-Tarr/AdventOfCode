@@ -6,7 +6,7 @@ import shared.Coordinates;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class Node {
+class Node {
     Coordinates coordinates;
     HashSet<Road> roads = new HashSet<>(4);
     Road northRoad = null;

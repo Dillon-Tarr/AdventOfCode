@@ -1,6 +1,6 @@
 package year2023.day19.part1;
 
-public class Workflow {
+class Workflow {
     private final Rule[] rules;
     private final String defaultResult;
 

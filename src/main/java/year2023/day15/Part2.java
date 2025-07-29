@@ -1,4 +1,4 @@
-package year2023.day15.part2;
+package year2023.day15;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main {
+class Part2 {
     static private final int DAY = 15;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
     static private String[] steps;

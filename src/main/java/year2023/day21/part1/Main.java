@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 
-public class Main {
+class Main {
     static private final int DAY = 21;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
     static private Tile[][] tiles;

@@ -1,6 +1,6 @@
 package year2023.day7.part1;
 
-public enum CardType {
+enum CardType {
     TWO,
     THREE,
     FOUR,

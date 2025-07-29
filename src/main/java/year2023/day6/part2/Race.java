@@ -1,6 +1,6 @@
 package year2023.day6.part2;
 
-public class Race {
+class Race {
     private final long numberOfWaysToBeatTheRecord;
 
     Race(long duration, long distanceRecord) {

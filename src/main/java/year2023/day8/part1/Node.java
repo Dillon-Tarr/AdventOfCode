@@ -1,6 +1,6 @@
 package year2023.day8.part1;
 
-public class Node {
+class Node {
     private final String key;
     private final String leftValue;
     private final String rightValue;
@@ -11,7 +11,7 @@ public class Node {
         rightValue = inputString.substring(12, 15);
     }
 
-    public String getKey() {return key;}
-    public String getLeftValue() {return leftValue;}
-    public String getRightValue() {return rightValue;}
+    String getKey() {return key;}
+    String getLeftValue() {return leftValue;}
+    String getRightValue() {return rightValue;}
 }

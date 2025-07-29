@@ -8,13 +8,13 @@ class QueuedStep implements Comparable<QueuedStep> {
     int y, x, heatLost;
     ArrayList<CardinalDirection> pastDirections = new ArrayList<>();
 
-    public QueuedStep(int y, int x, int heatLost) {
+    QueuedStep(int y, int x, int heatLost) {
         this.y = y;
         this.x = x;
         this.heatLost = heatLost;
     }
 
-    public QueuedStep(int y, int x, int heatLost, CardinalDirection newDirection, int stepsInNewDirection, ArrayList<CardinalDirection> pastPastDirections) {
+    QueuedStep(int y, int x, int heatLost, CardinalDirection newDirection, int stepsInNewDirection, ArrayList<CardinalDirection> pastPastDirections) {
         this.y = y;
         this.x = x;
         this.heatLost = heatLost;

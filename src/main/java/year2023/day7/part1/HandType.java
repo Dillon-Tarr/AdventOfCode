@@ -1,6 +1,6 @@
 package year2023.day7.part1;
 
-public enum HandType {
+enum HandType {
     HIGH_CARD,
     ONE_PAIR,
     TWO_PAIR,

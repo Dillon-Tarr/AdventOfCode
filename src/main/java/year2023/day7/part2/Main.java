@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class Main {
+class Main {
     static private final int DAY = 7;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
     static private final ArrayList<Hand> hands = new ArrayList<>();

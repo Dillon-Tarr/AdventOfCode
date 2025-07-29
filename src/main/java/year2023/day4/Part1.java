@@ -1,9 +1,9 @@
-package year2023.day4.part1;
+package year2023.day4;
 
 import java.io.*;
 import java.util.ArrayList;
 
-public class Main {
+class Part1 {
     static private final int DAY = 4;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
     static private final String[] cardStrings = new String[198];

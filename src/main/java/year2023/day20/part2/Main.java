@@ -8,7 +8,7 @@ import java.util.*;
 
 import static shared.math.LCMFinders.findLCMWithPrimes;
 
-public class Main {
+class Main {
     static private final int DAY = 20;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
     static private BroadcastModule broadcastModule;

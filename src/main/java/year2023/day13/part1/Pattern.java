@@ -2,14 +2,14 @@ package year2023.day13.part1;
 
 import java.util.ArrayList;
 
-public class Pattern {
+class Pattern {
     private final String[] rows;
     private final String[] columns;
     private final int value;
     private static int sumOfAllValues = 0;
 
-    public int getValue() {return value;}
-    public static int getSumOfAllValues() {return sumOfAllValues;}
+    int getValue() {return value;}
+    static int getSumOfAllValues() {return sumOfAllValues;}
 
     Pattern(ArrayList<String> inputRows) {
         rows = new String[inputRows.size()];

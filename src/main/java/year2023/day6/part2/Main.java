@@ -2,7 +2,7 @@ package year2023.day6.part2;
 
 import java.io.*;
 
-public class Main {
+class Main {
     static private final int DAY = 6;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
     static private Race race;

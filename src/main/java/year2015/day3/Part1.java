@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;
 
-public class Part1 {
+class Part1 {
     static private final int DAY = 3;
     static private final File INPUT_FILE = new File("input-files/2015/"+DAY+".txt");
 

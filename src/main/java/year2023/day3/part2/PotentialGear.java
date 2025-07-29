@@ -1,6 +1,6 @@
 package year2023.day3.part2;
 
-public class PotentialGear {
+class PotentialGear {
     private final int xIndex;
     private final int yIndex;
     private int adjacentNumberHitCount = 0;

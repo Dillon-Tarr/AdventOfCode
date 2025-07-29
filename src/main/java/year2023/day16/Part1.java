@@ -1,8 +1,8 @@
-package year2023.day16.part1;
+package year2023.day16;
 
 import java.io.*;
 
-public class Main {
+class Part1 {
     static private final int DAY = 16;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
     static private Tile[][] grid;

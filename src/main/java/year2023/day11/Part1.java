@@ -1,4 +1,4 @@
-package year2023.day11.part1;
+package year2023.day11;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Main {
+class Part1 {
     static private final int DAY = 11;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
     static private final ArrayList<ArrayList<Character>> universeMap = new ArrayList<>();
@@ -34,8 +34,8 @@ public class Main {
     private static void findDistanceBetweenThisGalaxyAndEveryLaterGalaxy(int index) {
         if (index >= galaxies.size()-1) return;
         for (int i = index+1; i < galaxies.size(); i++) {
-            int yDiff = galaxies.get(i).getY() - galaxies.get(index).getY();
-            int xDiff = galaxies.get(i).getX() - galaxies.get(index).getX();
+            int yDiff = galaxies.get(i).y() - galaxies.get(index).y();
+            int xDiff = galaxies.get(i).x() - galaxies.get(index).x();
             if (yDiff < 0) yDiff *= -1;
             if (xDiff < 0) xDiff *= -1;
             galaxyPairDistances.add(yDiff+xDiff);

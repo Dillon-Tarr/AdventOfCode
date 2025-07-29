@@ -3,7 +3,7 @@ package year2023.day12.part2;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class SpringRow {
+class SpringRow {
     private static long sumOfAllRowsArrangementCounts = 0;
     private static final HashMap<String, Long> cache = new HashMap<>();
 

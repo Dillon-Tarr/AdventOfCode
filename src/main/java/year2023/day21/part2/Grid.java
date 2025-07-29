@@ -6,7 +6,7 @@ import java.util.LinkedList;
 
 import static year2023.day21.part2.Main.gridWidth;
 
-public class Grid {
+class Grid {
     static private final ArrayList<Grid> allGrids = new ArrayList<>();
 
     private final String gridTypeDescription;

@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Part1 {
+class Part1 {
     static private final int DAY = 6;
     static private final File INPUT_FILE = new File("input-files/2015/"+DAY+".txt");
     static private final boolean[][] lights = new boolean[1000][1000];

@@ -9,7 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class NaiveApproach {
+class NaiveApproach {
     static private final int DAY = 20;
     static private final File INPUT_FILE = new File("input-files/2015/"+DAY+".txt");
     static private int specialPresentCount;

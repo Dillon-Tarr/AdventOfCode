@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Main {
+class Main {
     static private final int DAY = 19;
     static private final File INPUT_FILE = new File("input-files/2023/"+DAY+".txt");
     static private final HashMap<String, Workflow> workflows = new HashMap<>();

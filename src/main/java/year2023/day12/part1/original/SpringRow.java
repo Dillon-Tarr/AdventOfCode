@@ -1,8 +1,8 @@
-package year2023.day12.part1;
+package year2023.day12.part1.original;
 
 import java.util.ArrayList;
 
-public class SpringRow {
+class SpringRow {
     private static int sumOfAllRowsArrangementCounts = 0;
 
     public static int getSumOfAllRowsArrangementCounts() {return sumOfAllRowsArrangementCounts;}

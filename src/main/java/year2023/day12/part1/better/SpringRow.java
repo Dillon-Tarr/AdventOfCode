@@ -1,13 +1,13 @@
-package year2023.day12.part1;
+package year2023.day12.part1.better;
 
 import java.util.Arrays;
 
-public class BetterSpringRow {
+class SpringRow {
     private static int sumOfAllRowsArrangementCounts = 0;
 
     public static int getSumOfAllRowsArrangementCounts() {return sumOfAllRowsArrangementCounts;}
 
-    BetterSpringRow(String dataLine) {
+    SpringRow(String dataLine) {
         int spaceIndex = dataLine.indexOf(" ");
         String[] groupCountStrings = dataLine.substring(spaceIndex+1).split(",");
 
