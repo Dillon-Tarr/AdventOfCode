@@ -2,7 +2,7 @@ package year2023.day18.part1;
 
 import shared.CardinalDirection;
 
-public class Instruction {
+class Instruction {
     final CardinalDirection direction;
     final int steps;
 
