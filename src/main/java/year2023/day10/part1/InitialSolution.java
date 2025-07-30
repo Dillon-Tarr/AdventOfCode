@@ -38,38 +38,35 @@ class InitialSolution {
         int previousY = startY;
         int previousX = startX;
         do {
-            while (true) {
-                stepsTaken++;
-                if (currentY != 0 && previousY != currentY-1 && (currentCharacter == '|' || currentCharacter == 'L' || currentCharacter == 'J') && // Go up
-                        (grid[currentY -1][currentX] == '7' || grid[currentY-1][currentX] == '|' || grid[currentY-1][currentX] == 'F' || grid[currentY-1][currentX] == 'S')) {
-                    previousX = currentX;
-                    previousY = currentY;
-                    currentY--;
-                    currentCharacter = grid[currentY][currentX];
-                    break;
-                }
-                if (currentX != gridWidth-1 && previousX != currentX+1 && (currentCharacter == '-' || currentCharacter == 'L' || currentCharacter == 'F') && // Go right
-                        (grid[currentY][currentX+1] == 'J' || grid[currentY][currentX +1] == '-' || grid[currentY][currentX+1] == '7' || grid[currentY][currentX+1] == 'S')) {
-                    previousX = currentX;
-                    previousY = currentY;
-                    currentX++;
-                    currentCharacter = grid[currentY][currentX];
-                    break;
-                }
-                if (currentY != gridHeight-1 && previousY != currentY+1 && (currentCharacter == '|' || currentCharacter == 'F' || currentCharacter == '7') && // Go down
-                        (grid[currentY+1][currentX] == 'L' || grid[currentY+1][currentX] == '|' || grid[currentY+1][currentX] == 'J' || grid[currentY+1][currentX] == 'S')) {
-                    previousX = currentX;
-                    previousY = currentY;
-                    currentY++;
-                    currentCharacter = grid[currentY][currentX];
-                    break;
-                } // Else go left:
-                    previousX = currentX;
-                    previousY = currentY;
-                    currentX--;
-                    currentCharacter = grid[currentY][currentX];
-                    break;
+            stepsTaken++;
+            if (currentY != 0 && previousY != currentY-1 && (currentCharacter == '|' || currentCharacter == 'L' || currentCharacter == 'J') && // Go up
+                    (grid[currentY -1][currentX] == '7' || grid[currentY-1][currentX] == '|' || grid[currentY-1][currentX] == 'F' || grid[currentY-1][currentX] == 'S')) {
+                previousX = currentX;
+                previousY = currentY;
+                currentY--;
+                currentCharacter = grid[currentY][currentX];
+                continue;
             }
+            if (currentX != gridWidth-1 && previousX != currentX+1 && (currentCharacter == '-' || currentCharacter == 'L' || currentCharacter == 'F') && // Go right
+                    (grid[currentY][currentX+1] == 'J' || grid[currentY][currentX +1] == '-' || grid[currentY][currentX+1] == '7' || grid[currentY][currentX+1] == 'S')) {
+                previousX = currentX;
+                previousY = currentY;
+                currentX++;
+                currentCharacter = grid[currentY][currentX];
+                continue;
+            }
+            if (currentY != gridHeight-1 && previousY != currentY+1 && (currentCharacter == '|' || currentCharacter == 'F' || currentCharacter == '7') && // Go down
+                    (grid[currentY+1][currentX] == 'L' || grid[currentY+1][currentX] == '|' || grid[currentY+1][currentX] == 'J' || grid[currentY+1][currentX] == 'S')) {
+                previousX = currentX;
+                previousY = currentY;
+                currentY++;
+                currentCharacter = grid[currentY][currentX];
+                continue;
+            } // Else go left:
+                previousX = currentX;
+                previousY = currentY;
+                currentX--;
+                currentCharacter = grid[currentY][currentX];
         } while (currentY != startY || currentX != startX);
         loopLength = stepsTaken;
     }

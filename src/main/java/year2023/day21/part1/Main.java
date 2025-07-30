@@ -104,15 +104,9 @@ class Main {
 
     private static void countReachablePlotsForNeededStepCount() {
         int count = 0;
-        if (neededStepCount%2==0) {
-            for (Tile plot : reachedGardenPlots) {
-                if (!plot.isOddNumberOfStepsFromStart) count++;
-            }
-        } else {
-            for (Tile plot : reachedGardenPlots) {
-                if (plot.isOddNumberOfStepsFromStart) count++;
-            }
-        }
+        for (Tile plot : reachedGardenPlots) {
+            if (!plot.isOddNumberOfStepsFromStart) count++;
+        } // ^ If neededStepCount were odd, count++ would instead need to happen when plot.isOddNumberOfStepsFromStart is true.
         System.out.println("Number of garden tiles reachable in exactly "+neededStepCount+" steps: "+count);
         System.out.println("Number of steps actually taken to determine this: "+stepsActuallyTaken);
     }

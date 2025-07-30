@@ -67,7 +67,7 @@ class Main {
     }
 
     private static void getAllNumbers() {
-        String currentNumberBuild = "";
+        StringBuilder currentNumberBuild = new StringBuilder();
         int currentNumberYIndex = -1;
         int currentNumberXIndex = -1;
         CharacterType previousCharacterType;
@@ -85,15 +85,15 @@ class Main {
                 //If previous character is not a numeral. Indicate that this is the beginning of a new number.
                 if (previousCharacterType != CharacterType.NUMERAL) {
                     currentNumberYIndex = y; currentNumberXIndex = x;
-                    currentNumberBuild = "";
+                    currentNumberBuild = new StringBuilder();
                 }
                 //Whether starting new number or continuing one, add current character.
-                currentNumberBuild+=schematicCharacters[y][x];
+                currentNumberBuild.append(schematicCharacters[y][x]);
 
                 //If this character is the last character of a number, add it and its indices to the allNumbers ArrayList.
                 if (nextCharacterType != CharacterType.NUMERAL) {
-                    allNumbers.add(new int[]{Integer.parseInt(currentNumberBuild), currentNumberYIndex, currentNumberXIndex});
-                    currentNumberBuild = "";
+                    allNumbers.add(new int[]{Integer.parseInt(currentNumberBuild.toString()), currentNumberYIndex, currentNumberXIndex});
+                    currentNumberBuild.setLength(0);
                 }
             }
         }}
@@ -129,7 +129,7 @@ class Main {
         if (yIndex < 139) {
             if (xIndex > 0) if (characterTypes[yIndex+1][xIndex-1] == CharacterType.SYMBOL) return true; //Check below-left
             for (int i = 0; i < numberLength; i++) if (characterTypes[yIndex+1][xIndex+i] == CharacterType.SYMBOL) return true; // Check below each digit
-            if (lastDigitXIndex < 139 && characterTypes[yIndex+1][lastDigitXIndex+1] == CharacterType.SYMBOL) return true; // Check below-right
+            return lastDigitXIndex < 139 && characterTypes[yIndex+1][lastDigitXIndex+1] == CharacterType.SYMBOL; // Check below-right
         }
         return false;
     }
