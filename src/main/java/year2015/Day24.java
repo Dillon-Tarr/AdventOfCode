@@ -1,4 +1,4 @@
-package year2015.day24;
+package year2015;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-class BothParts {
+class Day24 {
     static private final int DAY = 24;
     static private final File INPUT_FILE = new File("input-files/2015/"+DAY+".txt");
     static private final ArrayList<Integer> presentWeights = new ArrayList<>(28);
