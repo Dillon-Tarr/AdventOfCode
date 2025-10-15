@@ -56,7 +56,7 @@ class Day11 {
             while (spaceBeforeGenIndex != -1) {
                 precedingSpaceIndex = sub.substring(0, spaceBeforeGenIndex).lastIndexOf(' ');
                 elementString = sub.substring(precedingSpaceIndex+1, spaceBeforeGenIndex);
-                elementNameToNumberMap.putIfAbsent(elementString, (byte) elementNameToNumberMap.size());
+                elementNameToNumberMap.putIfAbsent(elementString, Byte.valueOf((byte) elementNameToNumberMap.size()));
                 firstThreeFloorsItemStrings.add(i+"g"+elementString);
                 totalItemCount++;
                 sub = sub.substring(spaceBeforeGenIndex+1);
@@ -66,7 +66,7 @@ class Day11 {
             while (hyphenIndex != -1) {
                 precedingSpaceIndex = sub.substring(0, hyphenIndex).lastIndexOf(' ');
                 elementString = sub.substring(precedingSpaceIndex+1, hyphenIndex);
-                elementNameToNumberMap.putIfAbsent(elementString, (byte) elementNameToNumberMap.size());
+                elementNameToNumberMap.putIfAbsent(elementString, Byte.valueOf((byte) elementNameToNumberMap.size()));
                 firstThreeFloorsItemStrings.add(i+"m"+elementString);
                 totalItemCount++;
                 sub = sub.substring(hyphenIndex+1);
@@ -108,46 +108,74 @@ class Day11 {
         int numberOfConfigurationsTried = -1;
         configurationQueue.add(initialConfiguration);
         Configuration configuration, newConfiguration;
-        byte currentFloorNumber, otherFloorNumber, otherFloorSize, numberOfMovingItems;
+        byte currentFloorNumber, currentFloorSize, otherFloorNumber, otherFloorSize, numberOfMovingItems;
         ArrayList<Item> currentFloorItems, otherFloorItems, movingItems = new ArrayList<>(), unmovingItems = new ArrayList<>();
         ArrayList<Byte> otherFloorGeneratorElements = new ArrayList<>(), otherFloorMicrochipElements = new ArrayList<>(),
                 movingGeneratorElements = new ArrayList<>(), movingMicrochipElements = new ArrayList<>(),
                 combinedNewGeneratorElements = new ArrayList<>(), combinedNewMicrochipElements = new ArrayList<>(),
                 unmovingGeneratorElements = new ArrayList<>(), unmovingMicrochipElements = new ArrayList<>();
-        String stateString = initialConfiguration.getStateString();
         Item movingItem, unmovingItem, otherFloorItem;
-        boolean solved = false;
+        boolean solved = false, atLeastOneUpMoveContainsTwoItems;
+        String stateString = initialConfiguration.getStateString();
         pastConfigurations.add(stateString);
-        pastConfigurations.addAll(getEquivalentStateStrings(stateString));
+//        pastConfigurations.addAll(getEquivalentStateStrings(stateString));
+        ArrayList<Configuration> newConfigurations = new ArrayList<>();
+
         do {
             configuration = configurationQueue.remove();
             numberOfConfigurationsTried++;
             if (configuration.floors.get(3).size() == totalItemCount) { printStatusUpdate(configuration, numberOfConfigurationsTried); solved = true; break; }
-            else if (numberOfConfigurationsTried % 250 == 0) printStatusUpdate(configuration, numberOfConfigurationsTried);
+            else if (numberOfConfigurationsTried % 100000 == 0) printStatusUpdate(configuration, numberOfConfigurationsTried);
 
             currentFloorNumber = configuration.currentFloorNumber;
             currentFloorItems = configuration.floors.get(currentFloorNumber);
+            currentFloorSize = (byte) currentFloorItems.size();
 
             for (byte f = -1; f < 2; f+=2) {
+                switch (currentFloorNumber) {
+                    case 0 -> {if (f == -1) continue;}
+                    case 3 -> {if (f == 1) continue;}
+                }
                 otherFloorNumber = (byte)(currentFloorNumber+f);
-                if (otherFloorNumber < 0 || otherFloorNumber > 3) continue;
                 otherFloorItems = configuration.floors.get(otherFloorNumber); otherFloorSize = (byte)otherFloorItems.size();
+                if (f == -1) {
+                    switch (currentFloorNumber) {
+                        case 2 -> {
+                            if (configuration.floors.get(0).isEmpty() && otherFloorSize == 0) continue;
+                        }
+                        case 1 -> {
+                            if (otherFloorSize == 0) continue;
+                        }
+                    }
+                }
+
                 otherFloorGeneratorElements.clear(); otherFloorMicrochipElements.clear();
                 for (int o = 0; o < otherFloorSize; o++) {
                     otherFloorItem = otherFloorItems.get(o);
-                    if (otherFloorItems.get(o).isGenerator) otherFloorGeneratorElements.add(otherFloorItem.elementNumber);
-                    else otherFloorMicrochipElements.add(otherFloorItem.elementNumber);
+                    if (otherFloorItems.get(o).isGenerator) otherFloorGeneratorElements.add(Byte.valueOf(otherFloorItem.elementNumber));
+                    else otherFloorMicrochipElements.add(Byte.valueOf(otherFloorItem.elementNumber));
                 }
-                for (int intAsBinary = 1; intAsBinary < 1<<currentFloorItems.size(); intAsBinary++) {
+
+                newConfigurations.clear();
+                atLeastOneUpMoveContainsTwoItems = false;
+
+                for (int intAsBinary = 1; intAsBinary < 1<< currentFloorSize; intAsBinary++) { // Find all possible ways to move items to new floor.
                     numberOfMovingItems = 0;
-                    for (int i = 0; i < currentFloorItems.size(); i++) if ((intAsBinary & 1<<i) != 0) numberOfMovingItems++;
-                    if (numberOfMovingItems > 2) continue;
+                    for (int i = 0; i < currentFloorSize; i++) {
+                        if ((intAsBinary & 1<<i) != 0) numberOfMovingItems++;
+                        if (numberOfMovingItems == 3) break;
+                    }
+                    switch (numberOfMovingItems) {
+                        case 1 -> { if (atLeastOneUpMoveContainsTwoItems) continue; }
+                        case 2 -> {}
+                        default -> { continue; }
+                    }
                     movingItems.clear(); movingGeneratorElements.clear(); movingMicrochipElements.clear();
-                    for (int i = 0; i < currentFloorItems.size(); i++) if ((intAsBinary & 1<<i) != 0) {
+                    for (int i = 0; i < currentFloorSize; i++) if ((intAsBinary & 1<<i) != 0) {
                         movingItem = currentFloorItems.get(i);
                         movingItems.add(movingItem);
-                        if (movingItem.isGenerator) movingGeneratorElements.add(movingItem.elementNumber);
-                        else movingMicrochipElements.add(movingItem.elementNumber);
+                        if (movingItem.isGenerator) movingGeneratorElements.add(Byte.valueOf(movingItem.elementNumber));
+                        else movingMicrochipElements.add(Byte.valueOf(movingItem.elementNumber));
                     }
                     combinedNewGeneratorElements.clear(); combinedNewMicrochipElements.clear();
                     combinedNewGeneratorElements.addAll(movingGeneratorElements); combinedNewGeneratorElements.addAll(otherFloorGeneratorElements);
@@ -159,24 +187,31 @@ class Day11 {
                         unmovingGeneratorElements.clear(); unmovingMicrochipElements.clear();
                         for (int u = 0; u < unmovingItems.size(); u++) {
                             unmovingItem = unmovingItems.get(u);
-                            if (unmovingItem.isGenerator) unmovingGeneratorElements.add(unmovingItem.elementNumber);
-                            else unmovingMicrochipElements.add(unmovingItem.elementNumber);
+                            if (unmovingItem.isGenerator) unmovingGeneratorElements.add(Byte.valueOf(unmovingItem.elementNumber));
+                            else unmovingMicrochipElements.add(Byte.valueOf(unmovingItem.elementNumber));
                         }
                         if (!unmovingGeneratorElements.isEmpty() && !unmovingGeneratorElements.containsAll(unmovingMicrochipElements))
                             continue;
                     }
-
+                    if (f == 1 && !atLeastOneUpMoveContainsTwoItems && numberOfMovingItems == 2) {
+                        atLeastOneUpMoveContainsTwoItems = true;
+                        ArrayList<Configuration> lonelyConfigurations = new ArrayList<>();
+                        for (Configuration c : newConfigurations) if (c.moves.get(c.moves.size()-1).item2 == null) lonelyConfigurations.add(c);
+                        for (Configuration l : lonelyConfigurations) newConfigurations.remove(l);
+                    }
                     newConfiguration = configuration.getConfigurationCopy();
                     newConfiguration.floors.get(currentFloorNumber).removeAll(movingItems);
                     newConfiguration.moves.add(new Move(currentFloorNumber, otherFloorNumber, movingItems.get(0), movingItems.size()==2 ? movingItems.get(1) : null));
                     newConfiguration.currentFloorNumber = otherFloorNumber;
                     newConfiguration.floors.get(otherFloorNumber).addAll(movingItems);
                     newConfiguration.stepCount++;
-
-                    stateString = newConfiguration.getStateString();
+                    newConfigurations.add(newConfiguration);
+                }
+                for (Configuration c : newConfigurations) {
+                    stateString = c.getStateString();
                     if (pastConfigurations.add(stateString)) {
-                        pastConfigurations.addAll(getEquivalentStateStrings(stateString));
-                        configurationQueue.add(newConfiguration);
+//                        pastConfigurations.addAll(getEquivalentStateStrings(stateString));
+                        configurationQueue.add(c);
                     } else reEncounterCount++;
                 }
             }
@@ -199,7 +234,7 @@ class Day11 {
         for (int d = 0; d < pairCount; d++) {
             ArrayList<Integer> indices = new ArrayList<>();
             char dChar = Character.forDigit(d, 10);
-            for (int i = 0; i < stateString.length(); i++) if (stateString.charAt(i) == dChar) indices.add(i);
+            for (int i = 0; i < stateString.length(); i++) if (stateString.charAt(i) == dChar) indices.add(Integer.valueOf(i));
             indicesPerValue.add(indices);
         }
         HashSet<String> stateStrings = new HashSet<>();
