@@ -5,5 +5,16 @@ public enum CardinalDirection {
     SOUTH,
     WEST,
     EAST,
-    NONE
+    NONE;
+
+    public static CardinalDirection rotateLeft(CardinalDirection direction) {
+        return switch (direction) {
+            case EAST -> NORTH;
+            case NORTH -> WEST;
+            case WEST -> SOUTH;
+            case SOUTH -> EAST;
+            case NONE -> NONE;
+        };
+    }
+
 }
