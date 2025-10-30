@@ -69,7 +69,7 @@ class Day23 {
 
     private static void executeInstructions() {
         int instructionNumber = 0;
-        while (instructionNumber >= 0 && instructionNumber < instructions.size()) instructionNumber += instructions.get(instructionNumber).execute();
+        while (instructionNumber >= 0 && instructionNumber < instructionCount) instructionNumber += instructions.get(instructionNumber).execute();
         System.out.println("\nValue in register 'a' after executing instructions: "+ a.value);
     }
 
