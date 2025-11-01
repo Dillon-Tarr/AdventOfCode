@@ -11,12 +11,14 @@ class Day4 {
     static private final int DAY = 4;
     static private final File INPUT_FILE = new File("input-files/2017/"+DAY+".txt");
     static private final ArrayList<String> inputStrings = new ArrayList<>();
+    static private final ArrayList<String[]> substringArrays = new ArrayList<>();
 
     static void main() {
         long startTime = System.nanoTime();
 
         getInputData();
         countValidPassphrases();
+        countNonAnagramPassphrases();
 
         System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }
@@ -33,20 +35,44 @@ class Day4 {
 
     private static void countValidPassphrases() {
         int count = 0;
-        System.out.println();
-        mainLoop: for (String s : inputStrings) {
-            System.out.println("Checking string: "+s);
+        mainLoop: for (int i = 0; i < inputStrings.size(); i++) {
+            String s = inputStrings.get(i);
             String[] subs = s.split(" ");
             HashSet<String> seenSubs = new HashSet<>();
-            for (String sub : subs) {
-                if (!seenSubs.add(sub)) {
-                    System.out.println("NOT valid. Repeating \"word\": " + sub);
-                    continue mainLoop;
-                }
+            for (String sub : subs) if (!seenSubs.add(sub)) {
+                inputStrings.remove(i--);
+                continue mainLoop;
             }
-            System.out.println("Valid! Count: "+(++count));
+            count++;
+            substringArrays.add(subs);
         }
-        System.out.println("\nFinal count of valid passphrases: "+count);
+        System.out.println("\nFinal count of valid passphrases for part 1: "+count);
+    }
+
+    private static void countNonAnagramPassphrases() {
+        int count = 0, charIndex;
+        String sub1, sub2;
+        StringBuilder sub1SB, sub2SB;
+        mainLoop: for (String[] subs : substringArrays) {
+            for (int sub1Index = 0; sub1Index < subs.length-1; sub1Index++) { // :sub1Loop
+                sub1 = subs[sub1Index];
+                sub2Loop: for (int sub2Index = sub1Index+1; sub2Index < subs.length; sub2Index++) {
+                    sub2 = subs[sub2Index];
+                    if (sub1.length() != sub2.length()) continue;
+                    sub1SB = new StringBuilder(sub1);
+                    sub2SB = new StringBuilder(sub2);
+                    while (!sub1SB.isEmpty()) { // :anagramCheckLoop
+                        charIndex = sub2SB.indexOf(""+sub1SB.charAt(0));
+                        if (charIndex == -1) continue sub2Loop;
+                        sub1SB.deleteCharAt(0);
+                        sub2SB.deleteCharAt(charIndex);
+                    } // end of anagramCheckLoop
+                    continue mainLoop; // because end of anagramCheckLoop means anagram found.
+                } // end of sub2Loop
+            } // end of sub1Loop
+            count++; // reached if no anagrams found between any pair of substrings in passphrase
+        } // end of mainLoop
+        System.out.println("\nFinal count of valid passphrases for part 2: "+count);
     }
 
 }
