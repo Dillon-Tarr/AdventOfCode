@@ -9,6 +9,10 @@ public class BitwiseCharOperator {
         return (char) (c1 | c2);
     }
 
+    public static char xor(char c1, char c2) {
+        return (char) (c1 ^ c2);
+    }
+
     public static char lshift(char c, int i) {
         return (char) (c << i);
     }
