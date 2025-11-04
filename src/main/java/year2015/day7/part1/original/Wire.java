@@ -1,5 +1,7 @@
 package year2015.day7.part1.original;
 
+import shared.BitwiseCharOperator;
+
 import java.util.regex.Pattern;
 
 class Wire {

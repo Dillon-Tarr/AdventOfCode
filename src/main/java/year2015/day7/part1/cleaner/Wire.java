@@ -1,5 +1,7 @@
 package year2015.day7.part1.cleaner;
 
+import shared.BitwiseCharOperator;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
