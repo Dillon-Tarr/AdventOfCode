@@ -1,12 +1,11 @@
 package year2017;
 
-import shared.BitwiseCharOperator;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import static shared.BitwiseOperations.xor;
 import static shared.StringMethods.convertHexStringToBinaryString;
 
 class Day14 {
@@ -61,7 +60,7 @@ class Day14 {
         int[] denseHash = new int[16]; char xorResult;
         for (int d = 0; d < 16; d++) {
             xorResult = 0;
-            for (int i = 0; i < 16; i++) xorResult = BitwiseCharOperator.xor(xorResult, (char) list[(d*16)+i]);
+            for (int i = 0; i < 16; i++) xorResult = xor(xorResult, (char) list[(d*16)+i]);
             denseHash[d] = xorResult;
         }
         StringBuilder sb = new StringBuilder();

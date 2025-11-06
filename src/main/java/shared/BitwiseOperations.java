@@ -1,6 +1,7 @@
 package shared;
 
-public class BitwiseCharOperator {
+public class BitwiseOperations {
+
     public static char not(char c) {
         return (char) ~c;
     }

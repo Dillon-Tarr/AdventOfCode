@@ -1,6 +1,6 @@
 package year2015.day7.part1.cleaner;
 
-import shared.BitwiseCharOperator;
+import shared.BitwiseOperations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,9 +80,9 @@ class Wire {
     void activate() {
 
         switch (instructionType) {
-            case 'N' -> signal = BitwiseCharOperator.not(inputWires.get(0).signal);
-            case 'L' -> signal = BitwiseCharOperator.lshift(inputWires.get(0).signal, Integer.parseInt(operand2String));
-            case 'R' -> signal = BitwiseCharOperator.rshift(inputWires.get(0).signal, Integer.parseInt(operand2String));
+            case 'N' -> signal = BitwiseOperations.not(inputWires.get(0).signal);
+            case 'L' -> signal = BitwiseOperations.lshift(inputWires.get(0).signal, Integer.parseInt(operand2String));
+            case 'R' -> signal = BitwiseOperations.rshift(inputWires.get(0).signal, Integer.parseInt(operand2String));
             case 'D' -> signal = inputWires.isEmpty() ? (char) Integer.parseInt(operand1String) : inputWires.get(0).signal;
             case 'A', 'O' -> {
                 char signal1, signal2;
@@ -102,8 +102,8 @@ class Wire {
                     signal2 = (char)Integer.parseInt(operand2String);
                 }
                     signal = instructionType == 'A' ?
-                            BitwiseCharOperator.and(signal1, signal2) :
-                            BitwiseCharOperator.or(signal1, signal2);
+                            BitwiseOperations.and(signal1, signal2) :
+                            BitwiseOperations.or(signal1, signal2);
             }
             default -> throw new IllegalStateException("Unexpected value: " + instructionType);
         }

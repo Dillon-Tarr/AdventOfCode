@@ -1,6 +1,6 @@
 package year2015.day7.part1.original;
 
-import shared.BitwiseCharOperator;
+import shared.BitwiseOperations;
 
 import java.util.regex.Pattern;
 
@@ -86,10 +86,10 @@ class Wire {
 
     void activate() {
         switch (instructionType) {
-            case 'N' -> signal = BitwiseCharOperator.not(inputWires[0].signal);
+            case 'N' -> signal = BitwiseOperations.not(inputWires[0].signal);
             case 'O' -> {
                 if (inputWires.length == 2) {
-                    signal = BitwiseCharOperator.or(inputWires[0].signal, inputWires[1].signal);
+                    signal = BitwiseOperations.or(inputWires[0].signal, inputWires[1].signal);
                 } else {
                     char signal1, signal2;
                     if (inputWires.length == 1) {
@@ -100,16 +100,16 @@ class Wire {
                             signal1 = inputWires[0].signal;
                             signal2 = (char) Integer.parseInt(operand1String);
                         }
-                        signal = BitwiseCharOperator.or(signal1, signal2);
+                        signal = BitwiseOperations.or(signal1, signal2);
                     } else {
-                        signal = BitwiseCharOperator.or((char)Integer.parseInt(operand1String), (char)Integer.parseInt(operand2String));
+                        signal = BitwiseOperations.or((char)Integer.parseInt(operand1String), (char)Integer.parseInt(operand2String));
                     }
                 }
             }
-            case 'L' -> signal = BitwiseCharOperator.lshift(inputWires[0].signal, Integer.parseInt(operand2String));
+            case 'L' -> signal = BitwiseOperations.lshift(inputWires[0].signal, Integer.parseInt(operand2String));
             case 'A' -> {
                 if (inputWires.length == 2) {
-                    signal = BitwiseCharOperator.and(inputWires[0].signal, inputWires[1].signal);
+                    signal = BitwiseOperations.and(inputWires[0].signal, inputWires[1].signal);
                 } else {
                     char signal1, signal2;
                     if (inputWires.length == 1) {
@@ -120,13 +120,13 @@ class Wire {
                             signal1 = inputWires[0].signal;
                             signal2 = (char) Integer.parseInt(operand1String);
                         }
-                        signal = BitwiseCharOperator.and(signal1, signal2);
+                        signal = BitwiseOperations.and(signal1, signal2);
                     } else {
-                        signal = BitwiseCharOperator.and((char)Integer.parseInt(operand1String), (char)Integer.parseInt(operand2String));
+                        signal = BitwiseOperations.and((char)Integer.parseInt(operand1String), (char)Integer.parseInt(operand2String));
                     }
                 }
             }
-            case 'R' -> signal = BitwiseCharOperator.rshift(inputWires[0].signal, Integer.parseInt(operand2String));
+            case 'R' -> signal = BitwiseOperations.rshift(inputWires[0].signal, Integer.parseInt(operand2String));
             case 'D' -> signal = inputWires.length == 0 ? (char) Integer.parseInt(operand1String) : inputWires[0].signal;
             default -> throw new IllegalStateException("Unexpected value: " + instructionType);
         }
