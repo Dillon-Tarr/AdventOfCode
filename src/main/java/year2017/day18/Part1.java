@@ -13,7 +13,7 @@ class Part1 {
     static private final int DAY = 18;
     static private final File INPUT_FILE = new File("input-files/2017/"+DAY+".txt");
     static private final ArrayList<String> inputStrings = new ArrayList<>();
-    static private final ArrayList<Instruction> instructions = new ArrayList<>();
+    static private Instruction[] instructions;
     static private int instructionCount;
     static private Long lastSnd = null, lastRcv = null;
     static private final HashMap<Character, Register> characterRegisterHashMap = new HashMap<>();
@@ -41,6 +41,7 @@ class Part1 {
 
     private static void processInputData() {
         instructionCount = inputStrings.size();
+        instructions = new Instruction[instructionCount];
         String s;
         Type type;
         Object arg1, arg2;
@@ -66,14 +67,14 @@ class Part1 {
                         Long.parseLong(s.substring(lastSpaceIndex+1)) :
                         characterRegisterHashMap.computeIfAbsent(s.charAt(s.length()-1), _ -> new Register());
             }
-            instructions.add(new Instruction(type, arg1, arg2));
+            instructions[i] = new Instruction(type, arg1, arg2);
         }
     }
 
     private static void executeInstructions() {
         long instructionNumber = 0;
         while (instructionNumber >= 0 && instructionNumber < instructionCount) {
-            instructionNumber += instructions.get((int)instructionNumber).execute();
+            instructionNumber += instructions[(int)instructionNumber].execute();
             if (lastRcv != null) break;
         }
         System.out.println("\nFirst receive value: "+lastRcv);
