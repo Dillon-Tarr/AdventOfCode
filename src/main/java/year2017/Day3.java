@@ -54,7 +54,7 @@ class Day3 {
                     case SOUTH -> y+=overshotDistance;
                 }
                 break;
-            } else direction = CardinalDirection.rotateLeft(direction);
+            } else direction = direction.left();
         }
         int distance = Math.abs(x)+Math.abs(y);
         System.out.println("\nManhattan distance from square 1 to square "+goal+" (part 1 solution): "+distance);
@@ -72,7 +72,7 @@ class Day3 {
         while (n <= goal) {
             coordsToVals.put(x+","+y, n);
             if (stepsTakenInDirection >= stepsPerDirection) {
-                direction = CardinalDirection.rotateLeft(direction);
+                direction = direction.left();
                 stepsTakenInDirection = 0;
                 switch (direction) { case EAST, WEST -> stepsPerDirection++; }
             }
