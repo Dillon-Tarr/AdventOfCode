@@ -1,4 +1,4 @@
-package year2017;
+package year2017.day23;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,9 +6,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static year2017.Day23.Type.*;
+import static year2017.day23.Part1.Type.*;
 
-class Day23 {
+class Part1 {
     static private final int DAY = 23;
     static private final File INPUT_FILE = new File("input-files/2017/"+DAY+".txt");
     static private final ArrayList<String> inputStrings = new ArrayList<>();
