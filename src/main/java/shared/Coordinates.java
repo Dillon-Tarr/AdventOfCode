@@ -16,6 +16,10 @@ public class Coordinates {
         this.x = x;
     }
 
+    public int getManhattanDistance(Coordinates o) {
+        return Math.abs(y - o.y) + Math.abs(x - o.x);
+    }
+
     @Override
     public String toString() {
         return "y: "+y+", "+"x: "+x;
@@ -33,4 +37,5 @@ public class Coordinates {
     public int hashCode() {
         return Objects.hash(y, x);
     }
+
 }
