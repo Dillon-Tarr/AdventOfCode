@@ -21,7 +21,8 @@ class Day6 {
         long startTime = System.nanoTime();
 
         getAndProcessInputData();
-        solve();
+        solvePart1();
+        solvePart2();
 
         System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }
@@ -45,7 +46,7 @@ class Day6 {
         }
     }
 
-    private static void solve() {
+    private static void solvePart1() {
         var owningLocations = new Coordinates[highY+1][];
         for (int y = lowY; y <= highY; y++) {
             owningLocations[y] = new Coordinates[highX+1];
@@ -98,6 +99,24 @@ class Day6 {
         for (var location : locations) if (location != closestLocation
                 && locationToDistanceMap.get(location) == closestDistance) return null;
         return closestLocation;
+    }
+
+    private static void solvePart2() {
+        int sum, count = 0;
+        Coordinates coordinates;
+        for (int y = lowY; y <= highY; y++) {
+            xLoop: for (int x = lowX; x <= highX; x++) {
+                coordinates = new Coordinates(y, x);
+                sum = 0;
+                for (var location : locations) {
+                    sum += coordinates.getManhattanDistance(location);
+                    if (sum >= 10000) continue xLoop;
+                }
+                count++;
+            }
+        }
+        System.out.println("\nCount of locations with combined distance of 9999 or less..."+
+                "\n...from all provided coordinates (part 2 answer): "+count);
     }
 
 }
