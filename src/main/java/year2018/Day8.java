@@ -30,6 +30,7 @@ class Day8 {
 
     private static void solve() {
         System.out.println("\nMetadata sum (part 1 answer): "+parseNode(0)[0]);
+        System.out.println("\nRoot node value (part 2 answer): "+part2Parse(0)[0]);
     }
 
     private static int[] parseNode(int index) { // return new int[]{metadataSum, index};
@@ -43,6 +44,26 @@ class Day8 {
         }
         for (int i = 0; i < metadataEntryCount; i++) metadataSum += numbers[index++];
         return new int[]{metadataSum, index};
+    }
+
+    private static int[] part2Parse(int index) { // return new int[]{nodeValue, index};
+        int childNodeCount = numbers[index++];
+        int metadataEntryCount = numbers[index++];
+        int nodeValue = 0;
+        if (childNodeCount == 0) for (int i = 0; i < metadataEntryCount; i++) nodeValue += numbers[index++];
+        else {
+            int[] childNodeValues = new int[childNodeCount+1];
+            for (int i = 1; i <= childNodeCount; i++) {
+                var childNodeData = part2Parse(index);
+                childNodeValues[i] = childNodeData[0];
+                index = childNodeData[1];
+            }
+            for (int i = 0; i < metadataEntryCount; i++) {
+                int n = numbers[index++];
+                if (n <= childNodeCount) nodeValue += childNodeValues[n];
+            }
+        }
+        return new int[]{nodeValue, index};
     }
 
 }
