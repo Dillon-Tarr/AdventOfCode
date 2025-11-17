@@ -4,10 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.PriorityQueue;
+import java.util.*;
 
 class Day7 {
     static private final int DAY = 7;
@@ -22,8 +19,10 @@ class Day7 {
         long startTime = System.nanoTime();
 
         getInputData();
-        processInputData();
-        solve();
+        processInputDataAndPrepare();
+        solvePart1();
+        processInputDataAndPrepare();
+        solvePart2();
 
         System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }
@@ -38,7 +37,8 @@ class Day7 {
         } catch (IOException e) {throw new RuntimeException(e);}
     }
 
-    private static void processInputData() {
+    private static void processInputDataAndPrepare() {
+        incompleteSteps.clear(); readyStepChars.clear(); gatedCharToKeyCharsMap.clear(); keyCharToGatedCharsMap.clear();
         char keyChar, gatedChar;
         ArrayList<Character> gatedChars, keyChars;
         for (String s : inputStrings) {
@@ -64,7 +64,7 @@ class Day7 {
         for (var ch : incompleteSteps) if (!gatedCharToKeyCharsMap.containsKey(ch)) readyStepChars.add(ch);
     }
 
-    private static void solve() {
+    private static void solvePart1() {
         var sb = new StringBuilder();
         Character currentStep;
         ArrayList<Character> gatedChars, keyChars;
@@ -85,6 +85,50 @@ class Day7 {
             }
         }
         System.out.println("\nProper order of steps (part 1 answer): "+sb);
+    }
+
+    private static void solvePart2() {
+        int timePassed = 0, availableWorkers = 5, leastTimeLeftStep, value;
+        ArrayList<Character> gatedChars, keyChars, workingChars = new ArrayList<>();
+        HashMap<Character, Integer> workingCharsToTimeLeftMap = new HashMap<>();
+        while (!incompleteSteps.isEmpty()) {
+            while (availableWorkers > 0) {
+                if (readyStepChars.isEmpty()) break;
+                Character currentStep = readyStepChars.remove(); //currentStep-4 = time required; A == 61 (normally 65)
+                workingCharsToTimeLeftMap.put(currentStep, currentStep-4);
+                workingChars.add(currentStep);
+                availableWorkers--;
+            }
+            leastTimeLeftStep = Integer.MAX_VALUE;
+            for (var ch : workingChars) {
+                value = workingCharsToTimeLeftMap.get(ch);
+                if (value < leastTimeLeftStep) leastTimeLeftStep = value;
+            }
+            timePassed += leastTimeLeftStep;
+            for (int workingCharIndex = 0; workingCharIndex < workingChars.size(); workingCharIndex++) {
+                Character workingChar = workingChars.get(workingCharIndex);
+                value = workingCharsToTimeLeftMap.get(workingChar);
+                if (value == leastTimeLeftStep) {
+                    workingCharsToTimeLeftMap.remove(workingChar);
+                    workingChars.remove(workingChar);
+                    incompleteSteps.remove(workingChar);
+                    workingCharIndex--;
+                    gatedChars = keyCharToGatedCharsMap.remove(workingChar);
+                    if (gatedChars == null) continue;
+                    for (var ch : gatedChars) {
+                        keyChars = gatedCharToKeyCharsMap.get(ch);
+                        keyChars.remove(workingChar);
+                        if (keyChars.isEmpty()) {
+                            gatedCharToKeyCharsMap.remove(ch);
+                            readyStepChars.add(ch);
+                        }
+                    }
+                    availableWorkers++;
+                }
+                else workingCharsToTimeLeftMap.put(workingChar, value-leastTimeLeftStep);
+            }
+        }
+        System.out.println("\nSeconds required to complete all steps with 5 workers (part 2 answer): "+timePassed);
     }
 
 }
