@@ -16,8 +16,7 @@ class Day11 {
 
         getAndProcessInputData();
         calculatePowerLevels();
-        solvePart1();
-        solvePart2();
+        solve();
 
         System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
     }
@@ -47,46 +46,23 @@ class Day11 {
         }
     }
 
-    private static void solvePart1() {
-        int highestSum = Integer.MIN_VALUE;
-        String highestXYCoordinates = "???";
-        for (int y = 1; y <= 298; y++) {
-            for (int x = 1; x <= 298; x++) {
-                int sum = powerLevels[y][x] + powerLevels[y][x+1] + powerLevels[y][x+2] +
-                        powerLevels[y+1][x] + powerLevels[y+1][x+1] + powerLevels[y+1][x+2] +
-                        powerLevels[y+2][x] + powerLevels[y+2][x+1] + powerLevels[y+2][x+2];
-                if (sum > highestSum) {
-                    highestSum = sum;
-                    highestXYCoordinates = x+","+y;
+    private static void solve() {
+        int highestSum = Integer.MIN_VALUE, part1HighestSum = Integer.MIN_VALUE, size, sum, farY, farX; int[] row;
+        String highestXYSizeInfo = "???", highestPart1XYCoordinates = "???";
+        for (int topLeftY = 1; topLeftY <= 300; topLeftY++) {
+            for (int topLeftX = 1; topLeftX <= 300; topLeftX++) {
+                size = 1; sum = powerLevels[topLeftY][topLeftX];
+                farY = topLeftY; farX = topLeftX;
+                while (++farY <= 300 && ++farX <= 300) {
+                    row = powerLevels[farY]; for (int subX = topLeftX; subX <= farX; subX++) sum += row[subX];
+                    for (int subY = topLeftY; subY < farY; subY++) sum += powerLevels[subY][farX];
+                    if (++size == 3 && sum > part1HighestSum) { part1HighestSum = sum; highestPart1XYCoordinates = topLeftX+","+topLeftY; }
+                    if (sum > highestSum) { highestSum = sum; highestXYSizeInfo = topLeftX+","+topLeftY+","+size; }
                 }
             }
         }
-        System.out.println("\nx,y coordinates of highest 3x3-sum area (part 1 answer): "+highestXYCoordinates);
-    }
-
-    private static void solvePart2() {
-        // TODO: Map previously found sums for reuse.
-        int highestSum = Integer.MIN_VALUE;
-        String highestXYSizeInfo = "???";
-        for (int y = 1; y <= 300; y++) {
-            for (int x = 1; x <= 300; x++) {
-                for (int s = 1; s <= 300; s++) {
-                    int farY = y+s-1; if (farY > 300) continue;
-                    int farX = x+s-1; if (farX > 300) continue;
-                    int sum = 0;
-                    for (int innerY = y; innerY <= farY; innerY++) {
-                        for (int innerX = x; innerX <= farX; innerX++) {
-                            sum += powerLevels[innerY][innerX];
-                        }
-                    }
-                    if (sum > highestSum) {
-                        highestSum = sum;
-                        highestXYSizeInfo = x+","+y+","+s;
-                    }
-                }
-            }
-        }
-        System.out.println("\nx,y,size info of highest sum area (part 2 answer): "+ highestXYSizeInfo);
+        System.out.println("\nx,y coordinates of highest 3x3-sum area (part 1 answer): "+highestPart1XYCoordinates);
+        System.out.println("\nx,y,size info of highest square-area sum (part 2 answer): "+highestXYSizeInfo);
     }
 
 }
