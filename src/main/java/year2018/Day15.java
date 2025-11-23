@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 
@@ -13,6 +14,7 @@ class Day15 {
     static private final File INPUT_FILE = new File("input-files/2018/"+DAY+".txt");
     static private boolean[][] openTiles;
     static private final ArrayList<Unit> units = new ArrayList<>(), elves = new ArrayList<>(), goblins = new ArrayList<>();
+    static private final HashMap<Integer, HashMap<Integer, String>> coordinatesToStringMap = new HashMap<>();
 
     static void main() {
         long startTime = System.nanoTime();
@@ -39,8 +41,11 @@ class Day15 {
             char[] rowChars = inputChars.get(y);
             boolean[] rowTilesSteppable = new boolean[mapWidth];
             openTiles[y] = rowTilesSteppable;
+            HashMap<Integer, String> xtoString = new HashMap<>();
+            if (y > 0 && y < mapHeight-1) coordinatesToStringMap.put(y, xtoString);
             for (int x = 0; x < mapWidth; x++) {
                 char inputChar = rowChars[x];
+                if (inputChar != '#' && y > 0 && y < mapHeight-1) xtoString.put(x, y+","+x);
                 switch (inputChar) {
                     case '.' -> rowTilesSteppable[x] = true;
                     case '#' -> {}
@@ -94,25 +99,24 @@ class Day15 {
     static private boolean getWhetherThereIsAPossiblePath(int startY, int startX, int goalY, int goalX) {
         if (startY == goalY && startX == goalX) return true;
         PriorityQueue<QueuedSteplessAttempt> queue = new PriorityQueue<>();
-        queue.add(new QueuedSteplessAttempt(startY, startX, goalY, goalX));
+        queue.add(new QueuedSteplessAttempt(startY, startX, Math.abs(startY-goalY)+Math.abs(startX-goalX)));
         HashSet<String> visited = new HashSet<>();
         while (!queue.isEmpty()) {
             var attempt = queue.poll(); int y = attempt.cY, x = attempt.cX, nY = y-1, wX = x-1, eX = x+1, sY = y+1;
             if ((y == goalY && (wX == goalX || eX == goalX)) || (x == goalX && (nY == goalY || sY == goalY))) return true;
-            if (openTiles[nY][x] && visited.add(nY+","+x)) queue.add(new QueuedSteplessAttempt(nY, x, goalY, goalX));
-            if (openTiles[y][wX] && visited.add(y+","+wX)) queue.add(new QueuedSteplessAttempt(y, wX, goalY, goalX));
-            if (openTiles[y][eX] && visited.add(y+","+eX)) queue.add(new QueuedSteplessAttempt(y, eX, goalY, goalX));
-            if (openTiles[sY][x] && visited.add(sY+","+x)) queue.add(new QueuedSteplessAttempt(sY, x, goalY, goalX));
+            if (openTiles[nY][x] && visited.add(coordinatesToStringMap.get(nY).get(x))) queue.add(new QueuedSteplessAttempt(nY, x, Math.abs(nY-goalY)+Math.abs(x-goalX)));
+            if (openTiles[y][wX] && visited.add(coordinatesToStringMap.get(y).get(wX))) queue.add(new QueuedSteplessAttempt(y, wX, Math.abs(y-goalY)+Math.abs(wX-goalX)));
+            if (openTiles[y][eX] && visited.add(coordinatesToStringMap.get(y).get(eX))) queue.add(new QueuedSteplessAttempt(y, eX, Math.abs(y-goalY)+Math.abs(eX-goalX)));
+            if (openTiles[sY][x] && visited.add(coordinatesToStringMap.get(sY).get(x))) queue.add(new QueuedSteplessAttempt(sY, x, Math.abs(sY-goalY)+Math.abs(x-goalX)));
         }
         return false;
     }
 
     static private class QueuedSteplessAttempt implements Comparable<QueuedSteplessAttempt>{
-        int cY, cX, gY, gX, manhattan;
+        int cY, cX, manhattan;
 
-        QueuedSteplessAttempt(int currentY, int currentX, int goalY, int goalX) {
-            gY = goalY; gX = goalX; cY = currentY; cX = currentX;
-            manhattan = Math.abs(this.cY - this.gY)+Math.abs(this.cX - this.gX);
+        QueuedSteplessAttempt(int currentY, int currentX, int manhattan) {
+            cY = currentY; cX = currentX; this.manhattan = manhattan;
         }
 
         public int compareTo(QueuedSteplessAttempt o) { return Integer.compare(this.manhattan, o.manhattan); }
@@ -123,7 +127,7 @@ class Day15 {
         HashSet<String> visitCache = new HashSet<>();
         if (startY == goalY && startX == goalX) return 0;
         PriorityQueue<QueuedReachAttempt> queue = new PriorityQueue<>();
-        HashSet<String> visited = new HashSet<>(); visited.add(startY+","+startX);
+        HashSet<String> visited = new HashSet<>(); visited.add(coordinatesToStringMap.get(startY).get(startX));
         queue.add(new QueuedReachAttempt(startY, startX, goalY, goalX, 0, visited));
         while (!queue.isEmpty()) {
             var attempt = queue.poll(); int y = attempt.currentY, x = attempt.currentX,
@@ -132,18 +136,33 @@ class Day15 {
             if ((y == goalY && (wX == goalX || eX == goalX)) || (x == goalX && (nY == goalY || sY == goalY)))
                 return newStepCount;
             visited = attempt.visited;
-            if (openTiles[nY][x]) { String s = nY+","+x;
-                if (!visited.contains(s) && visitCache.add(s+newStepCount)) { var newVisited = new HashSet<>(visited); newVisited.add(s);
+            String cacheString = ","+newStepCount, s;
+            if (openTiles[nY][x]) {
+                s = coordinatesToStringMap.get(nY).get(x);
+                if (!visited.contains(s) && visitCache.add(s+cacheString)) {
+                    var newVisited = new HashSet<>(visited); newVisited.add(s);
                     queue.add(new QueuedReachAttempt(nY, x, goalY, goalX, newStepCount, newVisited)); } }
-            if (openTiles[y][wX]) { String s = y+","+wX;
-                if (!visited.contains(s) && visitCache.add(s+newStepCount)) { var newVisited = new HashSet<>(visited); newVisited.add(s);
-                    queue.add(new QueuedReachAttempt(y, wX, goalY, goalX, newStepCount, newVisited)); } }
-            if (openTiles[y][eX]) { String s = y+","+eX;
-                if (!visited.contains(s) && visitCache.add(s+newStepCount)) { var newVisited = new HashSet<>(visited); newVisited.add(s);
-                    queue.add(new QueuedReachAttempt(y, eX, goalY, goalX, newStepCount, newVisited)); } }
-            if (openTiles[sY][x]) { String s = sY+","+x;
-                if (!visited.contains(s) && visitCache.add(s+newStepCount)) { var newVisited = new HashSet<>(visited); newVisited.add(s);
-                    queue.add(new QueuedReachAttempt(sY, x, goalY, goalX, newStepCount, newVisited)); } }
+            if (openTiles[y][wX]) {
+                s = coordinatesToStringMap.get(y).get(wX);
+                if (!visited.contains(s) && visitCache.add(s+cacheString)) {
+                    var newVisited = new HashSet<>(visited); newVisited.add(s);
+                    queue.add(new QueuedReachAttempt(y, wX, goalY, goalX, newStepCount, newVisited));
+                }
+            }
+            if (openTiles[y][eX]) {
+                s = coordinatesToStringMap.get(y).get(eX);
+                if (!visited.contains(s) && visitCache.add(s+cacheString)) {
+                    var newVisited = new HashSet<>(visited); newVisited.add(s);
+                    queue.add(new QueuedReachAttempt(y, eX, goalY, goalX, newStepCount, newVisited));
+                }
+            }
+            if (openTiles[sY][x]) {
+                s = coordinatesToStringMap.get(sY).get(x);
+                if (!visited.contains(s) && visitCache.add(s+cacheString)) {
+                    var newVisited = new HashSet<>(visited); newVisited.add(s);
+                    queue.add(new QueuedReachAttempt(sY, x, goalY, goalX, newStepCount, newVisited));
+                }
+            }
         }
         throw new RuntimeException("You didn't check that this was even reachable first.");
     }
