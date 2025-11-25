@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 
-class Day15 {
+class Day15Part1 {
     static private final int DAY = 15;
     static private final File INPUT_FILE = new File("input-files/2018/"+DAY+".txt");
     static private boolean[][] openTiles;
