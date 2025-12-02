@@ -31,40 +31,23 @@ class Day1 {
     }
 
     private static void solve() {
-        int position = 50, zeroCount = 0;
+        int position = 50, part1Count = 0, part2Count = 0;
         for (String s : inputStrings) {
             int n = Integer.parseInt(s.substring(1));
-            if (s.charAt(0) == 'L') {
-                position -= n;
-                while (position < 0) position += 100;
-            }
-            else {
-                position += n;
-                while (position > 99) position -= 100;
-            }
-            if (position == 0) zeroCount++;
-        }
-        System.out.println("\nPart 1 count: "+zeroCount);
-
-        position = 50; zeroCount = 0;
-        for (String s : inputStrings) {
-            int n = Integer.parseInt(s.substring(1));
-            if (s.charAt(0) == 'L') {
-                while (--n >= 0) {
-                    if (--position == 0) zeroCount++;
-                    else if (position < 0) position += 100;
+            if (s.charAt(0) == 'L') while (n > 0) {
+                n--;
+                if (position == 0) position = 99;
+                else if (--position == 0) part2Count++;
+            } else while (n > 0) {
+                n--;
+                if (++position > 99) {
+                    position = 0;
+                    part2Count++;
                 }
             }
-            else {
-                while (--n >= 0) {
-                    if (++position > 99) {
-                        position = 0;
-                        zeroCount++;
-                    }
-                }
-            }
+            if (position == 0) part1Count++;
         }
-        System.out.println("\nPart 2 count: "+zeroCount);
+        System.out.println("\nPart 1 count: "+part1Count+"\n\nPart 2 count: "+part2Count);
     }
 
 }
