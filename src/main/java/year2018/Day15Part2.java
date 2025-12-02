@@ -1,5 +1,7 @@
 package year2018;
 
+import shared.CardinalDirection;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -8,6 +10,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.PriorityQueue;
+
+import static shared.CardinalDirection.*;
+import static shared.CardinalDirection.EAST;
+import static shared.CardinalDirection.NORTH;
+import static shared.CardinalDirection.SOUTH;
+import static shared.CardinalDirection.WEST;
 
 class Day15Part2 {
     static private final int DAY = 15;
@@ -149,7 +157,7 @@ class Day15Part2 {
         if (startY == goalY && startX == goalX) return 0;
         PriorityQueue<QueuedReachAttempt> queue = new PriorityQueue<>();
         HashSet<String> visited = new HashSet<>(); visited.add(coordinatesToStringMap.get(startY).get(startX));
-        queue.add(new QueuedReachAttempt(startY, startX, goalY, goalX, 0, visited));
+        queue.add(new QueuedReachAttempt(startY, startX, goalY, goalX, 0, visited, NONE));
         while (!queue.isEmpty()) {
             var attempt = queue.poll(); int y = attempt.currentY, x = attempt.currentX,
                     nY = y-1, wX = x-1, eX = x+1, sY = y+1, newStepCount = attempt.stepsTaken+1;
@@ -157,39 +165,34 @@ class Day15Part2 {
             if ((y == goalY && (wX == goalX || eX == goalX)) || (x == goalX && (nY == goalY || sY == goalY)))
                 return newStepCount;
             visited = attempt.visited;
+            var orientation = attempt.orientation;
             String cacheString = ","+newStepCount, s;
-            if (openTiles[nY][x]) {
+            if (orientation != SOUTH && openTiles[nY][x]) {
                 s = coordinatesToStringMap.get(nY).get(x);
                 if (!visited.contains(s) && visitCache.add(s+cacheString)) {
                     var newVisited = new HashSet<>(visited); newVisited.add(s);
-                    queue.add(new QueuedReachAttempt(nY, x, goalY, goalX, newStepCount, newVisited)); } }
-            if (openTiles[y][wX]) {
+                    queue.add(new QueuedReachAttempt(nY, x, goalY, goalX, newStepCount, newVisited, NORTH)); } }
+            if (orientation != EAST && openTiles[y][wX]) {
                 s = coordinatesToStringMap.get(y).get(wX);
                 if (!visited.contains(s) && visitCache.add(s+cacheString)) {
                     var newVisited = new HashSet<>(visited); newVisited.add(s);
-                    queue.add(new QueuedReachAttempt(y, wX, goalY, goalX, newStepCount, newVisited));
-                }
-            }
-            if (openTiles[y][eX]) {
+                    queue.add(new QueuedReachAttempt(y, wX, goalY, goalX, newStepCount, newVisited, WEST)); } }
+            if (orientation != WEST && openTiles[y][eX]) {
                 s = coordinatesToStringMap.get(y).get(eX);
                 if (!visited.contains(s) && visitCache.add(s+cacheString)) {
                     var newVisited = new HashSet<>(visited); newVisited.add(s);
-                    queue.add(new QueuedReachAttempt(y, eX, goalY, goalX, newStepCount, newVisited));
-                }
-            }
-            if (openTiles[sY][x]) {
+                    queue.add(new QueuedReachAttempt(y, eX, goalY, goalX, newStepCount, newVisited, EAST)); } }
+            if (orientation != NORTH && openTiles[sY][x]) {
                 s = coordinatesToStringMap.get(sY).get(x);
                 if (!visited.contains(s) && visitCache.add(s+cacheString)) {
                     var newVisited = new HashSet<>(visited); newVisited.add(s);
-                    queue.add(new QueuedReachAttempt(sY, x, goalY, goalX, newStepCount, newVisited));
-                }
-            }
+                    queue.add(new QueuedReachAttempt(sY, x, goalY, goalX, newStepCount, newVisited, SOUTH)); } }
         }
         throw new RuntimeException("You didn't check that this was even reachable first.");
     }
 
     private record QueuedReachAttempt(int currentY, int currentX, int goalY, int goalX, int stepsTaken,
-                                      HashSet<String> visited) implements Comparable<QueuedReachAttempt>{
+                                      HashSet<String> visited, CardinalDirection orientation) implements Comparable<QueuedReachAttempt>{
 
         public int compareTo(QueuedReachAttempt o) { return Integer.compare(stepsTaken, o.stepsTaken); }
 
