@@ -6,11 +6,19 @@ public class BitwiseOperations {
         return (char) ~c;
     }
 
-    public static int not(int n) {
-        String binaryString = Integer.toUnsignedString(n, 2);
-        var sb = new StringBuilder();
-        for (int i = 0; i < binaryString.length(); i++) sb.append(binaryString.charAt(i) == '0' ? '1' : '0');
-        return Integer.parseUnsignedInt(sb.toString(), 2);
+    /**
+     * @param n the number to not
+     * @param bitCount the number of bits to consider, max 32
+     * @return the result of performing an unsigned bitwise not operation on the int
+     * @throws IllegalArgumentException if bitCount is greater than 32
+     */
+    public static int not(int n, int bitCount) {
+        if (bitCount > 32) throw new IllegalArgumentException("bitCount is too high: "+bitCount);
+        else if (bitCount == 16) return not((char)n);
+        long longN = ~n; var sb = new StringBuilder(Long.toUnsignedString(longN, 2));
+        sb.reverse().setLength(bitCount); sb.reverse();
+        long result = Long.parseUnsignedLong(sb.toString(), 2);
+        return result > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int)result;
     }
 
     public static char or(char c1, char c2) {
@@ -18,12 +26,7 @@ public class BitwiseOperations {
     }
 
     public static int or(int n1, int n2) {
-        var bs1 = new StringBuilder(Integer.toUnsignedString(n1, 2));
-        var bs2 = new StringBuilder(Integer.toUnsignedString(n2, 2));
-        normalizeBinaryStrings(bs1, bs2);
-        var sb = new StringBuilder();
-        for (int i = 0; i < bs1.length(); i++) sb.append((bs1.charAt(i) == '1' || bs2.charAt(i) == '1') ? '1' : '0');
-        return Integer.parseUnsignedInt(sb.toString(), 2);
+        return (int)(Integer.toUnsignedLong(n1) | Integer.toUnsignedLong(n2));
     }
 
     public static char xor(char c1, char c2) {
@@ -31,15 +34,7 @@ public class BitwiseOperations {
     }
 
     public static int xor(int n1, int n2) {
-        var bs1 = new StringBuilder(Integer.toUnsignedString(n1, 2));
-        var bs2 = new StringBuilder(Integer.toUnsignedString(n2, 2));
-        normalizeBinaryStrings(bs1, bs2);
-        var sb = new StringBuilder();
-        for (int i = 0; i < bs1.length(); i++) {
-            char c1 = bs1.charAt(i), c2 = bs2.charAt(i);
-            sb.append(((c1 == '1' && c2 == '0') || (c1 == '0' && c2 == '1')) ? '1' : '0');
-        }
-        return Integer.parseUnsignedInt(sb.toString(), 2);
+        return (int)(Integer.toUnsignedLong(n1) ^ Integer.toUnsignedLong(n2));
     }
 
     public static char lshift(char c, int i) {
@@ -47,10 +42,7 @@ public class BitwiseOperations {
     }
 
     public static int lshift(int n, int distance) {
-        if (distance < 0) throw new IllegalArgumentException("Illegal shift distance: "+distance);
-        var sb = new StringBuilder(Integer.toUnsignedString(n, 2));
-        sb.repeat('0', distance);
-        return Integer.parseUnsignedInt(sb.toString(), 2);
+        return (int)(Integer.toUnsignedLong(n) << distance);
     }
 
     public static char and(char c1, char c2) {
@@ -58,12 +50,7 @@ public class BitwiseOperations {
     }
 
     public static int and(int n1, int n2) {
-        var bs1 = new StringBuilder(Integer.toUnsignedString(n1, 2));
-        var bs2 = new StringBuilder(Integer.toUnsignedString(n2, 2));
-        normalizeBinaryStrings(bs1, bs2);
-        var sb = new StringBuilder();
-        for (int i = 0; i < bs1.length(); i++) sb.append((bs1.charAt(i) == '1' && bs2.charAt(i) == '1') ? '1' : '0');
-        return Integer.parseUnsignedInt(sb.toString(), 2);
+        return (int)(Integer.toUnsignedLong(n1) & Integer.toUnsignedLong(n2));
     }
 
     public static char rshift(char c, int i) {
@@ -71,16 +58,7 @@ public class BitwiseOperations {
     }
 
     public static int rshift(int n, int distance) {
-        if (distance < 0) throw new IllegalArgumentException("Illegal shift distance: "+distance);
-        var sb = new StringBuilder(Integer.toUnsignedString(n, 2));
-        sb.setLength(Math.max(sb.length()-distance, 0));
-        return Integer.parseUnsignedInt(sb.toString(), 2);
-    }
-
-    private static void normalizeBinaryStrings(StringBuilder bs1, StringBuilder bs2) {
-        int bs1Length = bs1.length(), bs2Length = bs2.length();
-        if (bs1Length > bs2Length) bs2.insert(0, "0".repeat(bs1Length-bs2Length));
-        else if (bs2Length > bs1Length) bs1.insert(0, "0".repeat(bs2Length-bs1Length));
+        return (int)(Integer.toUnsignedLong(n) >> distance);
     }
 
 }
