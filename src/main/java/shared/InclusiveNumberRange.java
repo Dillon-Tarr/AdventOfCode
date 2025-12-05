@@ -9,8 +9,8 @@ public record InclusiveNumberRange(int rangeStart, int inclusiveRangeEnd) {
     public static void mergeOverlappingRanges(ArrayList<InclusiveNumberRange> ranges) {
         sortRangesByRangeStartLowToHigh(ranges);
         for (int i = 0; i < ranges.size() - 1; i++) {
-            InclusiveNumberRange lowerRange = ranges.get(i);
-            InclusiveNumberRange higherRange = ranges.get(i + 1);
+            var lowerRange = ranges.get(i);
+            var higherRange = ranges.get(i + 1);
             if (lowerRange.inclusiveRangeEnd >= higherRange.rangeStart - 1) {
                 ranges.set(i + 1, new InclusiveNumberRange(lowerRange.rangeStart,
                         Math.max(higherRange.inclusiveRangeEnd(), lowerRange.inclusiveRangeEnd())));
@@ -23,6 +23,8 @@ public record InclusiveNumberRange(int rangeStart, int inclusiveRangeEnd) {
     public static void sortRangesByRangeStartLowToHigh(ArrayList<InclusiveNumberRange> ranges) {
         ranges.sort(Comparator.comparing(InclusiveNumberRange::rangeStart));
     }
+
+    public boolean inRange(int n) { return n >= rangeStart && n <= inclusiveRangeEnd; }
 
     @Override
     public String toString() {
