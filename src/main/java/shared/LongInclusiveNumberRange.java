@@ -4,7 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public record LongInclusiveNumberRange(long rangeStart, long inclusiveRangeEnd) {
+public class LongInclusiveNumberRange {
+    public long rangeStart, inclusiveRangeEnd, size;
+
+    public LongInclusiveNumberRange(long rangeStart, long inclusiveRangeEnd) {
+        this.rangeStart = rangeStart;
+        this.inclusiveRangeEnd = inclusiveRangeEnd;
+        size = (inclusiveRangeEnd-rangeStart)+1;
+    }
 
     public static void mergeOverlappingRanges(ArrayList<LongInclusiveNumberRange> ranges) {
         sortRangesByRangeStartLowToHigh(ranges);
@@ -13,7 +20,7 @@ public record LongInclusiveNumberRange(long rangeStart, long inclusiveRangeEnd) 
             var higherRange = ranges.get(i + 1);
             if (lowerRange.inclusiveRangeEnd >= higherRange.rangeStart - 1) {
                 ranges.set(i + 1, new LongInclusiveNumberRange(lowerRange.rangeStart,
-                        Math.max(higherRange.inclusiveRangeEnd(), lowerRange.inclusiveRangeEnd())));
+                        Math.max(higherRange.inclusiveRangeEnd, lowerRange.inclusiveRangeEnd)));
                 ranges.set(i, null);
             }
         }
@@ -21,7 +28,7 @@ public record LongInclusiveNumberRange(long rangeStart, long inclusiveRangeEnd) 
     }
 
     public static void sortRangesByRangeStartLowToHigh(ArrayList<LongInclusiveNumberRange> ranges) {
-        ranges.sort(Comparator.comparing(LongInclusiveNumberRange::rangeStart));
+        ranges.sort(Comparator.comparing(range -> range.rangeStart));
     }
 
     public boolean inRange(long n) { return n >= rangeStart && n <= inclusiveRangeEnd; }

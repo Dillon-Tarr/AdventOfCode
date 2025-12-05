@@ -39,7 +39,7 @@ class Day2 {
         long sum1 = 0, sum2 = 0;
         Pattern part2Pattern = Pattern.compile("^(.+)\\1+$");
         for (var range : ranges) {
-            for (long i = range.rangeStart(); i <= range.inclusiveRangeEnd(); i++) {
+            for (long i = range.rangeStart; i <= range.inclusiveRangeEnd; i++) {
                 String s = ""+i; int length = s.length();
                 if (part2Pattern.matcher(s).matches()) {
                     sum2 += i; // Faster/simpler than regex for part 1 sum, and only possible if part 2 pattern is true:

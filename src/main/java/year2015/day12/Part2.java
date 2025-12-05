@@ -70,8 +70,8 @@ class Part2 {
         charIsRed = new boolean[inputString.length()];
         int i;
         for (InclusiveNumberRange range : redObjectRanges) {
-            i = range.rangeStart();
-            while (i <= range.inclusiveRangeEnd()) charIsRed[i++] = true;
+            i = range.rangeStart;
+            while (i <= range.inclusiveRangeEnd) charIsRed[i++] = true;
         }
     }
 

@@ -92,7 +92,7 @@ class Main {
 
     private static void mapSeedsToLocationNumbers() {
         ArrayList<LongInclusiveNumberRange> ranges = new ArrayList<>(seedRanges.size());
-        for (LongInclusiveNumberRange seedRange : seedRanges) ranges.add(new LongInclusiveNumberRange(seedRange.rangeStart(), seedRange.inclusiveRangeEnd()));
+        for (LongInclusiveNumberRange seedRange : seedRanges) ranges.add(new LongInclusiveNumberRange(seedRange.rangeStart, seedRange.inclusiveRangeEnd));
         System.out.println("Seed ranges:\n"+ranges);
         seedToSoilMapper.transformRanges(ranges); System.out.println("\nSoil ranges:\n"+ranges);
         soilToFertilizerMapper.transformRanges(ranges); System.out.println("\nFertilizer ranges:\n"+ranges);
@@ -109,7 +109,7 @@ class Main {
     private static void getLowestLocationNumber() {
         long lowestLocationNumber = Long.MAX_VALUE;
             for (LongInclusiveNumberRange range : locationNumberRanges) {
-                long rangeStart = range.rangeStart();
+                long rangeStart = range.rangeStart;
                 if (rangeStart < lowestLocationNumber)
                     lowestLocationNumber = rangeStart;
             }

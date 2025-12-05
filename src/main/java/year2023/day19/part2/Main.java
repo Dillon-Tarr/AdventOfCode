@@ -51,8 +51,8 @@ class Main {
     private static void countPossibilities() {
         long possibilityCount = 0;
         for (RatingRangeSet rangeSet : acceptedRangeSets) {
-            possibilityCount += (1+rangeSet.xRange.inclusiveRangeEnd()-rangeSet.xRange.rangeStart())*(1+rangeSet.mRange.inclusiveRangeEnd()-rangeSet.mRange.rangeStart())
-                    *(1+rangeSet.aRange.inclusiveRangeEnd()-rangeSet.aRange.rangeStart())*(1+rangeSet.sRange.inclusiveRangeEnd()-rangeSet.sRange.rangeStart());
+            possibilityCount += (1+rangeSet.xRange.inclusiveRangeEnd-rangeSet.xRange.rangeStart)*(1+rangeSet.mRange.inclusiveRangeEnd-rangeSet.mRange.rangeStart)
+                    *(1+rangeSet.aRange.inclusiveRangeEnd-rangeSet.aRange.rangeStart)*(1+rangeSet.sRange.inclusiveRangeEnd-rangeSet.sRange.rangeStart);
         }
         System.out.println("Count of possible combinations: "+possibilityCount);
     }

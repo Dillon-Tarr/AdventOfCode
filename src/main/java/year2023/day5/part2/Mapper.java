@@ -26,8 +26,8 @@ final class Mapper {
         ArrayList<LongInclusiveNumberRange> transformedRanges = new ArrayList<>();
         for (int i = 0; i < ranges.size(); i++) {
             LongInclusiveNumberRange range = ranges.get(i);
-            long rangeStart = range.rangeStart();
-            long inclusiveRangeEnd = range.inclusiveRangeEnd();
+            long rangeStart = range.rangeStart;
+            long inclusiveRangeEnd = range.inclusiveRangeEnd;
             for (MappingDataContainer mappingDataContainer : mappingDataContainers) {
                 long mapRangeStart = mappingDataContainer.getRangeStart();
                 long mapInclusiveRangeEnd = mappingDataContainer.getInclusiveRangeEnd();

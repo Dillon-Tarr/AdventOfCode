@@ -24,93 +24,93 @@ class Rule {
         switch (category) {
             case 'x' -> {
                 if (comparisonOperatorIsLessThan) {
-                    if (rangeSet.xRange.inclusiveRangeEnd() < comparisonValue) {
+                    if (rangeSet.xRange.inclusiveRangeEnd < comparisonValue) {
                         rangeSet.metMostRecentWorkflowCondition = true;
                         resultingRangeSets.add(rangeSet);
                     }
-                    else if (rangeSet.xRange.rangeStart() >= comparisonValue) resultingRangeSets.add(rangeSet);
+                    else if (rangeSet.xRange.rangeStart >= comparisonValue) resultingRangeSets.add(rangeSet);
                     else {
-                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(rangeSet.xRange.rangeStart(), comparisonValue-1), nextWorkflow));
-                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(comparisonValue, rangeSet.xRange.inclusiveRangeEnd())));
+                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(rangeSet.xRange.rangeStart, comparisonValue-1), nextWorkflow));
+                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(comparisonValue, rangeSet.xRange.inclusiveRangeEnd)));
                     }
                 } else {
-                    if (rangeSet.xRange.rangeStart() > comparisonValue) {
+                    if (rangeSet.xRange.rangeStart > comparisonValue) {
                         rangeSet.metMostRecentWorkflowCondition = true;
                         resultingRangeSets.add(rangeSet);
                     }
-                    else if (rangeSet.xRange.inclusiveRangeEnd() <= comparisonValue) resultingRangeSets.add(rangeSet);
+                    else if (rangeSet.xRange.inclusiveRangeEnd <= comparisonValue) resultingRangeSets.add(rangeSet);
                     else {
-                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(comparisonValue+1, rangeSet.xRange.inclusiveRangeEnd()), nextWorkflow));
-                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(rangeSet.xRange.rangeStart(), comparisonValue)));
+                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(comparisonValue+1, rangeSet.xRange.inclusiveRangeEnd), nextWorkflow));
+                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(rangeSet.xRange.rangeStart, comparisonValue)));
                     }
                 }
             }
             case 'm' -> {
                 if (comparisonOperatorIsLessThan) {
-                    if (rangeSet.mRange.inclusiveRangeEnd() < comparisonValue) {
+                    if (rangeSet.mRange.inclusiveRangeEnd < comparisonValue) {
                         rangeSet.metMostRecentWorkflowCondition = true;
                         resultingRangeSets.add(rangeSet);
                     }
-                    else if (rangeSet.mRange.rangeStart() >= comparisonValue) resultingRangeSets.add(rangeSet);
+                    else if (rangeSet.mRange.rangeStart >= comparisonValue) resultingRangeSets.add(rangeSet);
                     else {
-                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(rangeSet.mRange.rangeStart(), comparisonValue-1), nextWorkflow));
-                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(comparisonValue, rangeSet.mRange.inclusiveRangeEnd())));
+                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(rangeSet.mRange.rangeStart, comparisonValue-1), nextWorkflow));
+                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(comparisonValue, rangeSet.mRange.inclusiveRangeEnd)));
                     }
                 } else {
-                    if (rangeSet.mRange.rangeStart() > comparisonValue) {
+                    if (rangeSet.mRange.rangeStart > comparisonValue) {
                         rangeSet.metMostRecentWorkflowCondition = true;
                         resultingRangeSets.add(rangeSet);
                     }
-                    else if (rangeSet.mRange.inclusiveRangeEnd() <= comparisonValue) resultingRangeSets.add(rangeSet);
+                    else if (rangeSet.mRange.inclusiveRangeEnd <= comparisonValue) resultingRangeSets.add(rangeSet);
                     else {
-                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(comparisonValue+1, rangeSet.mRange.inclusiveRangeEnd()), nextWorkflow));
-                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(rangeSet.mRange.rangeStart(), comparisonValue)));
+                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(comparisonValue+1, rangeSet.mRange.inclusiveRangeEnd), nextWorkflow));
+                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(rangeSet.mRange.rangeStart, comparisonValue)));
                     }
                 }
             }
             case 'a' -> {
                 if (comparisonOperatorIsLessThan) {
-                    if (rangeSet.aRange.inclusiveRangeEnd() < comparisonValue) {
+                    if (rangeSet.aRange.inclusiveRangeEnd < comparisonValue) {
                         rangeSet.metMostRecentWorkflowCondition = true;
                         resultingRangeSets.add(rangeSet);
                     }
-                    else if (rangeSet.aRange.rangeStart() >= comparisonValue) resultingRangeSets.add(rangeSet);
+                    else if (rangeSet.aRange.rangeStart >= comparisonValue) resultingRangeSets.add(rangeSet);
                     else {
-                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(rangeSet.aRange.rangeStart(), comparisonValue-1), nextWorkflow));
-                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(comparisonValue, rangeSet.aRange.inclusiveRangeEnd())));
+                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(rangeSet.aRange.rangeStart, comparisonValue-1), nextWorkflow));
+                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(comparisonValue, rangeSet.aRange.inclusiveRangeEnd)));
                     }
                 } else {
-                    if (rangeSet.aRange.rangeStart() > comparisonValue) {
+                    if (rangeSet.aRange.rangeStart > comparisonValue) {
                         rangeSet.metMostRecentWorkflowCondition = true;
                         resultingRangeSets.add(rangeSet);
                     }
-                    else if (rangeSet.aRange.inclusiveRangeEnd() <= comparisonValue) resultingRangeSets.add(rangeSet);
+                    else if (rangeSet.aRange.inclusiveRangeEnd <= comparisonValue) resultingRangeSets.add(rangeSet);
                     else {
-                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(comparisonValue+1, rangeSet.aRange.inclusiveRangeEnd()), nextWorkflow));
-                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(rangeSet.aRange.rangeStart(), comparisonValue)));
+                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(comparisonValue+1, rangeSet.aRange.inclusiveRangeEnd), nextWorkflow));
+                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(rangeSet.aRange.rangeStart, comparisonValue)));
                     }
                 }
             }
             case 's' -> {
                 if (comparisonOperatorIsLessThan) {
-                    if (rangeSet.sRange.inclusiveRangeEnd() < comparisonValue) {
+                    if (rangeSet.sRange.inclusiveRangeEnd < comparisonValue) {
                         rangeSet.metMostRecentWorkflowCondition = true;
                         resultingRangeSets.add(rangeSet);
                     }
-                    else if (rangeSet.sRange.rangeStart() >= comparisonValue) resultingRangeSets.add(rangeSet);
+                    else if (rangeSet.sRange.rangeStart >= comparisonValue) resultingRangeSets.add(rangeSet);
                     else {
-                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(rangeSet.sRange.rangeStart(), comparisonValue-1), nextWorkflow));
-                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(comparisonValue, rangeSet.sRange.inclusiveRangeEnd())));
+                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(rangeSet.sRange.rangeStart, comparisonValue-1), nextWorkflow));
+                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(comparisonValue, rangeSet.sRange.inclusiveRangeEnd)));
                     }
                 } else {
-                    if (rangeSet.sRange.rangeStart() > comparisonValue) {
+                    if (rangeSet.sRange.rangeStart > comparisonValue) {
                         rangeSet.metMostRecentWorkflowCondition = true;
                         resultingRangeSets.add(rangeSet);
                     }
-                    else if (rangeSet.sRange.inclusiveRangeEnd() <= comparisonValue) resultingRangeSets.add(rangeSet);
+                    else if (rangeSet.sRange.inclusiveRangeEnd <= comparisonValue) resultingRangeSets.add(rangeSet);
                     else {
-                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(comparisonValue+1, rangeSet.sRange.inclusiveRangeEnd()), nextWorkflow));
-                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(rangeSet.sRange.rangeStart(), comparisonValue)));
+                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(comparisonValue+1, rangeSet.sRange.inclusiveRangeEnd), nextWorkflow));
+                        resultingRangeSets.add(new RatingRangeSet(rangeSet, category, new LongInclusiveNumberRange(rangeSet.sRange.rangeStart, comparisonValue)));
                     }
                 }
             }
