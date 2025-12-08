@@ -1,20 +1,16 @@
 package year2025;
 
-import shared.Coordinates;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 class Day7 {
     static private final int DAY = 7;
     static private final File INPUT_FILE = new File("input-files/2025/"+DAY+".txt");
     static private char[][] map;
-    static private int height, startX;
+    static private int height, width, startX;
 
     static void main() {
         long startTime = System.nanoTime();
@@ -27,7 +23,6 @@ class Day7 {
 
     private static void getAndProcessInputData() {
         var inputStrings = new ArrayList<String>();
-        int width;
         try (BufferedReader br = new BufferedReader(new FileReader(INPUT_FILE))) {
             String s = br.readLine();
             width = s.length();
@@ -43,26 +38,27 @@ class Day7 {
     }
 
     private static void solve() {
-        int splitCount = 0;
-        var emitPoints = new ArrayDeque<Coordinates>();
-        emitPoints.add(new Coordinates(1, startX));
-        HashSet<String> splitPoints = new HashSet<>();
-        while (!emitPoints.isEmpty()) {
-            var point = emitPoints.removeLast();
-            int y = point.y, x = point.x;
-            while (++y < height) {
-                if (map[y][x] == '^') {
-                    String s = y+","+x;
-                    if (splitPoints.add(s)) {
+        int splitCount = 0, y = 0;
+        long[] beamCountByXIndex = new long[width];
+        beamCountByXIndex[startX] = 1;
+        while ((y+=2) < height) {
+            char[] row = map[y];
+            for (int x = 0; x < width; x++) {
+                if (row[x] == '^') {
+                    long beamCount = beamCountByXIndex[x];
+                    if (beamCount > 0) {
                         splitCount++;
-                        if (map[y][x-1] == '.') emitPoints.add(new Coordinates(y, x-1));
-                        if (map[y][x+1] == '.') emitPoints.add(new Coordinates(y, x+1));
+                        beamCountByXIndex[x] = 0;
+                        beamCountByXIndex[x-1] += beamCount;
+                        beamCountByXIndex[x+1] += beamCount;
                     }
-                    break;
                 }
             }
         }
-        System.out.println("\nSplit count (part 1 answer): "+splitCount);
+        long timelineCount = 0;
+        for (int x = 0; x < width; x++) timelineCount += beamCountByXIndex[x];
+        System.out.println("\nSplit count (part 1 answer): "+splitCount+
+                "\n\nTimeline count (part 2 answer): "+timelineCount);
     }
 
 }
