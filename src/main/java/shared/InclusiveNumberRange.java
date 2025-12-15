@@ -7,10 +7,10 @@ import java.util.Comparator;
 public class InclusiveNumberRange {
     public int rangeStart, inclusiveRangeEnd, size;
 
-    public InclusiveNumberRange(int rangeStart, int inclusiveRangeEnd) {
-        this.rangeStart = rangeStart;
-        this.inclusiveRangeEnd = inclusiveRangeEnd;
-        size = (inclusiveRangeEnd-rangeStart)+1;
+    public InclusiveNumberRange(int n1, int n2) {
+        if (n1 < n2) { rangeStart = n1; inclusiveRangeEnd = n2; }
+        else { rangeStart = n2; inclusiveRangeEnd = n1; }
+        size = 1+inclusiveRangeEnd-rangeStart;
     }
 
     public static void mergeOverlappingRanges(ArrayList<InclusiveNumberRange> ranges) {
