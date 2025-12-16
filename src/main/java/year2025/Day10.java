@@ -4,10 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.PriorityQueue;
+import java.util.*;
 
 class Day10 {
     static private final int DAY = 10;
@@ -68,66 +65,66 @@ class Day10 {
 
     private static void solvePart1() {
         int sum = 0;
-        for (var machine : machines) {
-            boolean[] goalLights = machine.goalLights;
-            ArrayList<int[]> buttons = machine.buttons;
-            int presses = 0;
-            var queue = new PriorityQueue<QueuedPart1Press>();
-            for (int i = 0; i < buttons.size(); i++)
-                queue.add(new QueuedPart1Press(new boolean[goalLights.length], presses, i));
-            while (!queue.isEmpty()) {
-                var queuedPress = queue.poll();
-                var newState = queuedPress.state;
-                presses = 1+queuedPress.presses;
-                int nextButtonIndex = queuedPress.nextButtonIndex;
-                var button =  buttons.get(nextButtonIndex);
-                for (var index : button) newState[index] = !newState[index];
-                if (Arrays.equals(newState, goalLights)) break;
-                for (int i = 0; i < buttons.size(); i++)
-                    queue.add(new QueuedPart1Press(Arrays.copyOf(newState, newState.length), presses, i));
-            }
-            sum += presses;
-        }
+        for (var machine : machines) sum += getFewestPressesToReachGoalState(machine, machine.goalLights);
         System.out.println("\nPart 1 presses sum: "+sum);
     }
 
-    private static void solvePart2() {
-        int sum = 0;
-        for (var machine : machines) {
-            int biggestButtonSize = 0;
-            for (var button : machine.buttons) if (button.length > biggestButtonSize) biggestButtonSize = button.length;
-            int[] goalCounts = machine.goalCounts;
-            ArrayList<int[]> buttons = machine.buttons;
-            buttons.sort(Comparator.comparingInt(b -> b.length));
+    private static int getFewestPressesToReachGoalState(Machine machine, boolean[] goalLights) {
+        int width = goalLights.length;
+        var buttons = machine.buttons; int buttonCount = buttons.size();
+        int fewestPresses = Integer.MAX_VALUE;
+        for (int binaryCombo = 1; binaryCombo < 1<<buttonCount; binaryCombo++) {
+            boolean[] state = new boolean[width];
             int presses = 0;
-            var queue = new PriorityQueue<QueuedPart2Press>();
-            for (int i = buttons.size()-1; i >= 0; i--)
-                queue.add(new QueuedPart2Press(new int[goalCounts.length], presses, i, 0));
-            mainLoop: while (!queue.isEmpty()) {
-                var queuedPress = queue.poll();
-                var newState = queuedPress.state;
-                presses = 1+queuedPress.presses;
-                int nextButtonIndex = queuedPress.nextButtonIndex;
-                var button =  buttons.get(nextButtonIndex);
-                int stateSum = queuedPress.stateSum+button.length;
-                for (var index : button) if (++newState[index] > goalCounts[index]) continue mainLoop;
-                if (Arrays.equals(newState, goalCounts)) break;
-                for (int i = 0; i < newState.length; i++) stateSum += newState[i];
-                for (int i = 0; i < buttons.size(); i++)
-                    queue.add(new QueuedPart2Press(Arrays.copyOf(newState, newState.length), presses, i, stateSum));
+            for (int i = 0; i < buttonCount; i++) {
+                if ((binaryCombo & (1 << i)) != 0) {
+                    presses++;
+                    var button = buttons.get(i);
+                    for (int j = 0; j < button.length; j++) state[button[j]] = !state[button[j]];
+                }
+                if (presses < fewestPresses && Arrays.equals(state, goalLights)) fewestPresses = presses;
             }
-            System.out.println("Machine done. Presses: "+presses);
-            sum += presses;
         }
-        System.out.println("\nPart 2 presses sum: "+sum);
+        return fewestPresses;
     }
 
-    private record QueuedPart1Press(boolean[] state, int presses, int nextButtonIndex) implements Comparable<QueuedPart1Press> {
-
-        @Override
-        public int compareTo(QueuedPart1Press o) { return Integer.compare(presses, o.presses); }
-
-    }
+//    private static void solvePart2() {
+//        int sum = 0;
+//        for (var machine : machines) {
+//            int width = machine.goalCounts.length, buttonCount  = machine.buttons.size(), presses = 0;
+//            var part2GoalLights = new boolean[machine.goalCounts.length];
+//            for (int i = 0; i < machine.goalCounts.length; i++) { part2GoalLights[i] = machine.goalCounts[i] % 2 == 1; }
+//            var buttonOptionsToGetGoalLights = new ArrayList<boolean[]>();
+//
+//            var stack = new ArrayDeque<QueuedPart1Press>();
+//            for (int i = 0; i < buttons.size(); i++)
+//                stack.add(new QueuedPart1Press(new boolean[width], 0, i));
+//            stack.add(new QueuedPart1Press(new boolean[width], 0, 0));
+//            while (!stack.isEmpty()) {
+//                var queuedPress = stack.pop();
+//            }
+//
+//            boolean[] goalLights = machine.goalLights;
+//            ArrayList<int[]> buttons = machine.buttons;
+//
+//            var queue = new PriorityQueue<QueuedPart1Press>();
+//            for (int i = 0; i < buttons.size(); i++)
+//                queue.add(new QueuedPart1Press(new boolean[goalLights.length], 0, i));
+//            while (!queue.isEmpty()) {
+//                var queuedPress = queue.poll();
+//                var newState = queuedPress.state;
+//                presses = 1+queuedPress.presses;
+//                int nextButtonIndex = queuedPress.nextButtonIndex;
+//                var button =  buttons.get(nextButtonIndex);
+//                for (var index : button) newState[index] = !newState[index];
+//                if (Arrays.equals(newState, goalLights)) break;
+//                for (int i = 0; i < buttons.size(); i++)
+//                    queue.add(new QueuedPart1Press(Arrays.copyOf(newState, newState.length), presses, i));
+//            }
+//            sum += presses;
+//        }
+//        System.out.println("\nPart 2 presses sum: "+sum);
+//    }
 
     private record QueuedPart2Press(int[] state, int presses, int nextButtonIndex, int stateSum) implements Comparable<QueuedPart2Press> {
 
