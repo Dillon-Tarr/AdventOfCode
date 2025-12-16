@@ -81,7 +81,7 @@ class Day9 {
                     continue mainLoop;
             boolean inside = false;
             for (var edge : verticalEdges)
-                if (edge.x >= 0 && edge.x < sX1 && edge.yRange.inRange(sY1))
+                if (edge.x < sX1 && edge.yRange.inRange(sY1))
                     inside = !inside;
             if (inside) { area = rectangle.area; break; }
         }
