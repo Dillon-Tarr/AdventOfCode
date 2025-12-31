@@ -2,7 +2,7 @@ package shared;
 
 public class StringMethods {
 
-    public static String convertHexStringToBinaryString(String hexString) {
+    public static String hexToBinary(String hexString) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < hexString.length(); i++) sb.append(switch (hexString.charAt(i)) {
             case '0' -> "0000";
@@ -23,6 +23,12 @@ public class StringMethods {
             case 'f', 'F' -> "1111";
             default -> throw new IllegalStateException("Unexpected value: " + hexString.charAt(i));
         });
+        return sb.toString();
+    }
+
+    public static String toBinaryString(boolean[] booleanArray) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < booleanArray.length; i++) sb.append(booleanArray[i] ? '1' : '0');
         return sb.toString();
     }
 

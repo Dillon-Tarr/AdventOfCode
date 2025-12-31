@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import static shared.BitwiseOperations.xor;
-import static shared.StringMethods.convertHexStringToBinaryString;
+import static shared.StringMethods.hexToBinary;
 
 class Day14 {
     static private final int DAY = 14;
@@ -34,7 +34,7 @@ class Day14 {
         int usedSquareCount = 0;
         for (int i = 0; i < 128; i++) {
             boolean[] row = new boolean[128]; needGroupedBits[i] = row;
-            String binaryString = convertHexStringToBinaryString(getKnotHash(inputString+'-'+i));
+            String binaryString = hexToBinary(getKnotHash(inputString+'-'+i));
             for (int j = 0; j < 128; j++) if (binaryString.charAt(j) == '1') {
                 usedSquareCount++;
                 row[j] = true;
