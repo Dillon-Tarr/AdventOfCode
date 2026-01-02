@@ -58,10 +58,10 @@ class Day21 {
             newSquares.clear();
             for (int squareY = 0; squareY < oldGridSize; squareY += oldRowSize) {
                 xSquareLoop: for (int squareX = 0; squareX < oldGridSize; squareX += oldRowSize) {
-                    oldSquare = new boolean[oldRowSize][];
+                    oldSquare = new boolean[oldRowSize][oldRowSize];
                     subY = -1;
                     for (int y = squareY; y < squareY+oldRowSize; y++) {
-                        oldSquare[++subY] = new boolean[oldRowSize]; subX = 0;
+                        subY++; subX = 0;
                         for (int x = squareX; x < squareX+oldRowSize; x++) oldSquare[subY][subX++] = grid[y][x];
                     }
                     for (EnhancementRule rule : oldRowSize == 2 ? size2Rules : size3Rules) {
@@ -73,8 +73,7 @@ class Day21 {
                     throw new RuntimeException("This means a matching rule was not found! Iterations completed: "+iterationsCompleted);
                 }
             }
-            newGrid = new boolean[newGridSize][];
-            for (int i = 0; i < newGridSize; i++) newGrid[i] = new boolean[newGridSize];
+            newGrid = new boolean[newGridSize][newGridSize];
             for (int squareY = 0; squareY < newGridSize; squareY += newRowSize) {
                 for (int squareX = 0; squareX < newGridSize; squareX += newRowSize) {
                     newSquare = newSquares.remove();
@@ -108,47 +107,39 @@ class Day21 {
         EnhancementRule(String s) {
             size = s.indexOf('/');
             String[] inStringRows = s.substring(0, s.indexOf(' ')).split("/");
-            boolean[][] originalInput = new boolean[size][]; // Original pattern:
+            boolean[][] originalInput = new boolean[size][size]; // Original pattern:
             int inverseY, inverseX;
             for (int y = 0; y < size; y++) {
-                originalInput[y] = new boolean[size];
                 for (int x = 0; x < size; x++) originalInput[y][x] = inStringRows[y].charAt(x) == '#';
             }
             matchingInputs[0] = originalInput;
-            boolean[][] alteredInput = new boolean[size][]; // xFlip:
+            boolean[][] alteredInput = new boolean[size][size]; // xFlip:
             for (int y = 0; y < size; y++) {
-                alteredInput[y] = new boolean[size];
                 inverseX = size;
                 for (int x = 0; x < size; x++) alteredInput[y][x] = originalInput[y][--inverseX];
             }
             if (!this.checkForMatch(alteredInput)) matchingInputs[uniqueInputCount++] = alteredInput;
-            alteredInput = new boolean[size][]; //yFlip:
-            for (int y = 0; y < size; y++) alteredInput[y] = new boolean[size];
+            alteredInput = new boolean[size][size]; //yFlip:
             for (int x = 0; x < size; x++) {
                 inverseY = size;
                 for (int y = 0; y < size; y++) alteredInput[y][x] = originalInput[--inverseY][x];
             }
             if (!this.checkForMatch(alteredInput)) matchingInputs[uniqueInputCount++] = alteredInput;
-            alteredInput = new boolean[size][]; // bottomLeftToTopRightAxisFlip:
-            for (int y = 0; y < size; y++) alteredInput[y] = new boolean[size];
+            alteredInput = new boolean[size][size]; // bottomLeftToTopRightAxisFlip:
             inverseY = size;
             for (int y = 0; y < size; y++) {
                 inverseY--; inverseX = size;
-                for (int x = 0; x < size; x++) {
-                    alteredInput[--inverseX][inverseY] = originalInput[y][x];
-                }
+                for (int x = 0; x < size; x++) alteredInput[--inverseX][inverseY] = originalInput[y][x];
             }
             if (!this.checkForMatch(alteredInput)) matchingInputs[uniqueInputCount++] = alteredInput;
-            alteredInput = new boolean[size][]; // topLeftToBottomRightAxisFlip:
-            for (int y = 0; y < size; y++) alteredInput[y] = new boolean[size];
+            alteredInput = new boolean[size][size]; // topLeftToBottomRightAxisFlip:
             for (int y = 0; y < size; y++) {
                 for (int x = 0; x < size; x++) {
                     alteredInput[x][y] = originalInput[y][x];
                 }
             }
             if (!this.checkForMatch(alteredInput)) matchingInputs[uniqueInputCount++] = alteredInput;
-            alteredInput = new boolean[size][]; // rotateRight1:
-            for (int y = 0; y < size; y++) alteredInput[y] = new boolean[size];
+            alteredInput = new boolean[size][size]; // rotateRight1:
             inverseY = size;
             for (int y = 0; y < size; y++) {
                 inverseY--;
@@ -157,8 +148,7 @@ class Day21 {
                 }
             }
             if (!this.checkForMatch(alteredInput)) matchingInputs[uniqueInputCount++] = alteredInput;
-            alteredInput = new boolean[size][]; // rotateRight2:
-            for (int y = 0; y < size; y++) alteredInput[y] = new boolean[size];
+            alteredInput = new boolean[size][size]; // rotateRight2:
             inverseY = size;
             for (int y = 0; y < size; y++) {
                 inverseY--; inverseX = size;
@@ -168,8 +158,7 @@ class Day21 {
                 }
             }
             if (!this.checkForMatch(alteredInput)) matchingInputs[uniqueInputCount++] = alteredInput;
-            alteredInput = new boolean[size][]; // rotateRight3 (rotateLeft1):
-            for (int y = 0; y < size; y++) alteredInput[y] = new boolean[size];
+            alteredInput = new boolean[size][size]; // rotateRight3 (rotateLeft1):
             for (int y = 0; y < size; y++) {
                 inverseX = size;
                 for (int x = 0; x < size; x++) {
@@ -180,11 +169,8 @@ class Day21 {
 
             String[] outStringRows = s.substring(s.lastIndexOf(' ')+1).split("/");
             int outputSize = size+1;
-            output = new boolean[outputSize][];
-            for (int y = 0; y < outputSize; y++) {
-                output[y] = new boolean[outputSize];
-                for (int x = 0; x < outputSize; x++) output[y][x] = outStringRows[y].charAt(x) == '#';
-            }
+            output = new boolean[outputSize][outputSize];
+            for (int y = 0; y < outputSize; y++) for (int x = 0; x < outputSize; x++) output[y][x] = outStringRows[y].charAt(x) == '#';
         }
 
         boolean checkForMatch(boolean[][] input) {
