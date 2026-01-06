@@ -15,8 +15,8 @@ class Day19Part1 {
     static private final int[] registers = new int[6];
     static private int instructionPointerNumber, instructionCount;
     static private final ArrayList<int[]> instructions = new ArrayList<>();
-    static private final ArrayList<String> instructionNames = new ArrayList<>(List.of(new String[]{"addr", "addi", "mulr",
-            "muli", "banr", "bani", "borr", "bori", "setr", "seti", "gtir", "gtri", "gtrr", "eqir", "eqri", "eqrr"}));
+    static private final ArrayList<String> instructionNames = new ArrayList<>(List.of("addr", "addi", "mulr",
+            "muli", "banr", "bani", "borr", "bori", "setr", "seti", "gtir", "gtri", "gtrr", "eqir", "eqri", "eqrr"));
 
     static void main() {
         long startTime = System.nanoTime();

@@ -15,8 +15,8 @@ class Day16 {
     static private final int DAY = 16;
     static private final File INPUT_FILE = new File("input-files/2018/"+DAY+".txt");
     static private final ArrayList<Sample> samples = new ArrayList<>();
-    static private final ArrayList<String> instructionNames = new ArrayList<>(List.of(new String[]{"addr", "addi", "mulr",
-            "muli", "banr", "bani", "borr", "bori", "setr", "seti", "gtir", "gtri", "gtrr", "eqir", "eqri", "eqrr"}));
+    static private final ArrayList<String> instructionNames = new ArrayList<>(List.of("addr", "addi", "mulr",
+            "muli", "banr", "bani", "borr", "bori", "setr", "seti", "gtir", "gtri", "gtrr", "eqir", "eqri", "eqrr"));
     static private final ArrayList<int[]> testProgram = new ArrayList<>();
 
     static void main() {
@@ -309,6 +309,6 @@ class Day16 {
         return o;
     }
 
-    private static record Sample(int[] before, int[] instruction, int[] after){}
+    private record Sample(int[] before, int[] instruction, int[] after){}
 
 }

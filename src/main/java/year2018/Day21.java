@@ -14,10 +14,10 @@ class Day21 {
     static private final int DAY = 21;
     static private final File INPUT_FILE = new File("input-files/2018/"+DAY+".txt");
     static private final long[] registers = new long[6];
-    static private int instructionPointerNumber, instructionCount;
+    static private int instructionPointerNumber;
     static private final ArrayList<int[]> instructions = new ArrayList<>();
-    static private final ArrayList<String> instructionNames = new ArrayList<>(List.of(new String[]{"addr", "addi", "mulr",
-            "muli", "banr", "bani", "borr", "bori", "setr", "seti", "gtir", "gtri", "gtrr", "eqir", "eqri", "eqrr"}));
+    static private final ArrayList<String> instructionNames = new ArrayList<>(List.of("addr", "addi", "mulr",
+            "muli", "banr", "bani", "borr", "bori", "setr", "seti", "gtir", "gtri", "gtrr", "eqir", "eqri", "eqrr"));
 
     static void main() {
         long startTime = System.nanoTime();
@@ -50,7 +50,6 @@ class Day21 {
             instruction[3] = Integer.parseInt(parts[3]);
             instructions.add(instruction);
         }
-        instructionCount = instructions.size();
     }
 
     private static void solve() {
@@ -79,9 +78,9 @@ class Day21 {
             case 2 -> registers[instruction[3]] = registers[instruction[1]]*registers[instruction[2]]; // mulr
             case 3 -> registers[instruction[3]] = registers[instruction[1]]*instruction[2]; // muli
             case 4 -> registers[instruction[3]] = BitwiseOperations.and((int)registers[instruction[1]], (int)registers[instruction[2]]); // banr
-            case 5 -> registers[instruction[3]] = BitwiseOperations.and((int)registers[instruction[1]], (int)instruction[2]); //bani
+            case 5 -> registers[instruction[3]] = BitwiseOperations.and((int)registers[instruction[1]], instruction[2]); //bani
             case 6 -> registers[instruction[3]] = BitwiseOperations.or((int)registers[instruction[1]], (int)registers[instruction[2]]); // borr
-            case 7 -> registers[instruction[3]] = BitwiseOperations.or((int)registers[instruction[1]], (int)instruction[2]); // bori
+            case 7 -> registers[instruction[3]] = BitwiseOperations.or((int)registers[instruction[1]], instruction[2]); // bori
             case 8 -> registers[instruction[3]] = registers[instruction[1]]; // setr
             case 9 -> registers[instruction[3]] = instruction[1]; // seti
             case 10 -> registers[instruction[3]] = instruction[1] > registers[instruction[2]] ? 1 : 0; // gtir
