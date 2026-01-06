@@ -98,7 +98,8 @@ class Day20 {
                 }
             }
             if (map[y+1][x] != '#') {
-                otherNode = nodesGrid[y+2][x]; if (otherNode != null) {
+                otherNode = nodesGrid[y+2][x];
+                if (otherNode != null) {
                     node.adjacentNodes.add(otherNode);
                     otherNode.adjacentNodes.add(node);
                 }
