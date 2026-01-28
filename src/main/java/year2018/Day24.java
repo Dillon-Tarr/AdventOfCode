@@ -36,32 +36,21 @@ class Day24 {
                 s = br.readLine();
             }
         } catch (IOException e) {throw new RuntimeException(e);}
-        System.out.println("\nImmune system:");
         for (String s : immuneSystemStrings) allGroupsBackup.add(new Group(true, s));
-        System.out.println("\nInfection:");
         for (String s : infectionStrings) allGroupsBackup.add(new Group(false, s));
     }
 
-    private static void setScenario() {
+    private static void setScenario(int immuneSystemBoost) {
         allGroups.clear(); immuneSystem.clear(); infection.clear();
         for (var group : allGroupsBackup) {
-            var newGroup = new Group(group);
+            var newGroup = new Group(group, immuneSystemBoost);
             allGroups.add(newGroup);
-            if (newGroup.goodGuy) immuneSystem.add(newGroup);
+            if (group.goodGuy) immuneSystem.add(newGroup);
             else infection.add(newGroup);
         }
     }
 
-    private static void solvePart1() {
-        setScenario();
-        while (!immuneSystem.isEmpty() && !infection.isEmpty()) fight(0);
-        System.out.println("\nWinning group: "+(infection.isEmpty() ? "Immune system! :)" : "Infection! :("));
-        int sum = 0;
-        for (Group group : allGroups) sum += group.unitCount;
-        System.out.println("Number of remaining units (part 1): "+sum);
-    }
-
-    private static void fight(int boostValue) {
+    private static void fight() {
         allGroups.sort((g1, g2) -> Integer.compare(g2.initiative, g1.initiative));
         for (var group : allGroups) group.clearTargeting();
         immuneSystem.sort(selectionOrderComparator); infection.sort(selectionOrderComparator);
@@ -75,15 +64,28 @@ class Day24 {
             if (!target.handleDamageAndReturnWhetherStillStanding(realDamage)){
                 boolean needToDecrementI = allGroups.indexOf(target) < i;
                 allGroups.remove(target);
-                immuneSystem.remove(target);
-                infection.remove(target);
+                if (target.goodGuy) immuneSystem.remove(target); else infection.remove(target);
                 if (needToDecrementI) i--;
             }
         }
     }
 
-    private static void solvePart2() {
+    private static int countRemainingUnits() { int sum = 0; for (var group : allGroups) sum += group.unitCount; return sum; }
 
+    private static void solvePart1() {
+        setScenario(0);
+        while (!immuneSystem.isEmpty() && !infection.isEmpty()) fight();
+        System.out.println("\nNumber of remaining units (part 1 answer): "+countRemainingUnits());
+    }
+
+    private static void solvePart2() {
+        int currentBoost = 1, roundCount = 0;
+        setScenario(1);
+        while (!infection.isEmpty()) {
+            fight();
+            if (++roundCount > 9998 || immuneSystem.isEmpty()) { roundCount = 0; setScenario(++currentBoost); }
+        }
+        System.out.println("\nNumber of remaining units with lowest successful immune system boost (part 2 answer): "+countRemainingUnits());
     }
 
     private static class Group {
@@ -129,17 +131,16 @@ class Day24 {
             }
         }
 
-        public Group(Group group) {
+        Group(Group group, int goodGuyBoost) {
             goodGuy = group.goodGuy; unitCount = group.unitCount; perUnitHP = group.perUnitHP;
-            damage = group.damage; initiative = group.initiative; effectivePower = group.effectivePower;
-            effectiveDoublePower = group.effectiveDoublePower; damageType = group.damageType;
-            immunities = group.immunities; weaknesses = group.weaknesses;
-            currentTarget = null; currentTargetIsWeak = targeted = false;
+            damage = group.damage; if (goodGuy) damage += goodGuyBoost; updateEffectivePower();
+            initiative = group.initiative; damageType = group.damageType; immunities = group.immunities;
+            weaknesses = group.weaknesses; currentTarget = null; currentTargetIsWeak = targeted = false;
         }
 
         private void updateEffectivePower() {
             effectivePower = unitCount * damage;
-            effectiveDoublePower = effectivePower*2;
+            effectiveDoublePower = effectivePower << 1;
         }
 
         private void clearTargeting() {
@@ -176,7 +177,7 @@ class Day24 {
 
         private boolean handleDamageAndReturnWhetherStillStanding(int incomingDamage) {
             if ((unitCount -= (incomingDamage/perUnitHP)) > 0) { updateEffectivePower(); return true; }
-            unitCount = 0; effectivePower = 0; effectiveDoublePower = 0; return false;
+            return false;
         }
 
     }
