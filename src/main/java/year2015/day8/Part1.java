@@ -24,7 +24,7 @@ class Part1 {
         System.out.println("\nNon-whitespace number of chars from String literals: "+ nonWhiteSpaceCharacterCount);
         System.out.println("\nNumber of escape characters and surrounding quote marks (answer): "+escapedCharacterAndQuoteCount);
 
-        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
+        System.out.println("\nExecution time in ms: "+((double) (System.nanoTime()-startTime)/1000000));
     }
 
     // File must end without a new line for new line

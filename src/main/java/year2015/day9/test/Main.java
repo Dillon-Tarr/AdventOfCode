@@ -17,6 +17,6 @@ class Main {
         HashSet<String> mirrorlessPossibilities = PossibilityChecker.getMirrorlessPossibilities(numberOfLocations);
         System.out.println("\nPossibilities: "+possibilities.size()+"\nMirrorless possibilities: "+mirrorlessPossibilities.size());
 
-        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
+        System.out.println("\nExecution time in ms: "+((double) (System.nanoTime()-startTime)/1000000));
     }
 }

@@ -20,7 +20,7 @@ class Day15 {
         if (args.length != 0) discs.add(new Disc((discs.size()+1), 11, 0)); // Part 2 mode
         findWhenToPressButton();
 
-        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
+        System.out.println("\nExecution time in ms: "+((double) (System.nanoTime()-startTime)/1000000));
     }
 
     private static void getInputData() {

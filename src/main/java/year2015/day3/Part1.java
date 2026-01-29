@@ -23,7 +23,7 @@ class Part1 {
         System.out.println("\nNumber of house changes: "+inputString.length());
         System.out.println("\nNumber of houses visited at least once: "+ visitedCoordinatesData.size());
 
-        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
+        System.out.println("\nExecution time in ms: "+((double) (System.nanoTime()-startTime)/1000000));
     }
 
     private static void getInputData() {

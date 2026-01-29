@@ -28,10 +28,10 @@ class Part2 {
 
         long endTime = System.nanoTime();
 
-        System.out.println("\nTime spent pathfinding, in seconds (includes time spent recording previous step directions for every path): "+
-                ((double) (timeAfterFindingBestPath-startTime)/1000000000));
-        System.out.println("Time spent drawing and printing the best path, in seconds: "+((double) (endTime-timeAfterFindingBestPath)/1000000000));
-        System.out.println("Total execution time, in seconds: "+((double) (endTime-startTime)/1000000000));
+        System.out.println("\nTime spent pathfinding in ms (includes time spent recording previous step directions for every path): "+
+                ((double) (timeAfterFindingBestPath-startTime)/1000000));
+        System.out.println("Time spent drawing and printing the best path in ms: "+((double) (endTime-timeAfterFindingBestPath)/1000000));
+        System.out.println("Total execution time in ms: "+((double) (endTime-startTime)/1000000));
     }
 
     private static void getInputData() {

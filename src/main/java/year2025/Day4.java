@@ -19,7 +19,7 @@ class Day4 {
         getInputData();
         solve(args.length > 0); // Enter any arg for printMode.
 
-        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
+        System.out.println("\nExecution time in ms: "+((double) (System.nanoTime()-startTime)/1000000));
     }
 
     private static void getInputData() {

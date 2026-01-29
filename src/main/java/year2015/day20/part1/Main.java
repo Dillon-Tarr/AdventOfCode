@@ -21,10 +21,10 @@ class Main {
 
         getInputData();
         findSpecialHouseNumber();
-        System.out.println("\nExecution time for finding the house number, in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
+        System.out.println("\nExecution time for finding the house number, in ms: "+((double) (System.nanoTime()-startTime)/1000000));
         getElfNumbersForFun(usePrecalculatedPrimesMode);
 
-        System.out.println("\nTotal execution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
+        System.out.println("\nExecution time in ms: "+((double) (System.nanoTime()-startTime)/1000000));
     }
 
     private static void getInputData() {

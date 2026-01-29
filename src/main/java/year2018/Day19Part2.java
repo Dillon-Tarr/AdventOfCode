@@ -81,7 +81,7 @@ class Day19Part2 {
         for (int i = 1; i <= 10_551_320; i++) if (10_551_320 % i == 0) sum += i;
         System.out.println("\nSum of the factors of 10,551,320 (part 2 answer): "+sum);
 
-        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
+        System.out.println("\nExecution time in ms: "+((double) (System.nanoTime()-startTime)/1000000));
 
     }
 

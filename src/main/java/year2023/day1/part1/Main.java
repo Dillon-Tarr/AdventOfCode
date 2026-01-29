@@ -26,7 +26,7 @@ class Main {
         System.out.println(evaluateRealCalibrationValues());
         System.out.println("\nSUM OF REAL CALIBRATION VALUES:\n"+sumOfRealCalibrationValues);
 
-        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
+        System.out.println("\nExecution time in ms: "+((double) (System.nanoTime()-startTime)/1000000));
     }
 
     private static void readAndPrintGarbledCalibrationValues() {

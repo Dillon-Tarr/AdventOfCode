@@ -21,7 +21,7 @@ class Part1 {
 
         System.out.println("Nice string count: "+ niceStringCount);
 
-        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
+        System.out.println("\nExecution time in ms: "+((double) (System.nanoTime()-startTime)/1000000));
     }
 
     private static void getInputData() {

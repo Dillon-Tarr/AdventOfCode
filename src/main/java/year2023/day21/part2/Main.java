@@ -17,7 +17,7 @@ class Main {
         createGrids();
         System.out.println("\nSum of all reachable garden plots in "+requiredSteps+" steps: "+Grid.getSumOfPlotsReachedOnAllGrids());
 
-        System.out.println("\nExecution time in seconds: " + ((double) (System.nanoTime() - startTime) / 1000000000));
+        System.out.println("\nExecution time in ms: "+((double) (System.nanoTime()-startTime)/1000000));
     }
 
     private static void processInputData() {

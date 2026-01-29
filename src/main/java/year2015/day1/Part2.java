@@ -16,13 +16,12 @@ class Part2 {
     public static void main(String[] args) {
         long startTime = System.nanoTime();
 
-
         getInputData();
         traverse();
 
         System.out.println("Floor change count upon reaching basement (floor -1): "+floorChangeCount);
 
-        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
+        System.out.println("\nExecution time in ms: "+((double) (System.nanoTime()-startTime)/1000000));
     }
 
     private static void getInputData() {

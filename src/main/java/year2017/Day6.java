@@ -21,7 +21,7 @@ class Day6 {
         executeReallocationRoutine(); // gets part 1 answer
         countCyclesUntilCurrentStateIsSeenAgain(); // uses state reached in part 1 answer and gets part 2 answer
 
-        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
+        System.out.println("\nExecution time in ms: "+((double) (System.nanoTime()-startTime)/1000000));
     }
 
     private static void getInputData() {

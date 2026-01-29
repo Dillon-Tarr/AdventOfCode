@@ -16,7 +16,7 @@ class Day18 {
         getInputData();
         countSafeTiles(args.length == 0 ? 40 : 400000); // 0 args for part 1, >0 for part 2;
 
-        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
+        System.out.println("\nExecution time in ms: "+((double) (System.nanoTime()-startTime)/1000000));
     }
 
     private static void getInputData() {

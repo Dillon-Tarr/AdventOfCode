@@ -20,7 +20,7 @@ class Day12 {
         getAndProcessInputData();
         solve();
 
-        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
+        System.out.println("\nExecution time in ms: "+((double) (System.nanoTime()-startTime)/1000000));
     }
 
     private static void getAndProcessInputData() {

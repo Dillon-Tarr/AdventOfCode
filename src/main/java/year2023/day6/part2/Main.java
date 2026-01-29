@@ -14,7 +14,7 @@ class Main {
         long numberOfWays = race.getNumberOfWaysToBeatTheRecord();
         System.out.println("\nNumber of ways to beat the record of the long races:\n\n"+numberOfWays);
 
-        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
+        System.out.println("\nExecution time in ms: "+((double) (System.nanoTime()-startTime)/1000000));
     }
 
     private static void getInputDataAndCreateRace() {

@@ -18,7 +18,7 @@ class Day19 {
         getInputData();
         evaluate(args.length != 0); // 0 args for part 1, >0 args for part 2;
 
-        System.out.println("\nExecution time in seconds: "+((double) (System.nanoTime()-startTime)/1000000000));
+        System.out.println("\nExecution time in ms: "+((double) (System.nanoTime()-startTime)/1000000));
     }
 
     private static void printFirstHundredForFunctionDerivation(boolean part2Mode) {
