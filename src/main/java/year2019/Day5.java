@@ -64,7 +64,7 @@ class Day5 {
                         case '6' -> { if (param1 == 0) pos = param2; }
                         case '7' -> vals[vals[pos++]] = param1 < param2 ? 1 : 0;
                         case '8' -> vals[vals[pos++]] = param1 == param2 ? 1 : 0;
-                        default -> throw  new RuntimeException("Invalid final opCode character: "+lastChar);
+                        default -> throw new RuntimeException("Invalid final opCode character: "+lastChar);
                     }
                 }
             }
