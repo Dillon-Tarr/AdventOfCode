@@ -8,7 +8,7 @@ public class PrimeFinders {
 
     static private final String FOLDER_PATH = "src/main/java/shared/math/";
 
-    public static void main(String[] args) throws IOException {
+    static void main() {
         System.out.println("""
                 \nRunning main method of PrimeFinders.java. To exit at any time, enter only a single zero (0).
                 The following methods are available to run:
@@ -63,7 +63,7 @@ public class PrimeFinders {
         ArrayList<Integer> primes;
         if (file.exists()) {
             primes = getAllPrimesFromFile(file);
-            if (!primes.isEmpty() && primes.get(primes.size()-1) >= savePrimesToThisValue) throw new RuntimeException(
+            if (!primes.isEmpty() && primes.getLast() >= savePrimesToThisValue) throw new RuntimeException(
                         "Your last prime in the file is already greater than or equal to what you asked for.");
         } else primes = new ArrayList<>();
         int newPrimeCount = 0;
@@ -79,11 +79,11 @@ public class PrimeFinders {
                     newPrimeCount++;
                     System.out.println();
                     break;
-                default: System.out.println("\nPrimes from "+ primes.get(0)+" to "+ primes.get(primes.size()-1)+" read from file. ");
+                default: System.out.println("\nPrimes from "+ primes.getFirst()+" to "+ primes.getLast()+" read from file. ");
             }
             System.out.print("Calculating primes up to "+savePrimesToThisValue+".\n");
 
-            int i = 2+primes.get(primes.size()-1);
+            int i = 2+primes.getLast();
             boolean goodToGo = false;
             while (!goodToGo) {
                 switch (i % 6) {
@@ -113,7 +113,7 @@ public class PrimeFinders {
         if (newPrimeCount == 0) System.out.println("No new primes found. This should mean the limit you entered was above the " +
                 "last prime already in the file, but there is no prime number between that number and the supplied limit.");
         else {
-            int lastNewPrime = primes.get(primes.size()-1);
+            int lastNewPrime = primes.getLast();
             System.out.println("\nPrimes up to "+lastNewPrime+" (the last prime less than "+(lastNewPrime==savePrimesToThisValue?"or equal to ":"")+savePrimesToThisValue+") added to file.");
             System.out.println("Number of new primes found: "+newPrimeCount);
             System.out.println("\nConfirming that the file remains properly formatted, free from errors...\n");
@@ -209,7 +209,7 @@ public class PrimeFinders {
         if (primes.isEmpty()) throw new RuntimeException("Supplied source file \""+sourceFile.getPath()+"\" is primeless.");
         if (primes.size() == 1) throw new RuntimeException("Supplied source file \""+sourceFile.getPath()+"\" only contains one number.");
         try (FileWriter fileWriter = new FileWriter(destinationFile)) {
-            fileWriter.append(String.valueOf(primes.get(0)));
+            fileWriter.append(String.valueOf(primes.getFirst()));
             int prime;
             for (int i = 1; i < primes.size(); i++) {
                 prime = primes.get(i);
@@ -218,7 +218,7 @@ public class PrimeFinders {
             }
         } catch (IOException e) {throw new RuntimeException(e.toString());}
         confirmPrimeFileFormatAndReturnPrimes(destinationFile);
-        System.out.println("Primes from "+primes.get(0)+" to "+primes.get(primes.size()-1)+" read from \""+sourceFile.getPath()+"\" and written to \""+destinationFile.getPath()+"\".");
+        System.out.println("Primes from "+primes.getFirst()+" to "+primes.getLast()+" read from \""+sourceFile.getPath()+"\" and written to \""+destinationFile.getPath()+"\".");
         System.out.println("""
                 It was also confirmed that the format of the new file is correct, meaning:
                 - the destination file has no empty lines (except possibly the last one) and consists of only numbers,
@@ -266,7 +266,7 @@ public class PrimeFinders {
                 while (fileLine != null) {
                     if (fileLine.isEmpty()) throw new RuntimeException("Line number "+lineNumber+" is empty in file \""+file.getPath()+"\"");
                     currentNumber = Integer.parseInt(fileLine);
-                    if (!primes.isEmpty() && primes.get(primes.size()-1) > currentNumber)
+                    if (!primes.isEmpty() && primes.getLast() > currentNumber)
                         throw new RuntimeException("In file \""+file.getPath()+"\", the number on line "+(lineNumber-1)+" is greater than the number on line "+lineNumber+".");
                     primes.add(currentNumber);
                     fileLine = br.readLine();
@@ -274,7 +274,7 @@ public class PrimeFinders {
                 }
             } catch (IOException e) {throw new RuntimeException(e.toString());}
         }
-        if (!primes.isEmpty() && primes.get(0) != 2) throw new RuntimeException("In file \""+file.getPath()+"\", the first line is not 2.");
+        if (!primes.isEmpty() && primes.getFirst() != 2) throw new RuntimeException("In file \""+file.getPath()+"\", the first line is not 2.");
         if (primes.size() >= 2) confirmLastNumberIsNotDivisibleByTheRest(primes);
         return primes;
     }
@@ -287,7 +287,7 @@ public class PrimeFinders {
      * */
     private static void confirmLastNumberIsNotDivisibleByTheRest(ArrayList<Integer> supposedPrimes) {
         if (supposedPrimes.size() < 2) throw new RuntimeException("This method is only useful if 2 or more primes are present.");
-        int lastNumber = supposedPrimes.get(supposedPrimes.size()-1);
+        int lastNumber = supposedPrimes.getLast();
         boolean foundLastNumberIsDivisibleByAnother = false;
         int i = 0, supposedPrime = -1;
         while (i < supposedPrimes.size()-1) { // -1 to not try division by self... Of course primes are divisible by self.
@@ -326,10 +326,10 @@ public class PrimeFinders {
      */
     public static void findMorePrimes(int limit, ArrayList<Integer> primes) {
         if (limit < 5) throw new IllegalArgumentException("Supplied value to which to find primes is too low: "+ limit);
-        int lastPrime = primes.get(primes.size()-1);
+        int lastPrime = primes.getLast();
         if (limit <= lastPrime) throw new IllegalArgumentException("Supplied value to which to find primes, "+ limit
                     +", is less than or equal to the last prime in the existing list: "+lastPrime);
-        int i = 2+primes.get(primes.size()-1);
+        int i = 2+primes.getLast();
         boolean goodToGo = false;
         while (!goodToGo) {
             switch (i % 6) {

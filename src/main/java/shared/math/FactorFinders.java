@@ -1,23 +1,62 @@
 package shared.math;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class FactorFinders {
+    private static final HashMap<Integer, ArrayList<Integer>> factors = new HashMap<>();
+    private static final HashMap<Integer, HashMap<Integer, Integer>> greatestCommonFactors = new HashMap<>();
+    private static ArrayList<Integer> primes;
+
+    public static int getGreatestCommonFactor(int a, int b) {
+        if (primes == null) primes = PrimeFinders.findPrimesUntilValue(999);
+        if (a < 0) a = -a; if (b < 0) b = -b;
+        int min, max; if (a < b) { min = a; max = b; } else { max = a; min = b; }
+        if (min < 2 || min == max) return min;
+        var minMap = greatestCommonFactors.get(min);
+        Integer gcf = null;
+        if (minMap != null) {
+            gcf = minMap.get(max);
+            if (gcf != null) return gcf;
+        } else {
+            minMap = new HashMap<>();
+            greatestCommonFactors.put(min, minMap);
+        }
+        ArrayList<Integer> minFactors = factors.get(min), maxFactors = factors.get(max);
+        if (minFactors == null) {
+            minFactors = findAllNonOneFactors(min);
+            factors.put(min, minFactors);
+        }
+        if (maxFactors == null) {
+            maxFactors = findAllNonOneFactors(max);
+            factors.put(max, maxFactors);
+        }
+        ArrayList<Integer> combinedFactors = new ArrayList<>(maxFactors);
+        for (int factor : minFactors) if (!combinedFactors.contains(factor)) combinedFactors.add(factor);
+        combinedFactors.sort(Integer::compareTo);
+        for (int i = combinedFactors.size()-1; i >= 0; i--) {
+            int factor = combinedFactors.get(i);
+            if (minFactors.contains(factor) && maxFactors.contains(factor)) { gcf = factor; break; }
+        }
+        if (gcf == null) gcf = 1;
+        minMap.put(max, gcf);
+        return gcf;
+    }
 
     public static ArrayList<Integer> findPrimeFactorization(int product){
-        ArrayList<Integer> primes = PrimeFinders.findPrimesUntilValue(product/2);
+        if (primes.getLast() < product/2) PrimeFinders.findMorePrimes(product/2, primes);
         return findPrimeFactorizationWithPrimeList(product, primes);
     }
 
     public static ArrayList<Integer> findPrimeFactorization(int product, ArrayList<Integer> primes){
-        if (primes.get(primes.size()-1) < product/2) PrimeFinders.findMorePrimes(product/2, primes);
+        if (primes.getLast() < product/2) PrimeFinders.findMorePrimes(product/2, primes);
         return findPrimeFactorizationWithPrimeList(product, primes);
     }
 
     private static ArrayList<Integer> findPrimeFactorizationWithPrimeList(int product, ArrayList<Integer> primes){
         if (product == 1) return new ArrayList<>();
-        if (primes.get(primes.size()-1) < product/2) PrimeFinders.findMorePrimes(product/2, primes);
+        if (primes.getLast() < product/2) PrimeFinders.findMorePrimes(product/2, primes);
         ArrayList<Integer> primeFactors = new ArrayList<>();
         int multiDivisionTestNumber;
         for (Integer prime : primes) {
