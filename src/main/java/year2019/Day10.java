@@ -167,13 +167,6 @@ class Day10 {
             if (gcf > 1) { dy /= gcf; dx /= gcf; }
         }
 
-        @Override
-        public boolean equals(Object obj) {
-            if (obj == this) return true;
-            if (obj instanceof Slope o)
-                return negative == o.negative && dy == o.dy && dx == o.dx;
-            return false;
-        }
     }
 
 }
