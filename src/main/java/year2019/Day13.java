@@ -17,6 +17,7 @@ class Day13 {
 
         getInputData();
         solvePart1();
+        solvePart2();
 
         System.out.println("\nExecution time in ms: "+((double) (System.nanoTime()-startTime)/1000000));
     }
@@ -95,6 +96,90 @@ class Day13 {
         int blockTileCount = 0;
         for (var row : screen) for (var tileType : row) if (tileType == 2) blockTileCount++;
         System.out.println("\nBlock tile count (part 1 answer): "+blockTileCount);
+    }
+
+    private static void solvePart2() {
+        origVals[0] = 2;
+        var vals = new ExtendedLongArray(origVals);
+        long pos = 0, relativeBase = 0, score = 0;
+        int inputValue, outputSequenceNumber = 0, y = 0, x = 0, type = 0,
+                ballY = 0, ballX = 0, paddleY = 0, paddleX = 0, ballXDirection = 0;
+        while (true) {
+            var s = Long.toString(vals.get(pos++));
+            int sLength = s.length();
+            if (sLength < 5) {
+                switch (sLength) {
+                    case 1 -> s = "0000"+s;
+                    case 2 -> s = "000"+s;
+                    case 3 -> s = "00"+s;
+                    case 4 -> s = "0"+s;
+                }
+                sLength = 5;
+            }
+            char lastChar = s.charAt(s.length()-1);
+            if (lastChar == '9' && s.charAt(sLength-2) == '9') break;
+            char p1Char = s.charAt(sLength-3);
+            long p1Pos = switch (p1Char) {
+                case '0' -> vals.get(pos++);
+                case '1' -> pos++;
+                default -> relativeBase+vals.get(pos++);
+            };
+            switch (lastChar) {
+                case '3' -> {
+                    if (paddleX == ballX) inputValue = ballY == paddleY-1 ? 0 : ballXDirection;
+                    else inputValue = Integer.compare(ballX+ballXDirection, paddleX);
+                    vals.set(p1Pos, inputValue);
+                }
+                case '4' -> {
+                    int intOutput = (int) vals.get(p1Pos);
+                    switch (outputSequenceNumber) {
+                        case 0 -> x = intOutput;
+                        case 1 -> y = intOutput;
+                        case 2 -> type = intOutput;
+                    }
+                    if (++outputSequenceNumber > 2) {
+                        outputSequenceNumber = 0;
+                        if (x == -1 && y == 0) score = type;
+                        else {
+                            switch (type) {
+                                case 3 -> {
+                                    paddleY = y;
+                                    paddleX = x;
+                                }
+                                case 4 -> {
+                                    ballXDirection = x-ballX;
+                                    ballY = y;
+                                    ballX = x;
+                                }
+                            }
+                        }
+                    }
+                }
+                case '9' -> relativeBase += vals.get(p1Pos);
+                default -> {
+                    long p2Val = vals.get(switch (s.charAt(sLength-4)) {
+                        case '0' -> vals.get(pos++);
+                        case '1' -> pos++;
+                        default -> relativeBase+vals.get(pos++);
+                    });
+                    switch (lastChar) {
+                        case '5' -> { if (vals.get(p1Pos) != 0) pos = p2Val; }
+                        case '6' -> { if (vals.get(p1Pos) == 0) pos = p2Val; }
+                        default -> {
+                            long p3Pos = s.charAt(s.length()-5) == '0' ? vals.get(pos++) : relativeBase+vals.get(pos++);
+                            switch (lastChar) {
+                                case '1' -> vals.set(p3Pos, vals.get(p1Pos)+p2Val);
+                                case '2' -> vals.set(p3Pos, vals.get(p1Pos)*p2Val);
+                                case '7' -> vals.set(p3Pos, vals.get(p1Pos) < p2Val ? 1 : 0);
+                                case '8' -> vals.set(p3Pos, vals.get(p1Pos) == p2Val ? 1 : 0);
+                                default -> throw new RuntimeException("Invalid final opCode character: "+lastChar);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println("\nScore (part 2 answer): "+score);
     }
 
     private static class ExtendedLongArray {
