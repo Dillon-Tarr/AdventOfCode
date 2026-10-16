@@ -11,11 +11,13 @@ public class Day14 {
     static private final File INPUT_FILE = new File("input-files/2019/"+DAY+".txt");
     static private final ArrayList<Reaction> reactionsList = new ArrayList<>();
     static private final HashMap<String, Reaction> outputTypeToReactionMap = new HashMap<>();
+    static private ArrayList<String> topologicallySortedList;
 
     static void main() {
         long startTime = System.nanoTime();
 
         getAndProcessInputData();
+        createTopologicallySortedList();
         solve();
 
         System.out.println("\nExecution time in ms: "+((double) (System.nanoTime()-startTime)/1000000));
@@ -47,7 +49,7 @@ public class Day14 {
         }
     }
 
-    private static void solve() {
+    private static void createTopologicallySortedList() {
         var chemicalNameToInDegree = new HashMap<String, Integer>();
         for (var reaction : reactionsList) chemicalNameToInDegree.put(reaction.output.name, 0); // add every output
         for (var reaction : reactionsList) { // check initial in-degrees, i.e. direct dependency count -- how many outputs does this chemical feed?
@@ -60,9 +62,9 @@ public class Day14 {
                 });
             }
         }
-        var topologicallySortedList = new ArrayList<String>();
         var queue = new LinkedList<String>(); // queue for Khan's algorithm, applicable to this directed acyclic graph (DAG)
         queue.add("FUEL"); // starts off with zero in-degree, since FUEL is not an input for any other chemicals
+        topologicallySortedList = new ArrayList<>(); // create list we will now populate
         while (!queue.isEmpty()) {
             var outputName = queue.remove();
             topologicallySortedList.add(outputName);
@@ -77,8 +79,10 @@ public class Day14 {
                     queue.add(name);
                 }
             }
-        }
-        // Now we have a full topologically sorted list. So let's go through the list and calculate needed ORE amount.
+        } // Now we have a full topologically sorted list that can be used to calculate ORE requirements for varying FUEL amounts.
+    }
+
+    private static long getOreRequirementForFuelAmount(long fuelAmount) {
         var chemDemand = new HashMap<String, Integer>();
         chemDemand.put("FUEL", 1);
         for (var outputName : topologicallySortedList) {
@@ -89,7 +93,12 @@ public class Day14 {
                 chemDemand.put(name, chemDemand.getOrDefault(name, 0) + reactionCountNeeded * input.count);
             }
         }
-        System.out.println("ORE demand for 1 FUEL (part 1 answer): "+chemDemand.get("ORE"));
+        return chemDemand.get("ORE");
+    }
+
+    private static void solve() {
+        long oreRequiredForOneFuel = getOreRequirementForFuelAmount(1);
+        System.out.println("ORE demand for 1 FUEL (part 1 answer): "+oreRequiredForOneFuel);
     }
 
     private record Reaction(ChemAmountPair[] inputs, ChemAmountPair output) {}
