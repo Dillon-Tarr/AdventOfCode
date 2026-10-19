@@ -83,22 +83,52 @@ public class Day14 {
     }
 
     private static long getOreRequirementForFuelAmount(long fuelAmount) {
-        var chemDemand = new HashMap<String, Integer>();
-        chemDemand.put("FUEL", 1);
+        var chemDemand = new HashMap<String, Long>();
+        chemDemand.put("FUEL", fuelAmount);
         for (var outputName : topologicallySortedList) {
             var reaction = outputTypeToReactionMap.get(outputName);
-            int reactionCountNeeded = Math.ceilDiv(chemDemand.get(outputName), reaction.output.count);
+            long reactionCountNeeded = Math.ceilDiv(chemDemand.get(outputName), reaction.output.count);
             for (var input : reaction.inputs) {
                 var name = input.name;
-                chemDemand.put(name, chemDemand.getOrDefault(name, 0) + reactionCountNeeded * input.count);
+                chemDemand.put(name, chemDemand.getOrDefault(name, 0L) + reactionCountNeeded * input.count);
             }
         }
         return chemDemand.get("ORE");
     }
 
     private static void solve() {
-        long oreRequiredForOneFuel = getOreRequirementForFuelAmount(1);
-        System.out.println("ORE demand for 1 FUEL (part 1 answer): "+oreRequiredForOneFuel);
+        long oreAmount = getOreRequirementForFuelAmount(1);
+        System.out.println("ORE demand for 1 FUEL (part 1 answer): "+oreAmount);
+        long fuelAmount = 1_000_000_000_000L / oreAmount, greatestSuccessfulFuelAmount = fuelAmount;
+        long step, leastFailedFuelAmount; // ^ 1e12/oreAmount for 1 fuel necessarily floors to a successful amount
+        while (true) {
+            oreAmount = getOreRequirementForFuelAmount(fuelAmount <<= 1);
+            if (oreAmount > 1_000_000_000_000L) {
+                leastFailedFuelAmount = fuelAmount;
+                break;
+            }
+        }
+        boolean tryingHigher = false;
+        while (true) {
+            step = (leastFailedFuelAmount - greatestSuccessfulFuelAmount) >> 1;
+            if (step == 0) break;
+            if (tryingHigher) {
+                fuelAmount += step;
+                oreAmount = getOreRequirementForFuelAmount(fuelAmount);
+                if (oreAmount > 1_000_000_000_000L) {
+                    leastFailedFuelAmount = fuelAmount;
+                    tryingHigher = false;
+                } else greatestSuccessfulFuelAmount = fuelAmount;
+            } else {
+                fuelAmount = leastFailedFuelAmount - step;
+                oreAmount = getOreRequirementForFuelAmount(fuelAmount);
+                if (oreAmount <= 1_000_000_000_000L) {
+                    greatestSuccessfulFuelAmount = fuelAmount;
+                    tryingHigher = true;
+                } else leastFailedFuelAmount = fuelAmount;
+            }
+        }
+        System.out.println("Greatest amount of FUEL that can be made with 1 trillion ore (part 2 answer): "+greatestSuccessfulFuelAmount);
     }
 
     private record Reaction(ChemAmountPair[] inputs, ChemAmountPair output) {}
