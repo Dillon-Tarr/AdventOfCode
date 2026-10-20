@@ -16,6 +16,12 @@ public class Coordinates {
         this.x = x;
     }
 
+    public void updateY(int y) { this.y = y; }
+
+    public void updateX(int x) { this.x = x; }
+
+    public Coordinates copy() { return new Coordinates(y, x); }
+
     public int getManhattanDistance(Coordinates o) {
         return Math.abs(y - o.y) + Math.abs(x - o.x);
     }
