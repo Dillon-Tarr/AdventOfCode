@@ -26,6 +26,7 @@ class Day15 {
         runProgramToGenerateAreaMap();
         printArea();
         solvePart1();
+        solvePart2();
 
         System.out.println("\nExecution time in ms: "+((double) (System.nanoTime()-startTime)/1000000));
     }
@@ -148,7 +149,7 @@ class Day15 {
     private static void solvePart1() {
         if (oxygenCoordinates == null) throw new RuntimeException("Somehow oxygenCoordinates is null.");
         int[][] fewestSteps = new int[area.length][area[0].length];
-        for (var row : fewestSteps) Arrays.fill(row, Integer.MAX_VALUE);
+        for (var row : fewestSteps) Arrays.fill(row, Integer.MAX_VALUE); // from start point to every reachable point
         var queue = new PriorityQueue<QueuedStep>();
         queue.add(new QueuedStep(startY, startX, 0));
         while (!queue.isEmpty()) {
@@ -165,7 +166,31 @@ class Day15 {
             if (area[y][eX] != '#' && fewestSteps[y][eX] > stepCount) queue.add(new QueuedStep(y, eX, stepCount));
         }
         int stepsRequired = fewestSteps[oxygenCoordinates.y][oxygenCoordinates.x];
-        System.out.println("\nFewest steps required to move repair droid to oxygen system (part 1 solution): "+stepsRequired);
+        System.out.println("\nFewest steps required to move repair droid to oxygen system (part 1 answer): "+stepsRequired);
+    }
+
+    private static void solvePart2() {
+        if (oxygenCoordinates == null) throw new RuntimeException("Somehow oxygenCoordinates is null.");
+        int[][] fewestSteps = new int[area.length][area[0].length]; // from start point to every reachable point
+        for (var row : fewestSteps) Arrays.fill(row, Integer.MAX_VALUE);
+        var queue = new PriorityQueue<QueuedStep>();
+        queue.add(new QueuedStep(oxygenCoordinates.y, oxygenCoordinates.x, 0));
+        while (!queue.isEmpty()) {
+            var step = queue.remove();
+            int stepCount = step.stepCount;
+            int y = step.y, x = step.x;
+            if (stepCount >= fewestSteps[y][x]) continue;
+            int nY = y-1, sY = y+1, wX = x-1, eX = x+1;
+            fewestSteps[y][x] = stepCount;
+            stepCount++;
+            if (area[nY][x] != '#' && fewestSteps[nY][x] > stepCount) queue.add(new QueuedStep(nY, x, stepCount));
+            if (area[sY][x] != '#' && fewestSteps[sY][x] > stepCount) queue.add(new QueuedStep(sY, x, stepCount));
+            if (area[y][wX] != '#' && fewestSteps[y][wX] > stepCount) queue.add(new QueuedStep(y, wX, stepCount));
+            if (area[y][eX] != '#' && fewestSteps[y][eX] > stepCount) queue.add(new QueuedStep(y, eX, stepCount));
+        }
+        int mostSteps = -1;
+        for (var row : fewestSteps) for (var x : row) if (x != Integer.MAX_VALUE && x > mostSteps) mostSteps = x;
+        System.out.println("\nNumber of minutes required to fill the area with oxygen (part 2 answer): "+mostSteps);
     }
 
     private record QueuedStep(int y, int x, int stepCount) implements Comparable<QueuedStep> {
