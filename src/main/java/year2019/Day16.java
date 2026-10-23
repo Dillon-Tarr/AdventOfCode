@@ -18,7 +18,8 @@ class Day16 {
 
         getInputData();
         createPatterns();
-        solve();
+        solvePart1();
+        solvePart2();
 
         System.out.println("\nExecution time in ms: "+((double) (System.nanoTime()-startTime)/1000000));
     }
@@ -46,24 +47,39 @@ class Day16 {
         }
     }
 
-    private static void solve() {
-        String s = inputString;
-        for (int i = 0; i < 100; i++) s = runPhaseOfFFT(s);
-        System.out.println("First 8 digits of s after 100 phases of FFT (part 1 answer): "+s.substring(0, 8));
+    private static void solvePart1() {
+        int[] digits = new int[length], newDigits = new int[length];
+        for (int i = 0; i < length; i++) digits[i] = Character.getNumericValue(inputString.charAt(i));
+        for (int phase = 0; phase < 100; phase++) {
+            for (int o = 0; o < length; o++) {
+                int[] pattern = patterns[o];
+                int n = 0;
+                for (int i = 0; i < length; i++) n += pattern[i] * digits[i];
+                if ((n %= 10) < 0) n *= -1;
+                newDigits[o] = n;
+            }
+            digits = newDigits;
+        }
+        var output = new StringBuilder();
+        for (int i = 0; i < 8; i++) output.append(digits[i]);
+        System.out.println("First 8 digits of s after 100 phases of FFT (part 1 answer): "+output);
     }
 
-    private static String runPhaseOfFFT(String input) {
-        int[] inVals = new int[length];
-        for (int i = 0; i < length; i++) inVals[i] = Character.getNumericValue(input.charAt(i));
-        var output = new StringBuilder();
-        for (int o = 0; o < length; o++) {
-            int[] pattern = patterns[o];
+    private static void solvePart2() {
+        int offset = Integer.parseInt(inputString.substring(0, 7));
+        if (offset < length*5000) throw new RuntimeException("offset in first half == impossible for large inputs");
+        String relevantSegment = inputString.repeat(10_000).substring(offset);
+        int relevantLength = relevantSegment.length();
+        int[] digits = new int[relevantLength], newDigits = new int[relevantLength];
+        for (int i = 0; i < relevantLength; i++) digits[i] = Character.getNumericValue(relevantSegment.charAt(i));
+        for (int phase = 0; phase < 100; phase++) {
             int n = 0;
-            for (int i = 0; i < length; i++) n += pattern[i] * inVals[i];
-            var nString = String.valueOf(n);
-            output.append(nString.charAt(nString.length()-1));
+            for (int i = relevantLength-1; i >= 0; i--) newDigits[i] = (n += digits[i]) % 10;
+            digits = newDigits;
         }
-        return output.toString();
+        var output = new StringBuilder();
+        for (int i = 0; i < 8; i++) output.append(digits[i]);
+        System.out.println("Eight digit message at offset of real signal after 100 phases of FFT (part 2 answer): "+output);
     }
 
 }
