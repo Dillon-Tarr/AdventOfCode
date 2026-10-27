@@ -94,7 +94,9 @@ public class PrimeFinders {
             boolean remainderOne = i % 6 == 1;
             while (i <= savePrimesToThisValue) {
                 boolean foundThatIHasAPrimeFactor = false;
+                int squareRootOfCandidate = (int) Math.sqrt(i);
                 for (int prime : primes) {
+                    if (prime > squareRootOfCandidate) break;
                     if (i % prime == 0) {
                         foundThatIHasAPrimeFactor = true;
                         break;
@@ -104,7 +106,7 @@ public class PrimeFinders {
                     primes.add(i);
                     fileWriter.append(System.lineSeparator()).append(String.valueOf(i));
                     newPrimeCount++;
-                    if (newPrimeCount % 1000 == 0) System.out.println(newPrimeCount + " new primes found so far! Current value of i: "+i);
+                    if (newPrimeCount % 1000000 == 0) System.out.println(newPrimeCount + " new primes found so far! Current value of i: "+i);
                 }
                 i += remainderOne ? 4 : 2;
                 remainderOne = !remainderOne;
@@ -340,7 +342,9 @@ public class PrimeFinders {
         boolean remainderOne = i % 6 == 1;
         while (i <= limit) {
             boolean foundThatIHasAPrimeFactor = false;
+            int squareRootOfCandidate = (int) Math.sqrt(i);
             for (int prime : primes) {
+                if (prime > squareRootOfCandidate) break;
                 if (i % prime == 0) {
                     foundThatIHasAPrimeFactor = true;
                     break;
