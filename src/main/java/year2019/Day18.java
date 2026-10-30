@@ -101,7 +101,6 @@ public class Day18 {
                 trueKeyAKeyBData[b][a] = data;
             }
         }
-
     }
 
     private static int[] distanceAndDoorsBetween(int keyA, int keyB, int[][] coordinates, char[][] map) {
@@ -142,42 +141,52 @@ public class Day18 {
 
     private static void solvePart1() {
         int fastestTrip = Integer.MAX_VALUE;
-        var stateToBestSteps = new HashMap<TripState, Integer>();
+        var stateToBestSteps = new HashMap<Integer, Integer>();
         var queue = new PriorityQueue<QueuedLeap>();
         for (int b = 0; b < 26; b++) {
             int[] data = keyAKeyBData[26][b]; int steps = data[0], doorsMask = data[1];
-            if (doorsMask == 0) queue.add(new QueuedLeap(new TripState(b, 0), steps));
+            if (doorsMask == 0) {
+                int state = packState(b, 1<<b);
+                stateToBestSteps.put(state, steps);
+                queue.add(new QueuedLeap(state, steps));
+            }
         }
         while (!queue.isEmpty()) {
             var trip = queue.remove();
-            var tripState = trip.tripState;
-            int steps = trip.steps, keysMask = tripState.keysMask;
+            int tripState = trip.tripState, steps = trip.steps;
+            if (steps > stateToBestSteps.getOrDefault(tripState, Integer.MAX_VALUE)) continue;
+            int keysMask = tripState & allKeysValue;
             if (keysMask == allKeysValue) {
                 fastestTrip = steps;
                 break;
             }
-            Integer bestSteps = stateToBestSteps.get(tripState);
-            if (bestSteps == null || steps < bestSteps) stateToBestSteps.put(tripState, steps);
-            else continue;
-            int[][] keyAData = keyAKeyBData[tripState.a];
+            int[][] keyAData = keyAKeyBData[tripState >>> 26];
             for (int b = 0; b < 26; b++) {
                 int bPosValue = 1<<b;
                 if ((keysMask & bPosValue) != 0) continue; // <-- continue if (we already have the destination key)
                 int[] data = keyAData[b]; int doorsMask = data[1];
                 if ((doorsMask & keysMask) != doorsMask) continue;
                 // ^^ continue with next destination if (missing any required key) ^^
-                queue.add(new QueuedLeap(new TripState(b, keysMask | bPosValue), steps+data[0]));
+                int newState = packState(b, (keysMask | bPosValue));
+                Integer newBestSteps = stateToBestSteps.get(newState);
+                int newSteps = steps + data[0];
+                if (newBestSteps == null || newSteps < newBestSteps) {
+                    stateToBestSteps.put(newState, newSteps);
+                    queue.add(new QueuedLeap(newState, newSteps));
+                }
             }
         }
         System.out.println("All keys obtained on fictional map. Fastest trip (part 1 answer): "+fastestTrip);
     }
+
+    static private int packState(int a, int keysMask) {
+        return (a<<26) | keysMask;
+    }
     
-    private record QueuedLeap(TripState tripState, int steps) implements  Comparable<QueuedLeap> {
+    private record QueuedLeap(int tripState, int steps) implements  Comparable<QueuedLeap> {
         @Override
         public int compareTo(QueuedLeap o) { return Integer.compare(steps, o.steps); }
     }
-
-    private record TripState(int a, int keysMask) {}
 
     private static void solvePart2() {
         int[] keyToRobotNumber = new int[26];
@@ -190,41 +199,45 @@ public class Day18 {
             else throw new RuntimeException("Invalid keyData");
         }
         int fastestTrip = Integer.MAX_VALUE;
-        var stateToBestSteps = new HashMap<TripStateV2, Integer>();
+        var stateToBestSteps = new HashMap<Long, Integer>();
+        long initialState = 26L<<26 | 27L<<31 | 28L<<36 | 29L<<41;
+        stateToBestSteps.put(initialState, 0);
         var queue = new PriorityQueue<QueuedLeapV2>();
-        queue.add(new QueuedLeapV2(new TripStateV2(26, 27, 28, 29, 0), 0));
+        queue.add(new QueuedLeapV2(initialState, 0));
         while (!queue.isEmpty()) {
             var trip = queue.remove();
             var tripState = trip.tripState;
-            int steps = trip.steps, keysMask = tripState.keysMask;
+            int steps = trip.steps, keysMask = (int)tripState & allKeysValue;
             Integer currentBest = stateToBestSteps.get(tripState);
             if (currentBest != null && steps > currentBest) continue;
             if (keysMask == allKeysValue) {
                 fastestTrip = steps;
                 break;
             }
+            int r0 = (int)((tripState >>> 26) & 0b11111), r1 = (int)((tripState >>> 31) & 0b11111),
+                    r2 = (int)((tripState >>> 36) & 0b11111), r3 = (int)((tripState >>> 41) & 0b11111);
             for (int b = 0; b < 26; b++) {
                 int bPosValue = 1<<b;
                 if ((keysMask & bPosValue) != 0) continue; // <-- continue if (we already have the destination key)
                 int robotNumber = keyToRobotNumber[b];
-                int a26 = tripState.a26, a27 = tripState.a27, a28 = tripState.a28, a29 = tripState.a29;
                 int robotPosition = switch(robotNumber) {
-                    case 26 -> a26;
-                    case 27 -> a27;
-                    case 28 -> a28;
-                    case 29 -> a29;
+                    case 26 -> r0;
+                    case 27 -> r1;
+                    case 28 -> r2;
+                    case 29 -> r3;
                     default -> throw new RuntimeException("Invalid keyData");
                 };
                 var data = trueKeyAKeyBData[robotPosition][b]; int doorsMask = data[1];
                 if ((doorsMask & keysMask) != doorsMask) continue;
                 // ^^ continue with next destination if (missing any required key) ^^
+                int newR0 = r0, newR1 = r1, newR2 = r2, newR3 = r3;
                 switch (robotNumber) {
-                    case 26 -> a26 = b;
-                    case 27 -> a27 = b;
-                    case 28 -> a28 = b;
-                    case 29 -> a29 = b;
+                    case 26 -> newR0 = b;
+                    case 27 -> newR1 = b;
+                    case 28 -> newR2 = b;
+                    case 29 -> newR3 = b;
                 }
-                var newState = new TripStateV2(a26, a27, a28, a29, keysMask | bPosValue);
+                long newState = packState(newR0, newR1, newR2, newR3, keysMask | bPosValue);
                 int newSteps = steps+data[0];
                 Integer bestSteps = stateToBestSteps.get(newState);
                 if (bestSteps == null || newSteps < bestSteps) {
@@ -236,11 +249,13 @@ public class Day18 {
         System.out.println("All keys obtained on true map. Fastest trip (part 2 answer): "+fastestTrip);
     }
 
-    private record QueuedLeapV2(TripStateV2 tripState, int steps) implements  Comparable<QueuedLeapV2> {
+    private static long packState(int r0, int r1, int r2, int r3, int keysMask) {
+        return ((long) r0 << 26) | ((long) r1 << 31) | ((long) r2 << 36) | ((long) r3 << 41) | keysMask;
+    }
+
+    private record QueuedLeapV2(long tripState, int steps) implements  Comparable<QueuedLeapV2> {
         @Override
         public int compareTo(QueuedLeapV2 o) { return Integer.compare(steps, o.steps); }
     }
-
-    private record TripStateV2(int a26, int a27, int a28, int a29, int keysMask) {}
 
 }
